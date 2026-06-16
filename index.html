@@ -301,9 +301,25 @@ const APPS = [
     tags:["PWA","IndexedDB","CSV取込","確定申告"],
     demo:"https://tad551216-rgb.github.io/demo-kakeibo/",   // デモ公開URL
     article:"articles/kakeibo.html"
+  },
+  {
+    name:"わが家の予定板",
+    status:"live",
+    glyph:"🗓️",
+    summary:"父・母・長男の予定を1枚で共有。月間カレンダーと週間リスト、写真付き日記まで。データは端末内だけに保存。",
+    tags:["PWA","カレンダー","家族共有","写真日記"],
+    link:"https://tad551216-rgb.github.io/yotei3/"          // 公開URL(開く)
+  },
+  {
+    name:"放課後等デイサービス 作業日報",
+    status:"live",
+    glyph:"⏱️",
+    summary:"パート従業員の作業を15分単位で簡単に報告。勤怠・時間計算の元になる作業報告に特化し、個人情報や療育内容は一切扱わない。",
+    tags:["PWA","福祉","勤怠・作業報告","15分単位"],
+    link:"https://tad551216-rgb.github.io/nippo/"
   }
   // 例) 次のアプリを追加するときは下の形式で足すだけ:
-  // ,{ name:"○○", status:"wip", glyph:"🧰", summary:"…", tags:["PWA","…"], demo:"#", article:"articles/xxx.html" }
+  // ,{ name:"○○", status:"wip", glyph:"🧰", summary:"…", tags:["PWA","…"], link:"https://…", article:"articles/xxx.html" }
 ];
 
 const POSTS = [
@@ -337,6 +353,9 @@ function renderApps(){
     if(a.status==="live" && a.demo){
       const ext = /^https?:/.test(a.demo);
       links.push(`<a class="primary" href="${esc(a.demo)}"${ext?' target="_blank" rel="noopener"':''}>使ってみる</a>`);
+    }
+    if(a.status==="live" && a.link){
+      links.push(`<a class="primary" href="${esc(a.link)}" target="_blank" rel="noopener">開く</a>`);
     }
     if(a.article) links.push(`<a class="ghost" href="${esc(a.article)}">作り方を読む</a>`);
     return `<article class="appcard">
