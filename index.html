@@ -141,6 +141,16 @@
   .appcard .links a.primary:hover{background:var(--accent);}
   .appcard .links a.ghost{color:var(--ink);border:1px solid var(--line-strong);}
   .appcard .links a.ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .appcard .docs{display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+  .appcard .docs a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;color:var(--ink-soft);
+    text-decoration:none;display:flex;align-items:center;gap:8px;line-height:1.5;
+  }
+  .appcard .docs a:hover{color:var(--accent);}
+  .appcard .docs a::before{
+    content:"PDF";font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--accent);
+    border:1px solid var(--accent);border-radius:4px;padding:1px 5px;flex:none;
+  }
 
   /* ===== 記事 ===== */
   .posts{display:flex;flex-direction:column;}
@@ -316,7 +326,11 @@ const APPS = [
     glyph:"⏱️",
     summary:"パート従業員の作業を15分単位で簡単に報告。勤怠・時間計算の元になる作業報告に特化し、個人情報や療育内容は一切扱わない。",
     tags:["PWA","福祉","勤怠・作業報告","15分単位"],
-    link:"https://tad551216-rgb.github.io/nippo/"
+    link:"https://tad551216-rgb.github.io/nippo/",
+    docs:[
+      { label:"機能のご紹介（PDF）", file:"docs/nippo-features.pdf" },
+      { label:"ホーム画面への登録手順（PDF）", file:"docs/nippo-install.pdf" }
+    ]
   }
   // 例) 次のアプリを追加するときは下の形式で足すだけ:
   // ,{ name:"○○", status:"wip", glyph:"🧰", summary:"…", tags:["PWA","…"], link:"https://…", article:"articles/xxx.html" }
@@ -358,6 +372,7 @@ function renderApps(){
       links.push(`<a class="primary" href="${esc(a.link)}" target="_blank" rel="noopener">開く</a>`);
     }
     if(a.article) links.push(`<a class="ghost" href="${esc(a.article)}">作り方を読む</a>`);
+    const docs = (a.docs||[]).map(d=>`<a href="${esc(d.file)}" download>${esc(d.label)}</a>`).join("");
     return `<article class="appcard">
       <div class="thumb"><div class="grid-bg"></div><div class="glyph">${a.glyph||"🧩"}</div></div>
       <div class="body">
@@ -366,6 +381,7 @@ function renderApps(){
         <p>${esc(a.summary)}</p>
         <div class="tags">${tags}</div>
         <div class="links">${links.join("")}</div>
+        ${docs ? `<div class="docs">${docs}</div>` : ""}
       </div>
     </article>`;
   }).join("");
