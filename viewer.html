@@ -135,6 +135,11 @@
   var standalone = (window.navigator.standalone === true) ||
     (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
 
+  // 印刷ボタンはアプリ表示のときだけ出す。
+  // Safariでは window.print() が確認ダイアログを出すうえ、「新しいタブで開く」から
+  // 実PDFを鮮明に印刷できるため、そちらに任せる。
+  printBtn.hidden = !standalone;
+
   // 行き止まりにならない代替文。Safariなら直接開くリンク、アプリなら上の「もどる」へ誘導。
   function directLink(){
     return standalone
