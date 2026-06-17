@@ -42,11 +42,11 @@
   .pull{font-family:"Hiragino Mincho ProN",serif;font-size:20px;line-height:1.7;color:var(--ink);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin:30px 0;text-align:center;letter-spacing:.03em;}
 
   /* 仕様の箇条(機能まとめ) */
-  .spec{background:var(--ink);color:#E9E7DF;border-radius:12px;padding:22px 24px;margin:26px 0;}
-  .spec .h{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:#D98A66;margin-bottom:12px;}
-  .spec ul{list-style:none;padding:0;margin:0;font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14.5px;line-height:1.75;color:#C9C6BD;}
-  .spec ul li{padding-left:18px;position:relative;margin-bottom:7px;}
-  .spec ul li::before{content:"▪";position:absolute;left:0;color:#D98A66;}
+  .spec{background:#FBFAF4;color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:20px 22px;margin:26px 0;}
+  .spec .h{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent-deep);margin-bottom:12px;}
+  .spec ul{list-style:none;padding:0;margin:0;font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:15.5px;line-height:1.9;color:#2c3650;}
+  .spec ul li{padding-left:20px;position:relative;margin-bottom:9px;}
+  .spec ul li::before{content:"▪";position:absolute;left:2px;color:var(--accent);}
 
   .art-foot{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 60px;}
   .backlink{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;color:var(--accent);text-decoration:none;font-weight:700;}
