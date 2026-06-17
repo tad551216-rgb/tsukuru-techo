@@ -372,7 +372,7 @@ function renderApps(){
       links.push(`<a class="primary" href="${esc(a.link)}" target="_blank" rel="noopener">開く</a>`);
     }
     if(a.article) links.push(`<a class="ghost" href="${esc(a.article)}">作り方を読む</a>`);
-    const docs = (a.docs||[]).map(d=>`<a href="${esc(d.file)}" target="_blank" rel="noopener">${esc(d.label)}</a>`).join("");
+    const docs = (a.docs||[]).map(d=>`<a href="viewer.html?f=${encodeURIComponent(d.file)}&t=${encodeURIComponent(d.label)}">${esc(d.label)}</a>`).join("");
     return `<article class="appcard">
       <div class="thumb"><div class="grid-bg"></div><div class="glyph">${a.glyph||"🧩"}</div></div>
       <div class="body">

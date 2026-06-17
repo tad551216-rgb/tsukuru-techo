@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDFを見る — つくる手帖</title>
+<style>
+  :root{
+    --ink:#1B2A4A; --paper:#F3F1EA; --surface:#FFFFFF;
+    --line:#D8D3C4; --accent:#C2603A; --muted:#7A7567;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  /* 上部バー(常に表示・自分で付ける戻る) */
+  .bar{
+    position:sticky; top:0; z-index:10;
+    display:flex; align-items:center; gap:12px;
+    padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+    background:rgba(243,241,234,.94); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .back{
+    appearance:none; -webkit-appearance:none; cursor:pointer;
+    font:inherit; font-size:13px; font-weight:700; letter-spacing:.03em;
+    color:#fff; background:var(--ink); border:none; border-radius:8px;
+    padding:9px 14px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .back:hover{background:var(--accent);}
+  .ttl{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    font-size:15px; font-weight:700; letter-spacing:.02em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;
+  }
+  .open{
+    font-size:12px; font-weight:700; color:var(--accent);
+    text-decoration:none; white-space:nowrap;
+  }
+  .open:hover{text-decoration:underline;}
+  /* PDF描画領域 */
+  #pages{
+    max-width:900px; margin:0 auto;
+    padding:16px 12px calc(28px + env(safe-area-inset-bottom));
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  #pages canvas{
+    width:100%; height:auto; max-width:100%;
+    background:var(--surface);
+    border:1px solid var(--line); border-radius:6px;
+    box-shadow:0 4px 16px rgba(27,42,74,.07);
+  }
+  .state{
+    text-align:center; color:var(--muted); font-size:13px; line-height:1.9;
+    padding:48px 22px;
+  }
+  .state .em{color:var(--ink); font-weight:700; display:block; margin-bottom:6px; font-size:14px;}
+  .state a{color:var(--accent); font-weight:700;}
+  .spin{
+    width:26px; height:26px; margin:0 auto 14px;
+    border:3px solid var(--line); border-top-color:var(--accent);
+    border-radius:50%; animation:sp .8s linear infinite;
+  }
+  @keyframes sp{to{transform:rotate(360deg);}}
+  @media (prefers-reduced-motion:reduce){ .spin{animation:none;} }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button class="back" id="back" type="button">‹ もどる</button>
+  <div class="ttl" id="ttl">PDF</div>
+  <a class="open" id="open" target="_blank" rel="noopener" hidden>新しいタブで開く</a>
+</div>
+
+<div id="pages">
+  <div class="state" id="state">
+    <div class="spin"></div>
+    読み込んでいます…
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var qs = new URLSearchParams(location.search);
+  var fileParam = qs.get("f") || "";
+  var titleParam = qs.get("t") || "";
+
+  // 戻る: 履歴があれば戻る、無ければ一覧へ
+  document.getElementById("back").addEventListener("click", function(){
+    if (history.length > 1) history.back();
+    else location.href = "index.html#apps";
+  });
+
+  // 安全のため docs/◯◯.pdf 形式のみ許可
+  var safe = /^docs\/[A-Za-z0-9_\-]+\.pdf$/.test(fileParam);
+
+  var ttlText = (titleParam ? decodeURIComponent(titleParam) : "PDF").replace(/（PDF）$/,"");
+  document.getElementById("ttl").textContent = ttlText;
+  document.title = ttlText + " — つくる手帖";
+
+  var pagesEl = document.getElementById("pages");
+  var stateEl = document.getElementById("state");
+
+  function fail(msgHtml){
+    stateEl.innerHTML = msgHtml;
+  }
+
+  if (!safe){
+    fail('<span class="em">PDFを表示できませんでした</span>リンクが正しくありません。<br><a href="index.html#apps">一覧にもどる</a>');
+    return;
+  }
+
+  // 「新しいタブで開く」(保存・印刷したい人向け)
+  var openA = document.getElementById("open");
+  openA.href = fileParam;
+  openA.hidden = false;
+
+  if (typeof pdfjsLib === "undefined"){
+    fail('<span class="em">表示用の部品を読み込めませんでした</span>通信環境をご確認のうえ開き直すか、<br><a href="'+fileParam+'" target="_blank" rel="noopener">PDFを直接開く</a>。');
+    return;
+  }
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  pdfjsLib.getDocument(fileParam).promise.then(function(pdf){
+    stateEl.remove();
+    var containerW = Math.min(pagesEl.clientWidth - 24, 876);
+    var chain = Promise.resolve();
+    for (var n = 1; n <= pdf.numPages; n++){
+      (function(num){
+        chain = chain.then(function(){
+          return pdf.getPage(num).then(function(page){
+            var base = page.getViewport({scale:1});
+            var scale = containerW / base.width;
+            var vp = page.getViewport({scale: scale * dpr});
+            var canvas = document.createElement("canvas");
+            canvas.width = Math.floor(vp.width);
+            canvas.height = Math.floor(vp.height);
+            canvas.style.width = Math.floor(vp.width / dpr) + "px";
+            pagesEl.appendChild(canvas);
+            return page.render({
+              canvasContext: canvas.getContext("2d"),
+              viewport: vp
+            }).promise;
+          });
+        });
+      })(n);
+    }
+    return chain;
+  }).catch(function(){
+    pagesEl.innerHTML =
+      '<div class="state"><span class="em">PDFを開けませんでした</span>'
+      + '<a href="'+fileParam+'" target="_blank" rel="noopener">PDFを直接開く</a></div>';
+  });
+})();
+</script>
+</body>
+</html>
