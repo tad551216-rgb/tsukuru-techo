@@ -126,7 +126,7 @@
   .status.live{background:#E4EEE7;color:#2E7D5B;}
   .status.wip{background:#F2E9D8;color:#9F7A2B;}
   .appcard h3{font-size:18px;font-weight:700;margin-bottom:8px;letter-spacing:.02em;}
-  .appcard p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.75;flex:1;}
+  .appcard p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14px;color:var(--ink-soft);line-height:1.8;flex:1;}
   .appcard .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;}
   .appcard .tags span{
     font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:10.5px;color:var(--muted);
@@ -168,7 +168,7 @@
     letter-spacing:.06em;
   }
   .post .main h3{font-size:19px;font-weight:700;margin-bottom:8px;line-height:1.5;transition:color .12s;}
-  .post .main p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;color:var(--ink-soft);line-height:1.75;}
+  .post .main p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14px;color:var(--ink-soft);line-height:1.8;}
   .post .main .readmark{
     font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11.5px;color:var(--muted);margin-top:10px;display:inline-block;
   }
@@ -178,7 +178,7 @@
   .about-band .wrap{padding:58px 22px;}
   .about-band .eyebrow{color:#D98A66;}
   .about-band h2{font-size:24px;font-weight:700;margin-bottom:18px;letter-spacing:.03em;}
-  .about-band p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14px;line-height:1.9;color:#C9C6BD;max-width:680px;}
+  .about-band p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:15px;line-height:1.95;color:#C9C6BD;max-width:680px;}
   .about-band .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px;margin-top:30px;}
   .about-band .pillar .n{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11px;color:#D98A66;font-weight:700;letter-spacing:.1em;margin-bottom:6px;}
   .about-band .pillar .h{font-size:16px;font-weight:700;margin-bottom:6px;}
@@ -202,6 +202,25 @@
     .site-inner{height:56px;}
     .sec-head{flex-wrap:wrap;gap:8px 14px;}
     .sec-head .note{margin-left:0;width:100%;}
+
+    /* スマホでの可読性: 読む文字を少し大きく・濃く・押しやすく */
+    .hero .lede{font-size:17px;line-height:2;}
+    .sec-head h2{font-size:23px;}
+    .appcard .body{padding:20px 20px 22px;}
+    .appcard h3{font-size:19px;}
+    .appcard p{font-size:16px;line-height:1.9;color:#2f3c57;}
+    .appcard .status{font-size:11.5px;}
+    .appcard .tags span{font-size:11.5px;}
+    .appcard .links a{font-size:13.5px;padding:10px 16px;}
+    .appcard .docs a{font-size:13.5px;}
+    .post .main h3{font-size:20px;}
+    .post .main p{font-size:16px;line-height:1.9;color:#2f3c57;}
+    .post .meta .date{font-size:12.5px;}
+    .post .meta .cat{font-size:11.5px;}
+    .about-band h2{font-size:22px;}
+    .about-band p{font-size:16px;line-height:2;}
+    .about-band .pillar .h{font-size:17px;}
+    .about-band .pillar p{font-size:14px;}
   }
 </style>
 </head>
@@ -225,7 +244,7 @@
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="eyebrow sans">MAKING MY OWN TOOLS WITH AI</div>
-    <h1>30年つくってきた人間が、<br>AIを相棒に<span class="em">"自分専用"</span>の道具をつくる。</h1>
+    <h1>35年間、業務システムの受託開発をしてきた人間が、<br>スマホ片手にAIを相棒に<span class="em">"自分専用"</span>の道具をつくる。</h1>
     <p class="lede">
       既製品では痒いところに手が届かない。だったら自分で作ればいい——とはいえ一人で全部は骨が折れる。
       そこへAIが来た。長年の業務システム開発の勘どころと、AIの速さを掛け合わせると、
