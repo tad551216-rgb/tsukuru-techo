@@ -7,7 +7,7 @@
 <style>
   :root{
     --ink:#1B2A4A; --paper:#F3F1EA; --surface:#FFFFFF;
-    --line:#D8D3C4; --accent:#C2603A; --muted:#7A7567;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --muted:#7A7567;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -39,6 +39,13 @@
     text-decoration:none; white-space:nowrap;
   }
   .open:hover{text-decoration:underline;}
+  .act{
+    appearance:none; -webkit-appearance:none; cursor:pointer; font:inherit;
+    font-size:12px; font-weight:700; letter-spacing:.03em; color:var(--ink);
+    background:transparent; border:1px solid var(--line-strong); border-radius:8px;
+    padding:8px 12px; white-space:nowrap;
+  }
+  .act:hover{border-color:var(--accent); color:var(--accent);}
   /* PDF描画領域 */
   #pages{
     max-width:900px; margin:0 auto;
@@ -64,6 +71,19 @@
   }
   @keyframes sp{to{transform:rotate(360deg);}}
   @media (prefers-reduced-motion:reduce){ .spin{animation:none;} }
+
+  /* 印刷時は操作バーを隠し、PDFページだけを1ページずつ出す */
+  @media print{
+    .bar{ display:none !important; }
+    body{ background:#fff; }
+    #pages{ padding:0; margin:0; max-width:none; gap:0; display:block; }
+    #pages canvas{
+      border:none !important; border-radius:0 !important; box-shadow:none !important;
+      width:100% !important; height:auto !important; margin:0 !important;
+      page-break-after:always; break-after:page;
+    }
+    #pages canvas:last-child{ page-break-after:auto; break-after:auto; }
+  }
 </style>
 </head>
 <body>
@@ -71,6 +91,7 @@
 <div class="bar">
   <button class="back" id="back" type="button">‹ もどる</button>
   <div class="ttl" id="ttl">PDF</div>
+  <button class="act" id="print" type="button">印刷</button>
   <a class="open" id="open" target="_blank" rel="noopener" hidden>新しいタブで開く</a>
 </div>
 
@@ -95,6 +116,10 @@
     else location.href = "index.html#apps";
   });
 
+  // 印刷: 画面遷移せず印刷シートを開く(アプリ表示でも戻れる)
+  var printBtn = document.getElementById("print");
+  printBtn.addEventListener("click", function(){ window.print(); });
+
   // 安全のため docs/◯◯.pdf 形式のみ許可
   var safe = /^docs\/[A-Za-z0-9_\-]+\.pdf$/.test(fileParam);
 
@@ -105,22 +130,36 @@
   var pagesEl = document.getElementById("pages");
   var stateEl = document.getElementById("state");
 
+  // ホーム画面アプリ(スタンドアロン表示)かどうか。
+  // この場合 target="_blank" は効かず、生PDFを開くと戻れなくなるため、直接開く導線は出さない。
+  var standalone = (window.navigator.standalone === true) ||
+    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+
+  // 行き止まりにならない代替文。Safariなら直接開くリンク、アプリなら上の「もどる」へ誘導。
+  function directLink(){
+    return standalone
+      ? '上の「‹ もどる」でお戻りください。'
+      : '<a href="'+fileParam+'" target="_blank" rel="noopener">PDFを直接開く</a>';
+  }
+
   function fail(msgHtml){
     stateEl.innerHTML = msgHtml;
   }
 
   if (!safe){
+    printBtn.hidden = true;
     fail('<span class="em">PDFを表示できませんでした</span>リンクが正しくありません。<br><a href="index.html#apps">一覧にもどる</a>');
     return;
   }
 
-  // 「新しいタブで開く」(保存・印刷したい人向け)
+  // 「新しいタブで開く」(保存・印刷用)。アプリ表示では出さない。
   var openA = document.getElementById("open");
   openA.href = fileParam;
-  openA.hidden = false;
+  openA.hidden = standalone;
 
   if (typeof pdfjsLib === "undefined"){
-    fail('<span class="em">表示用の部品を読み込めませんでした</span>通信環境をご確認のうえ開き直すか、<br><a href="'+fileParam+'" target="_blank" rel="noopener">PDFを直接開く</a>。');
+    printBtn.hidden = true;
+    fail('<span class="em">表示用の部品を読み込めませんでした</span>通信環境をご確認のうえ開き直してください。<br>'+directLink());
     return;
   }
   pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -156,7 +195,7 @@
   }).catch(function(){
     pagesEl.innerHTML =
       '<div class="state"><span class="em">PDFを開けませんでした</span>'
-      + '<a href="'+fileParam+'" target="_blank" rel="noopener">PDFを直接開く</a></div>';
+      + directLink() + '</div>';
   });
 })();
 </script>
