@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>鉄からシステム、そしてAIへ — つくる手帖</title>
+<meta name="description" content="父の鉄工所が消えた日から、独学のパソコン、そして70歳のいまのAIまで。道具は変わっても、やってきたことは一つだった——その半生の記録。">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#3A4A66;
+    --paper:#F3F1EA;
+    --paper-2:#ECE9DF;
+    --surface:#FFFFFF;
+    --line:#D8D3C4;
+    --line-strong:#B9B2A0;
+    --accent:#C2603A;
+    --accent-deep:#9F4A2B;
+    --muted:#7A7567;
+    --grid:#E3DFD3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);background:var(--paper);
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 22px;}
+
+  /* ===== ヘッダー ===== */
+  header.site{
+    border-bottom:1px solid var(--line);
+    background:rgba(243,241,234,.9);backdrop-filter:blur(6px);
+    position:sticky;top:0;z-index:20;
+  }
+  .site-inner{display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand .mark{font-family:"Hiragino Mincho ProN",serif;font-size:21px;font-weight:700;letter-spacing:.04em;}
+  .brand .mark .han{color:var(--accent);}
+  .brand .tag{font-size:11px;color:var(--muted);letter-spacing:.08em;}
+  nav.site-nav{display:flex;gap:22px;}
+  nav.site-nav a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;
+  }
+  nav.site-nav a:hover{color:var(--accent);}
+
+  /* ===== 記事ヒーロー ===== */
+  .a-hero{padding:64px 0 34px;position:relative;}
+  .a-hero::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
+    opacity:.6;
+  }
+  .a-hero-inner{position:relative;z-index:1;max-width:760px;}
+  .a-eyebrow{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:12px;letter-spacing:.2em;color:var(--accent);font-weight:700;margin-bottom:18px;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .a-eyebrow .date{color:var(--muted);letter-spacing:.06em;font-weight:400;}
+  .a-hero h1{
+    font-size:clamp(28px,4.8vw,44px);line-height:1.4;font-weight:700;letter-spacing:.01em;margin-bottom:20px;
+  }
+  .a-hero h1 .em{background:linear-gradient(transparent 64%,rgba(194,96,58,.22) 64%);padding:0 .05em;}
+  .a-lede{font-size:clamp(15px,2vw,17px);color:var(--ink-soft);line-height:1.95;}
+
+  /* ===== 本文 ===== */
+  .article{border-top:1px solid var(--line);padding:46px 0 20px;}
+  .article-inner{max-width:720px;}
+  .article .lead{
+    font-size:clamp(16px,2.1vw,18px);color:var(--ink);line-height:2;
+    padding-bottom:30px;margin-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .a-sec{padding:34px 0 6px;}
+  .a-sec h2{
+    font-size:22px;font-weight:700;letter-spacing:.03em;line-height:1.5;margin-bottom:22px;
+    display:flex;align-items:baseline;gap:13px;
+  }
+  .a-sec h2 .idx{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13px;color:var(--accent);font-weight:700;letter-spacing:.1em;flex:none;
+  }
+  .a-sec p{font-size:16.5px;color:var(--ink);line-height:2.02;margin-bottom:1.45em;}
+  .a-sec p:last-child{margin-bottom:0;}
+
+  /* ===== 結びの印 ===== */
+  .endmark{display:flex;justify-content:center;padding:26px 0 6px;}
+  .endmark .seal{
+    width:48px;height:48px;border:1.5px solid var(--accent);color:var(--accent);
+    border-radius:7px;display:flex;align-items:center;justify-content:center;
+    font-family:"Hiragino Mincho ProN",serif;font-size:18px;transform:rotate(-3deg);
+  }
+
+  /* ===== 記事フッターナビ ===== */
+  .a-foot{border-top:1px solid var(--line);padding:30px 0 8px;}
+  .a-foot a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13.5px;
+    color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;
+  }
+  .a-foot a:hover{color:var(--accent);}
+
+  /* ===== サイトフッター ===== */
+  footer.site{border-top:1px solid var(--line);margin-top:30px;padding:30px 0 40px;}
+  footer.site .f-brand{font-family:"Hiragino Mincho ProN",serif;font-size:18px;font-weight:700;letter-spacing:.04em;margin-bottom:8px;}
+  footer.site .f-brand .han{color:var(--accent);}
+  footer.site .f-note{font-size:12px;color:var(--muted);letter-spacing:.03em;}
+
+  @media (max-width:640px){
+    nav.site-nav{gap:15px;}
+    nav.site-nav a.hide-sp{display:none;}
+    .brand .tag{display:none;}
+    .a-hero{padding:48px 0 28px;}
+    .a-sec p{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="../index.html">
+      <span class="mark">つくる<span class="han">手帖</span></span>
+      <span class="tag sans">AIで"自分専用"の道具をつくる</span>
+    </a>
+    <nav class="site-nav">
+      <a href="../index.html#apps">アプリ</a>
+      <a href="../index.html#posts">記事</a>
+      <a href="../index.html#about" class="hide-sp">このサイトについて</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== 記事ヒーロー ===== -->
+<section class="a-hero">
+  <div class="wrap a-hero-inner">
+    <div class="a-eyebrow">エッセイ <span class="date">2026.06.19</span></div>
+    <h1>鉄から<span class="em">システム</span>、そしてAIへ</h1>
+    <p class="a-lede">父の鉄工所が消えた日から、独学のパソコン、そして70歳のいまのAIまで。道具は変わっても、やってきたことは一つだった——その半生の記録。</p>
+  </div>
+</section>
+
+<!-- ===== 本文 ===== -->
+<article class="article">
+  <div class="wrap article-inner">
+
+    <p class="lead">70歳になりました。ここまでを振り返ると、私の人生はいつも「道具」とともにありました。鉄、パソコン、そしていまはAI。扱うものは時代ごとに変わっても、やっていることは、ずっと同じだった気がします。</p>
+
+    <section class="a-sec">
+      <h2><span class="idx">01</span>鉄の時代</h2>
+      <p>社員は10人にも満たない、小さな鉄工所でした。けれど、誰にでもできる仕事ではありません。鉄をおよそ800度に熱して加工し、わずかな狂いも許されない寸法精度が求められる——国鉄の仕事です。その認定を受けた会社は、当時、全国にたった2社。私たちは、そのうちの1社の下請けでした。</p>
+      <p>国鉄がアルゼンチンのロカ線の受注を取ったときのことは、今でもよく覚えています。朝早くから検査が立ち会う張りつめた空気の中で、私たちはやり遂げました。すべてを完納したその日、24ミリの鉄板を切って鉄板代わりにし、その上で焼いた肉のうまさといったら——あれは、生涯忘れられません。</p>
+      <p>東海道新幹線の架線金物には、刻印が打たれていました。それが、これは自分たちが作ったのだ、という何よりの証でした。</p>
+    </section>
+
+    <section class="a-sec">
+      <h2><span class="idx">02</span>工場が傾く——そして、最初のプログラム</h2>
+      <p>整備新幹線の計画が中止になり、潮目が変わりました。それまで、新幹線の架線金物は、同じサイズで2000枚を超える単位で注文が来ていました。それが、新しい路線が引かれないとなれば、残るのは既成路線の保守の仕事だけ。サイズごとに、2枚、多くて10枚。注文は極端に細り、利益はまるで出なくなりました。</p>
+      <p>その時期に、私は10万円のパソコンを一台買いました。付属していた倍精度のBASICで、在来線の電柱バンド（160径から360径）の切断寸法を、自動で計算するプログラムを作ってみようと思い立ったのです。プログラムなど、初めての経験でした。本を片手に夜なべして、それでも1か月で仕上げました。</p>
+      <p>新幹線の架線金物は400径ひとつだけでしたから、その都度、時期や材料に合わせて十数枚も試し切りをして寸法を決めていました。それが、種類とサイズ別の数量を入力するだけで、切断寸法の一覧が印刷されて出てくる。画期的どころか、もう無くてはならない仕組みでした。</p>
+      <p>最初、工場長は「パソコンが出した寸法で、本当に大丈夫なのか」と疑っていました。ところが、なんと一発でOK。これには、作った私自身も含めて、全員が驚きました。</p>
+      <p>プログラムというものが、こんなに役に立つ。それを知った私は、次に、架橋の鉄道フェンスの仕事に挑みました。受注金額が安く、大手がやりたがらない仕事です。フェンスは伸び縮みが激しいうえ、定型サイズよりも、橋のスパンごとに両端の特殊なサイズが多い。公共工事は1メートルいくらで値が決まっていますから、原価の計算が、とにかく難しいのです。</p>
+      <p>それでも挑めたのは、電柱バンドでの成功があったからでした。あのとき、気づいていたのです——これは、ただの数学の計算では解けない、と。サイズの大小、季節の温度、仕入れた鋼材の状態。職人が長年の経験で体に刻んできた知恵を、そっくりプログラムに詰め込むしかない。私は現場の職人に、必死で聴き込みました。データはカセットテープに記録して、そうして、難しいフェンスの原価計算も、やり遂げたのです。</p>
+      <p>そのシステムを、何億円というホストコンピュータをお使いの公団の方が、わざわざ見にこられました。なぜ10万円のパソコンで作ったものを、と当時は不思議でなりませんでした。けれど、いま思えば、あれは確かに、他にないものだったのでしょう。</p>
+    </section>
+
+    <section class="a-sec">
+      <h2><span class="idx">03</span>工場をたたむ</h2>
+      <p>工場をたたむと決めてからは、父に代わって、後始末のすべてを私が引き受けました。</p>
+      <p>借入金を一つひとつ洗い出し、返済の交渉に回る。職人たちの次の働き口を探す。長年勤めてくれたパートのおばさんも含め、自分たちの資産を取り崩してでも、全員にきちんと退職金を渡す。自宅を含む不動産を手放し、世話になった溶接工さんへの支払いを済ませ、大手の鋼材メーカーには、残った債務の返済をお願いに上がる。来る日も来る日も、寝る間も惜しんで駆けずり回りました。</p>
+      <p>最後の交渉を、新大阪で終えたときのことです。相手方の責任者の方が、「一杯どうですか」と誘ってくださいました。お言葉に甘えてご一緒したのですが——そこで私は、生まれて初めて、意識を失いました。どうやって家にたどり着いたのか、いまも、まったく覚えていません。</p>
+    </section>
+
+    <section class="a-sec">
+      <h2><span class="idx">04</span>変化し続けるアプリケーション</h2>
+      <p>どん底から、私はもう一度、立ち上がろうとしていました。</p>
+      <p>やがて、パソコン用の業務パッケージソフトを開発している人たちと知り合います。最初に描いた絵はこうでした。私が受託開発の営業に回り、開発はその人たちに任せる。そうやって、たくさんの仕事を受注しよう、と。</p>
+      <p>ところが、すぐに壁にぶつかりました。ソフトウェアというのは、納品したその瞬間から、もう古びはじめるのです。直してほしいという要望が出るたび、お客様と開発元のあいだに私が挟まり、話がうまく流れない。これでは立ちゆかない。</p>
+      <p>そこで私は、考え方そのものを切り替えました。自分で簡単な開発環境を覚えて、手を動かす。そして、「開発はいつまでも完了しない」ものとして捉える——保守契約の中で、お客様の変化とともに生きていく、変わり続けるアプリケーション。それを、自分の仕事の軸に据えたのです。</p>
+      <p>当時は、OSもデータベースも開発ツールも、目まぐるしく移り変わる時代でした。だから私は、いつも一歩先のツールに賭け続けました。みんなが使う環境で勝負すれば、後発の私は必ず負ける。けれど、誰もやっていないことなら、早い者勝ちの目がある。また、がむしゃらに動きました。</p>
+      <p>その賭けは、思わぬ形で実を結びます。まだ日本に上陸する前のネットワーク環境を扱い、手がけたツールの代理店認定を受け、紹介セミナーの講師まで頼まれるようになりました。そして、そのセミナーを受けてくださった会社の担当の方からお声がけをいただき、今度は大手企業から、直接、受託開発を任されるようになっていったのです。</p>
+    </section>
+
+    <section class="a-sec">
+      <h2><span class="idx">05</span>人は雇わない、と決めていた</h2>
+      <p>工場をたたむとき、みんなの再就職先を探し、退職金を、自分たちの資産を取り崩して、どうにか工面しました。あの経験は、いまも言葉にできません。だからこそ私は、固く決めていました。これからは、自分ひとりでできる仕事だけをやっていく。人を雇うことだけは、決してしない、と。</p>
+      <p>暮らしを立てるためなら、システム開発以外の仕事も、できることは何でもやりました。病院の貸しテレビ事業では、ベッドに固定するテレビ台が要る。それを、鉄工所時代に世話になった東大阪の社長さんに頼んで、オリジナルでこしらえてもらいました。子どもが三人いて、社会保険に入りたい一心で、生命保険会社の営業も一年半、続けました。</p>
+      <p>そうやって方々で働くうちに、出会った人の中から、「あなたのやっているシステム開発を、一緒にやらせてほしい」と言ってくれる人が現れはじめました。私は、一年半以上、断り続けました。あの思いを、もう二度としたくなかったからです。</p>
+      <p>それでも、受託開発の仕事は増えていく。そして、まだ借金の返済が残るこの事業だと正直に話しても、それを承知のうえで、どうしても一緒にやりたいと言ってくれる人が、一人、また一人と増えていきました。</p>
+      <p>ここまで言ってくれるのなら——。私はとうとう、会社をつくることを決意しました。</p>
+    </section>
+
+    <section class="a-sec">
+      <h2><span class="idx">06</span>そして、AIへ</h2>
+      <p>こうして始まった会社のことは、いつか、別にじっくり書き残せたらと思います。ここでは、多くを語りません。ただ——あれから三十数年。気づけば私は六十五歳になり、会社を後進に託して、会長へと退いていました。</p>
+      <p>会社を離れ、ようやく自分の時間ができたとき、私はAIに出会いました。</p>
+      <p>正直なところ、最初は半信半疑でした。けれど、触れてみて驚きました。これは、鉄を加工した現場で、夜なべでパソコンを覚えた頃からずっと私を助けてくれた「一歩先のツールに賭ける」という生き方——その、最新の相棒だったのです。</p>
+      <p>長い年月をかけて体に染み込ませた現場の勘どころを、AIの速さと掛け合わせる。すると、欲しい道具が、驚くほど少ない手間で形になっていく。あの電柱バンドの寸法計算を、たった一人、夜なべで作っていた頃から思えば、夢のような速さです。</p>
+      <p>手始めに、スマホ片手に、自分や家族が日々使う小さな道具をつくってみました。家計簿、予定表、現場の作業日報。世の中を変えるような、大層なものではありません。それでも、私にささやかな充実感を与えてくれます。</p>
+    </section>
+
+    <section class="a-sec">
+      <h2><span class="idx">07</span>変わったのは、道具だけ</h2>
+      <p>振り返れば、私はいつも同じことをしてきました。</p>
+      <p>800度の鉄を加工した父の工場でも、職人の知恵を詰め込んだあのプログラムでも、お客様とともに変わり続けたアプリケーションでも、そしていまのAIでも——やっていることは、ただ一つ。目の前にいる誰かの手間を、ほんの少しだけ軽くすることです。</p>
+      <p>道具は、鉄からパソコンへ、パソコンからAIへと移り変わりました。けれど、その手応えと喜びは、四十年、何ひとつ変わっていません。</p>
+      <p>誰か一人の役に立てば、それで価値がある。70歳のいまも、私はそう思いながら、また新しい道具をつくっています。</p>
+    </section>
+
+    <div class="endmark"><span class="seal">了</span></div>
+
+    <div class="a-foot">
+      <a href="../index.html#posts">← 記事一覧へ戻る</a>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="f-brand">つくる<span class="han">手帖</span></div>
+    <div class="f-note sans">© 2026 つくる手帖 / GitHub Pages で公開 / 各アプリのデータは利用者の端末内にのみ保存されます</div>
+  </div>
+</footer>
+
+</body>
+</html>
