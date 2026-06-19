@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- トップページ -->
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 記事 -->
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/iron-to-ai.html</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/kakeibo.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/ai-app-howto.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 資料（PDF）。不要なら削除してかまいません -->
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/yotei-setup.pdf</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/nippo-features.pdf</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/nippo-install.pdf</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
