@@ -4,15 +4,21 @@
   <!-- トップページ -->
   <url>
     <loc>https://tad551216-rgb.github.io/tsukuru-techo/</loc>
-    <lastmod>2026-06-18</lastmod>
+    <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- 記事 -->
   <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/dev-syuukei.html</loc>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/iron-to-ai.html</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -47,6 +53,11 @@
   </url>
   <url>
     <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/android-nippo-install.pdf</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/nippo-shukei-manual.pdf</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
