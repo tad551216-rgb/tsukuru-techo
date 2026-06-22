@@ -372,15 +372,15 @@ const APPS = [
   },
   {
     name:"作業日報集計",
-    status:"wip",            // 制作中（公開したら status:"live" と link を追加）
+    status:"live",
     glyph:"📊",
     summary:"作業日報アプリで記録した作業を、従業員別・期間別に集計。勤怠や作業時間の集計を、まとめて確認できます。",
     tags:["PWA","集計","勤怠","作業時間"],
-    article:"articles/nippo-shukei.html",
+    link:"https://tad551216-rgb.github.io/-nippo-syuukei/",
+    article:"articles/dev-syuukei.html",
     docs:[
       { label:"操作マニュアル（PDF）", file:"docs/nippo-shukei-manual.pdf" }
     ]
-    // 公開したら → status:"live", link:"https://tad551216-rgb.github.io/.../"
   }
   // 例) 次のアプリを追加するときは下の形式で足すだけ:
   // ,{ name:"○○", status:"wip", glyph:"🧰", summary:"…", tags:["PWA","…"], link:"https://…", article:"articles/xxx.html" }
@@ -392,7 +392,7 @@ const POSTS = [
     cat:"開発記",
     title:"LINEに流れる日報を、自動で集計する仕組みをつくった話",
     excerpt:"作業日報アプリに集計機能を足していった記録。氏名の埋め込み、月締め、漏れ確認カレンダー、日報・週報・月報の出力まで、現場の声に応えて少しずつ形を変えた過程を残した。",
-    url:"articles/nippo-shukei.html"
+    url:"articles/dev-syuukei.html"
   },
   {
     date:"2026-06-19",
