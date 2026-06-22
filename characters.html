@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>つくる手帖のなかまたち — キャラクター紹介</title>
+<meta name="description" content="つくる手帖の世界をいっしょに育てる4組のなかまたち。テチョン、グラスプロト、R・G・B、ツクモグラ。それぞれの役割と口ぐせを紹介します。">
+<link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+<style>
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --card:#FBFAF6;
+    --line:#D8D3C4; --accent:#C2603A; --muted:#7A7567; --grid:#E3DFD3;
+    --green:#3D6B52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ max-width:880px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px; }
+  .brand .han{ color:var(--accent); }
+  .site-nav{ display:flex; gap:20px; }
+  .site-nav a{ color:var(--green); text-decoration:none; font-weight:700; font-size:14px; }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .head{ padding:46px 0 8px; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:clamp(26px,5vw,38px); margin:12px 0 14px; line-height:1.4; }
+  .head .lead{ color:var(--ink-soft); max-width:54ch; }
+
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:34px 0 8px; }
+  @media (max-width:680px){ .grid{ grid-template-columns:1fr; } }
+
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }
+  .portrait{ background:#fff; border:1px solid var(--line); border-radius:10px;
+    display:flex; align-items:center; justify-content:center; padding:10px; margin-bottom:16px; }
+  .portrait img{ width:100%; max-width:260px; height:auto; display:block; }
+  .ptype{ font-size:12px; font-weight:700; letter-spacing:.04em; color:var(--accent); }
+  .card h2{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:22px; margin:5px 0 4px; }
+  .card h2 .en{ font-size:14px; color:var(--muted); font-weight:400; margin-left:.4em; }
+  .tagline{ color:var(--ink-soft); margin:0 0 14px; }
+  .feat{ list-style:none; display:flex; flex-direction:column; gap:7px; margin:0 0 16px; }
+  .feat li{ position:relative; padding-left:1.5em; font-size:.96em; color:var(--ink-soft); line-height:1.7; }
+  .feat li::before{ content:"✓"; position:absolute; left:0; color:var(--green); font-weight:700; }
+  .quote{ border-left:3px solid var(--accent); padding:4px 0 4px 14px; color:var(--ink);
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+
+  .rgbroles{ display:flex; flex-direction:column; gap:6px; margin:0 0 14px; }
+  .rgbroles .r{ display:flex; gap:.5em; font-size:.95em; color:var(--ink-soft); }
+  .rgbroles .dot{ font-weight:700; }
+  .rgbroles .R .dot{ color:#c8463a; } .rgbroles .G .dot{ color:#3f9a52; } .rgbroles .B .dot{ color:#3a6fc8; }
+
+  .pillars{ margin:30px 0 10px; padding:22px; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; }
+  .pillars h3{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:18px; margin-bottom:8px; }
+  .pillars p{ color:var(--ink-soft); }
+  .pillars b{ color:var(--accent); }
+
+  .foot{ border-top:1px solid var(--line); margin-top:34px; padding:26px 0 60px; }
+  .foot .backlink{ color:var(--green); text-decoration:none; font-weight:700; border-bottom:1px solid currentColor; }
+  .foot .note{ color:var(--muted); font-size:13px; margin-top:14px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="index.html">つくる<span class="han">手帖</span></a>
+    <nav class="site-nav"><a href="index.html#apps">アプリ</a><a href="index.html#posts">記事</a></nav>
+  </div>
+</header>
+
+<div class="head">
+  <div class="wrap">
+    <div class="eyebrow mincho">CHARACTERS</div>
+    <h1>つくる手帖の、なかまたち</h1>
+    <p class="lead">「つくる」を記録し、育て、カタチにする——その物語を、いっしょに歩むなかまたちです。それぞれに役割と、口ぐせがあります。</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+
+    <div class="card">
+      <div class="portrait"><img src="assets/characters/techon.png" alt="テチョン"></div>
+      <div class="ptype">テック × ステーショナリー</div>
+      <h2>テチョン<span class="en">Techon</span></h2>
+      <p class="tagline">進捗を見守る、スマートなシステム手帳ロボ。</p>
+      <ul class="feat">
+        <li>表紙は GitHub の草をイメージしたグラデーションドット</li>
+        <li>頭のタッチペンで、メモやコードを記録</li>
+        <li>お腹のディスプレイに進捗を表示</li>
+      </ul>
+      <p class="quote">生真面目だけど、新しいものをつくるのが大好き！</p>
+    </div>
+
+    <div class="card">
+      <div class="portrait"><img src="assets/characters/grassplot.png" alt="グラスプロト"></div>
+      <div class="ptype">クリエイティブ × 自然</div>
+      <h2>グラスプロト<span class="en">Grassplot</span></h2>
+      <p class="tagline">コントリビューションの草から生まれた、小さな妖精。</p>
+      <ul class="feat">
+        <li>つくるたびに、草が茂り、花が咲く</li>
+        <li>ノートにアイデアや記録をメモ</li>
+        <li>ドット絵の、癒やし系見守りキャラ</li>
+      </ul>
+      <p class="quote">マイペースに、あなたの「つくる」を見守ってるよ。</p>
+    </div>
+
+    <div class="card">
+      <div class="portrait"><img src="assets/characters/rgb.png" alt="アール・ジー・ビー"></div>
+      <div class="ptype">カラー × エンジニア</div>
+      <h2>アール・ジー・ビー<span class="en">R・G・B</span></h2>
+      <p class="tagline">三原色の、小さなエンジニアトリオ。</p>
+      <div class="rgbroles">
+        <div class="r R"><span class="dot">●R（レッド）</span><span>アイデア担当 — 思いつく、つくり出す！</span></div>
+        <div class="r G"><span class="dot">●G（グリーン）</span><span>記録担当 — 書く、残す、積み上げる！</span></div>
+        <div class="r B"><span class="dot">●B（ブルー）</span><span>チェック担当 — 見直す、整える、守る！</span></div>
+      </div>
+      <ul class="feat">
+        <li>3体が合体すると…「ホワイト・マイスター」（完成形態）に！</li>
+      </ul>
+      <p class="quote">ワイワイ協力して、最高のものを完成させるよ！</p>
+    </div>
+
+    <div class="card">
+      <div class="portrait"><img src="assets/characters/tsukumogra.png" alt="ツクモグラ"></div>
+      <div class="ptype">職人 × ガジェット</div>
+      <h2>ツクモグラ<span class="en">Tsukumogra</span></h2>
+      <p class="tagline">土の中でコツコツ作業する、職人エンジニア。</p>
+      <ul class="feat">
+        <li>RGB に光るゴーグルで、集中モード！</li>
+        <li>ピンセットやスタイラスで、細かい作業</li>
+        <li>手帳リュックに、アイデアとログを収納</li>
+      </ul>
+      <p class="quote">無口だけど、完成したときの喜びは一番大きいんだ。</p>
+    </div>
+
+  </div>
+
+  <div class="pillars">
+    <h3>R・G・B と、3つの柱</h3>
+    <p>このサイトの3つの柱とも、ぴったり重なります。<b>R（つくる）</b>で思いつき、<b>G（のこす）</b>で書き残し、<b>B（わたす）</b>で見直して整える。三色がそろって一つになったとき、いちばん良いものが完成します。</p>
+  </div>
+
+  <div class="foot">
+    <a class="backlink" href="index.html">← つくる手帖にもどる</a>
+    <p class="note">「つくる」を記録し、育て、カタチにする。それが、つくる手帖の物語です。</p>
+  </div>
+</div>
+
+</body>
+</html>
