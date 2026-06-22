@@ -22,6 +22,32 @@
   }
   .serif{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
 
+  /* ---- サイトへ戻る上部バー ---- */
+  .sitebar{
+    position:sticky; top:0; z-index:20;
+    background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:saturate(1.2) blur(8px);
+    backdrop-filter:saturate(1.2) blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:12px 0;
+  }
+  .sitebar .bar{
+    max-width:760px; margin:0 auto; padding:0 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .sitebar .brand{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    font-weight:600; font-size:21px; color:var(--ink); text-decoration:none;
+    letter-spacing:.02em;
+  }
+  .sitebar .brand em{ font-style:normal; color:var(--accent); }
+  .sitebar .navlinks{ display:flex; gap:22px; }
+  .sitebar .navlinks a{
+    color:var(--green); text-decoration:none; font-size:14px; font-weight:700;
+    letter-spacing:.04em;
+  }
+  .sitebar .navlinks a:hover{ color:var(--accent); }
+
   /* ---- グリッド地紋（方眼手帖の質感）---- */
   .hero{
     position:relative; overflow:hidden;
@@ -127,15 +153,28 @@
   }
   footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
   footer b{ color:#fff; }
+  footer .home{ color:#cbb7a6; text-decoration:none; border-bottom:1px solid currentColor; }
 
   @media (max-width:560px){
     body{ font-size:16px; line-height:1.85; }
     blockquote{ padding:20px 18px; }
+    .sitebar .brand{ font-size:19px; }
+    .sitebar .navlinks{ gap:18px; }
   }
   @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
 </style>
 </head>
 <body>
+
+<nav class="sitebar">
+  <div class="bar">
+    <a class="brand" href="../index.html">つくる<em>手帖</em></a>
+    <div class="navlinks">
+      <a href="../index.html#apps">アプリ</a>
+      <a href="../index.html#posts">記事</a>
+    </div>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="wrap">
@@ -212,7 +251,7 @@
 <footer>
   <div class="wrap">
     <span>作業日報アプリ／日報集計アプリ <b>開発ノート</b></span>
-    <span>放課後等デイサービス 業務改善の記録</span>
+    <a class="home" href="../index.html">← つくる手帖トップへ</a>
   </div>
 </footer>
 
