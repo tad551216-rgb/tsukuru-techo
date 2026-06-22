@@ -276,6 +276,9 @@
       <h2>つくった道具</h2>
       <span class="note sans">順次ふやしていきます</span>
     </div>
+    <p class="apps-note" style="margin:.1rem 0 1.7rem;max-width:62ch;color:var(--ink-soft,#3A4A66);line-height:1.95;font-size:.98rem;">
+      どのアプリも、ブラウザで開くだけで使える「PWA」です。アプリを開いて<span style="color:var(--accent,#C2603A);font-weight:600">ホーム画面に追加</span>すれば、ふつうのアプリのように起動できます。入力したデータは<span style="color:var(--accent,#C2603A);font-weight:600">すべて手元の端末の中だけ</span>に保存され、サーバーには送られません。
+    </p>
     <div class="apps" id="appGrid"></div>
   </div>
 </section>
@@ -433,7 +436,7 @@ function renderApps(){
       links.push(`<a class="primary" href="${esc(a.demo)}"${ext?' target="_blank" rel="noopener"':''}>使ってみる</a>`);
     }
     if(a.status==="live" && a.link){
-      links.push(`<a class="primary" href="${esc(a.link)}" target="_blank" rel="noopener">開く</a>`);
+      links.push(`<a class="primary" href="${esc(a.link)}" target="_blank" rel="noopener">使ってみる</a>`);
     }
     if(a.article) links.push(`<a class="ghost" href="${esc(a.article)}">作り方を読む</a>`);
     const docs = (a.docs||[]).map(d=>`<a href="viewer.html?f=${encodeURIComponent(d.file)}&t=${encodeURIComponent(d.label)}">${esc(d.label)}</a>`).join("");
