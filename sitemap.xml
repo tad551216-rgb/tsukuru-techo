@@ -11,6 +11,12 @@
 
   <!-- 記事 -->
   <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/yotei.html</loc>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/dev-syuukei.html</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
