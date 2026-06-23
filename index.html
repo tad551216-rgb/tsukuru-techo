@@ -90,6 +90,10 @@
     font-family:"Hiragino Mincho ProN",serif;font-size:12px;line-height:1.2;text-align:center;
     transform:rotate(-3deg);
   }
+  .hero .sig .hero-techon{
+    width:clamp(54px,11vw,72px);height:auto;flex:none;
+    mix-blend-mode:multiply;
+  }
 
   /* ===== セクション見出し ===== */
   .section{padding:54px 0;border-top:1px solid var(--line);}
@@ -267,7 +271,8 @@
     </details>
     <div class="sig sans">
       <div class="seal">手帖</div>
-      <div>作ったものと、その作り方・勘所・つまずきを、正直に記録します。</div>
+      <div style="flex:1">作ったものと、その作り方・勘所・つまずきを、正直に記録します。</div>
+      <img class="hero-techon" src="characters/techon.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
