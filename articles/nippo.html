@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>無料でも、安全に。介護現場の「作業日報」をつくった話 — つくる手帖</title>
+<meta name="description" content="きっかけは、長男のひとこと。小さな介護事業所ではLINEが事実上の情報共有インフラになっている——その現実の中で、個人情報を載せず、端末内に閉じて、無料で安全に使える作業日報アプリをつくった記録。">
+<link rel="icon" href="../icons/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="../icons/icon-180.png">
+<link rel="stylesheet" href="article.css">
+<style>
+  .body ul{ margin:0 0 22px; padding-left:0; list-style:none; }
+  .body ul li{ position:relative; margin:0 0 .7em; padding-left:1.3em; line-height:1.85; }
+  .body ul li::before{ content:"—"; position:absolute; left:0; color:#C2603A; font-weight:700; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="../index.html"><span class="mark">つくる<span class="han">手帖</span></span><span class="tag sans">AIで"自分専用"の道具をつくる</span></a>
+    <nav class="site-nav"><a href="../index.html#apps">アプリ</a></nav>
+  </div>
+</header>
+
+<div class="art-head">
+  <div class="wrap">
+    <div class="crumb sans"><a href="../index.html">つくる手帖</a> ／ 記録 ／ 開発記</div>
+    <div class="art-meta sans"><span class="cat">開発記</span><span>2026.06.21</span><span>福祉・プライバシー</span></div>
+    <h1>無料でも、安全に。<br>介護現場の「作業日報」をつくった話</h1>
+    <p class="stand sans">きっかけは、長男のひとことでした。そこから、小さな介護事業所の情報共有の実態と、無料ツールに頼らざるを得ない現実を知ります。いちばん個人情報を守るべき場所で、お金をかけずに安全側に倒すには——その答えを、一つのアプリにしました。</p>
+  </div>
+</div>
+
+<article class="body">
+  <div class="wrap">
+
+    <h2>きっかけは、長男のひとこと</h2>
+    <p>はじまりは、長男から聞いた職場の話でした。「勤務時間外の会議に出たときは、<strong>15分単位で勤務日報を出すように</strong>言われた」。働いた時間を、こまかい単位できちんと記録して残す——そういう運用が、現場では求められているのだと知りました。</p>
+    <p>では、その日報は実際どうやってやり取りされているのか。聞いていくうちに、思いがけない事実にたどり着きます。</p>
+
+    <h2>現場の情報共有は、LINEだった</h2>
+    <p>会社で使っている <strong>LINEのグループチャットが、いろいろな意味で、欠かせない情報共有の手段</strong>になっていたのです。連絡も、報告も、日報のやり取りも、そこを通っている。</p>
+    <p>これには驚きました。私が長くいた大きな企業では、セキュリティ上、LINEを業務に使わないのが<strong>常識</strong>でした。だから「現場の情報がLINEで流れている」と聞いたとき、最初は戸惑ったのです。</p>
+    <p>けれど、よく考えれば当然のことでもありました。小さなデイサービスなどの介護事業所は、予算が限られています。高価な業務システムを導入する余裕はない。だから実態として、<strong>身近で無料のツールが使われている</strong>。それが現場のリアルでした。</p>
+
+    <h2>いちばん守るべき場所の、ジレンマ</h2>
+    <p>ここに、難しさがあります。介護や福祉は、利用者——お子さんや高齢の方——の個人情報を、<strong>もっとも慎重に扱うべき業態</strong>です。それなのに、予算の都合で、無料のツールに頼らざるを得ない。</p>
+    <p>「無料ツールは危ないから使うな」と言うのは簡単です。でも、それを言われても、ほかに選べる手段がない現場がある。理想論で切り捨てても、現実は変わりません。</p>
+    <p>ならば——お金をかけずに、<strong>安全な側に倒せる仕組み</strong>はつくれないか。そう考えたのが、このアプリの出発点でした。</p>
+
+    <h2>だから、「載せない・閉じる」設計にした</h2>
+    <p>発想を切り替えました。ツールそのものを禁じるのではなく、<strong>危ないものを最初から「載せない」、そして手元に「閉じる」</strong>。この二つを設計の芯に据えました。</p>
+
+    <div class="pull">危ないものは、載せない。手元に、閉じる。</div>
+
+    <p>具体的には、こうしています。</p>
+    <ul>
+      <li>扱うのは、<strong>勤務時間＝15分単位の作業記録だけ</strong>。利用者の名前や、療育・ケアの内容といった個人情報は、そもそも一切入れない。</li>
+      <li>入力したデータは、すべて<strong>お使いの端末の中だけ</strong>に保存。サーバーには送らない。</li>
+      <li>LINEで送るのは、集計に必要な<strong>最小限のテキスト</strong>（担当者の氏名・日付・作業時間）だけ。利用者の個人情報は、どこにも載らない。</li>
+      <li>ブラウザで開くだけの<strong>PWA</strong>。アカウント登録もサーバー費用も不要で、GitHub Pages を使えば公開も無料。</li>
+    </ul>
+    <p>つまり、たとえLINEで日報を送っても、そこに流れるのは「誰が・いつ・何分働いたか」という勤怠の数字だけ。守るべき個人情報は、最初からアプリに入っていないので、漏れようがない。<strong>無料のツールを安全に使うために、無料のツールに何を渡さないかを決めた</strong>——そういう道具です。</p>
+
+    <h2>使い方は、シンプルに</h2>
+    <p>現場で迷わないよう、流れはできるだけ単純にしました。作業を<strong>15分単位</strong>で選んで記録し、ボタンひとつで日報のテキストが整う。あとは、それをLINEで送るだけ。受け取った側は、別の集計アプリに貼り付ければ、月単位で自動集計できます。</p>
+    <p>その集計の仕組みについては、別の記事「<a href="dev-syuukei.html">LINEに流れる日報を、自動で集計する仕組みをつくった話</a>」に書きました。あわせて読んでいただけると、全体像が見えると思います。</p>
+
+    <h2>むすび</h2>
+    <p>無料でも、工夫しだいで、安全な側に立てる。大切なのは、便利な道具を遠ざけることではなく、<strong>「そこに何を載せないか」をきちんと決める</strong>ことでした。</p>
+    <p>限られた予算の、小さな現場で。できることを、身の丈の道具で。長男のひとことから始まったこの試みが、同じように悩んでいるどこかの現場の、ひとつのヒントになればうれしいです。</p>
+
+    <div class="art-foot">
+      <a class="backlink" href="../index.html">← つくる手帖にもどる</a>
+      <p class="note-small">※ このアプリは勤務時間の記録に特化しており、利用者の個人情報や療育・ケアの内容は扱いません。入力したデータは端末内にのみ保存され、外部には送信されません。</p>
+    </div>
+
+  </div>
+</article>
+
+</body>
+</html>
