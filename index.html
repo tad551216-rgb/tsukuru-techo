@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="70歳。スマホとAIで、自分や家族が日々使う小さな道具をつくる記録。">
 <meta name="twitter:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
 <title>つくる手帖 — AIで"自分専用"の道具をつくる</title>
-<meta name="description" content="70歳。父の鉄工所の倒産を機に、独学のパソコン知識でシステム開発へ。会社を離れたいま、スマホとAIで”自分専用の道具”をつくっています。その実例と作り方を、つまずきも含めて正直に残す記録。">
+<meta name="description" content="70歳。スマホとAIで、自分や家族のための小さな道具をつくっています。どれもブラウザですぐ試せるPWA。作り方・勘所・つまずきまで、正直に残す記録。">
 <style>
   :root{
     --ink:#1B2A4A;        /* 濃紺(主役) */
@@ -66,7 +66,7 @@
   nav.site-nav a:hover{color:var(--accent);}
 
   /* ===== ヒーロー ===== */
-  .hero{padding:74px 0 50px;position:relative;}
+  .hero{padding:54px 0 44px;position:relative;}
   .hero::before{
     content:"";position:absolute;inset:0;z-index:0;
     background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
@@ -102,9 +102,18 @@
     font-family:"Hiragino Mincho ProN",serif;font-size:12px;line-height:1.2;text-align:center;
     transform:rotate(-3deg);
   }
-  .hero .sig .hero-techon{
-    width:clamp(54px,11vw,72px);height:auto;flex:none;
+  .hero-min{display:flex;align-items:center;gap:16px;}
+  .hero-min .hero-min-text{flex:1;min-width:0;}
+  .hero .hero-techon{
+    width:clamp(60px,15vw,96px);height:auto;flex:none;
     mix-blend-mode:multiply;
+  }
+  .hero .hero-try{
+    margin-top:14px;font-size:14px;color:var(--ink-soft);
+  }
+  .hero .hero-try a{
+    color:var(--accent);text-decoration:none;font-weight:700;
+    border-bottom:1px solid currentColor;margin-left:.4em;white-space:nowrap;
   }
 
   /* ===== セクション見出し ===== */
@@ -264,26 +273,11 @@
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="eyebrow sans">MAKING MY OWN TOOLS WITH AI</div>
-    <h1>システム開発で、現場の道具をつくって40年。<br>70歳のいまは、スマホとAIで<span class="em">"自分専用の道具"</span>をつくっている。</h1>
-    <p class="lede">
-      現場の手間を、どうすれば減らせるか。考えてきたことは、昔も今も変わりません。変わったのは、道具がパソコンからAIになったことだけ。会社を後進に託したいまは、自分や家族が日々使う小さな道具を、スマホ片手につくっています。ここは、その実例と作り方を、つまずきも含めて正直に残していく場所です。
-    </p>
-    <style>
-      .origin{border-top:1px solid var(--line,#D8D3C4);margin:.2rem 0 1.2rem;padding-top:.8rem}
-      .origin>summary{cursor:pointer;list-style:none;color:var(--accent,#C2603A);font-weight:600}
-      .origin>summary::-webkit-details-marker{display:none}
-      .origin>summary::before{content:"＋ ";font-weight:700}
-      .origin[open]>summary::before{content:"− "}
-      .origin p{margin:.6rem 0 0;color:var(--ink,#1B2A4A);font-size:.96rem;line-height:1.9}
-      .origin a{color:var(--accent,#C2603A);text-decoration:none;border-bottom:1px solid currentColor;white-space:nowrap}
-    </style>
-    <details class="origin">
-      <summary>はじまりは、父の鉄工所</summary>
-      <p>新幹線の架線金物をつくる父の鉄工所は、国鉄の経営難で整備新幹線の建設が凍結され、受注が途絶えて倒産しました。手元に残ったのは、工場の生産管理や原価計算のために独学したパソコンの知識だけ。それを頼りに、30歳でシステム開発を個人で始め、5年後に会社にしました。<a href="articles/iron-to-ai.html">くわしくは「鉄からシステム、そしてAIへ」へ →</a></p>
-    </details>
-    <div class="sig sans">
-      <div class="seal">手帖</div>
-      <div style="flex:1">作ったものと、その作り方・勘所・つまずきを、正直に記録します。</div>
+    <div class="hero-min">
+      <div class="hero-min-text">
+        <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
+        <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
+      </div>
       <img class="hero-techon" src="characters/techon.png" alt="" aria-hidden="true">
     </div>
   </div>
