@@ -131,10 +131,12 @@
   .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
   .vmodal[hidden]{ display:none; }
   .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,25,40,.8); }
-  .vmodal-box{ position:relative; width:min(94vw,860px); }
+  .vmodal-box{ position:relative; width:min(94vw, calc(82vh * 16 / 9), 920px); }
   .vmodal-frame{ position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.45); }
   .vmodal-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; }
+  .vmodal-open{ display:block; margin-top:12px; text-align:center; color:#fff; font-size:13px; text-decoration:none; opacity:.92; }
+  .vmodal-open:hover{ opacity:1; text-decoration:underline; }
 
   /* ===== セクション見出し ===== */
   .section{padding:54px 0;border-top:1px solid var(--line);}
@@ -578,14 +580,16 @@ renderPosts();
     <div class="vmodal-frame">
       <iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
+    <a id="videoOpen" class="vmodal-open" href="#" target="_blank" rel="noopener">↗ ドライブで大きく見る（全画面・横向き）</a>
   </div>
 </div>
 <script>
 (function(){
   var modal=document.getElementById('videoModal');
   var frame=document.getElementById('videoFrame');
+  var openLink=document.getElementById('videoOpen');
   if(!modal||!frame) return;
-  function openVid(id){ frame.src='https://drive.google.com/file/d/'+id+'/preview'; modal.hidden=false; document.body.style.overflow='hidden'; }
+  function openVid(id){ frame.src='https://drive.google.com/file/d/'+id+'/preview'; if(openLink) openLink.href='https://drive.google.com/file/d/'+id+'/view'; modal.hidden=false; document.body.style.overflow='hidden'; }
   function closeVid(){ modal.hidden=true; frame.src=''; document.body.style.overflow=''; }
   document.querySelectorAll('.vbtn[data-vid]').forEach(function(b){
     b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-vid')); });
