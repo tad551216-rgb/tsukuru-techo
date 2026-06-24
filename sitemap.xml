@@ -9,6 +9,14 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- ページ -->
+  <url>
+    <loc>https://tad551216-rgb.github.io/tsukuru-techo/characters.html</loc>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- 記事 -->
   <url>
     <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/intro-video.html</loc>
