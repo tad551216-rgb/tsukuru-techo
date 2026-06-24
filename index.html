@@ -127,6 +127,13 @@
   }
   .hero-videos .vbtn:hover{ border-color:var(--accent);color:var(--accent); }
   .hero-videos .vbtn .play{ color:var(--accent);font-size:.85em; }
+  /* 動画ポップアップ（自前video） */
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,25,40,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:12px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
 
   /* ===== セクション見出し ===== */
   .section{padding:54px 0;border-top:1px solid var(--line);}
@@ -290,9 +297,9 @@
         <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
         <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
         <div class="hero-videos">
-          <a class="vbtn sans" href="https://drive.google.com/file/d/1Z8eccf_G-17KuQabV0Kjh3eVHnSoUYvy/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>妥協ゼロの家計簿アプリ</a>
-          <a class="vbtn sans" href="https://drive.google.com/file/d/1lHrY14L9qFvRcm34bwbO3dRJfL9-tw7N/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>ノーコードで作る自分の道具</a>
-          <a class="vbtn sans" href="https://drive.google.com/file/d/1vq6viZ0N7tKRLD_onGzGjzJqXamnJUn8/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>日報集計システムの解説</a>
+          <a class="vbtn sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
+          <a class="vbtn sans" href="docs/yotei3-douga.mp4" data-video="docs/yotei3-douga.mp4"><span class="play">▶</span>わが家の予定板</a>
+          <a class="vbtn sans" href="docs/nippo-douga.mp4" data-video="docs/nippo-douga.mp4"><span class="play">▶</span>作業日報</a>
         </div>
         <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
       </div>
@@ -561,6 +568,28 @@ function renderPosts(){
 
 renderApps();
 renderPosts();
+</script>
+<!-- 動画ポップアップ（自前video） -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var vid=document.getElementById('videoEl');
+  if(!modal||!vid) return;
+  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
+  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
 </script>
 </body>
 </html>
