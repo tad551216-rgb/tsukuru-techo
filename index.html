@@ -115,6 +115,18 @@
     color:var(--accent);text-decoration:none;font-weight:700;
     border-bottom:1px solid currentColor;margin-left:.4em;white-space:nowrap;
   }
+  .hero .hero-video-lead{
+    margin:14px 0 10px;font-size:14.5px;font-weight:700;color:var(--ink);
+  }
+  .hero-videos{ display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2px; }
+  .hero-videos .vbtn{
+    display:inline-flex;align-items:center;gap:.45em;
+    padding:9px 15px;border:1px solid var(--line);border-radius:999px;
+    background:var(--card);color:var(--ink);text-decoration:none;
+    font-size:13px;font-weight:600;line-height:1.2;
+  }
+  .hero-videos .vbtn:hover{ border-color:var(--accent);color:var(--accent); }
+  .hero-videos .vbtn .play{ color:var(--accent);font-size:.85em; }
 
   /* ===== セクション見出し ===== */
   .section{padding:54px 0;border-top:1px solid var(--line);}
@@ -276,6 +288,12 @@
     <div class="hero-min">
       <div class="hero-min-text">
         <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
+        <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
+        <div class="hero-videos">
+          <a class="vbtn sans" href="https://drive.google.com/file/d/1Z8eccf_G-17KuQabV0Kjh3eVHnSoUYvy/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>妥協ゼロの家計簿アプリ</a>
+          <a class="vbtn sans" href="https://drive.google.com/file/d/1lHrY14L9qFvRcm34bwbO3dRJfL9-tw7N/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>ノーコードで作る自分の道具</a>
+          <a class="vbtn sans" href="https://drive.google.com/file/d/1vq6viZ0N7tKRLD_onGzGjzJqXamnJUn8/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>日報集計システムの解説</a>
+        </div>
         <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
       </div>
       <img class="hero-techon" src="characters/techon.png" alt="" aria-hidden="true">
