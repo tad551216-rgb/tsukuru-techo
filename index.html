@@ -127,6 +127,9 @@
   }
   .hero-videos .vbtn:hover{ border-color:var(--accent);color:var(--accent); }
   .hero-videos .vbtn .play{ color:var(--accent);font-size:.85em; }
+  .hero-videos .vbtn-solid{ background:var(--ink); color:#fff; border-color:var(--ink); border-radius:8px; font-weight:700; }
+  .hero-videos .vbtn-solid:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .hero-videos .vbtn-solid .play{ color:#fff; }
   /* 動画ポップアップ（自前video） */
   .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
   .vmodal[hidden]{ display:none; }
@@ -297,9 +300,9 @@
         <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
         <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
         <div class="hero-videos">
-          <a class="vbtn sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
-          <a class="vbtn sans" href="docs/yotei3-douga.mp4" data-video="docs/yotei3-douga.mp4"><span class="play">▶</span>わが家の予定板</a>
-          <a class="vbtn sans" href="docs/nippo-douga.mp4" data-video="docs/nippo-douga.mp4"><span class="play">▶</span>作業日報＆集計</a>
+          <a class="vbtn vbtn-solid sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
+          <a class="vbtn vbtn-solid sans" href="docs/yotei3-douga.mp4" data-video="docs/yotei3-douga.mp4"><span class="play">▶</span>わが家の予定板</a>
+          <a class="vbtn vbtn-solid sans" href="docs/nippo-douga.mp4" data-video="docs/nippo-douga.mp4"><span class="play">▶</span>作業日報＆集計</a>
           <a class="vbtn sans" href="docs/tetukaraai-douga.mp4" data-video="docs/tetukaraai-douga.mp4"><span class="play">▶</span>鉄からAIへ</a>
         </div>
         <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
