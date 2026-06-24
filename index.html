@@ -127,6 +127,14 @@
   }
   .hero-videos .vbtn:hover{ border-color:var(--accent);color:var(--accent); }
   .hero-videos .vbtn .play{ color:var(--accent);font-size:.85em; }
+  /* 動画ポップアップ */
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,25,40,.8); }
+  .vmodal-box{ position:relative; width:min(94vw,860px); }
+  .vmodal-frame{ position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; }
 
   /* ===== セクション見出し ===== */
   .section{padding:54px 0;border-top:1px solid var(--line);}
@@ -290,9 +298,9 @@
         <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
         <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
         <div class="hero-videos">
-          <a class="vbtn sans" href="https://drive.google.com/file/d/1Z8eccf_G-17KuQabV0Kjh3eVHnSoUYvy/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>妥協ゼロの家計簿アプリ</a>
-          <a class="vbtn sans" href="https://drive.google.com/file/d/1lHrY14L9qFvRcm34bwbO3dRJfL9-tw7N/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>ノーコードで作る自分の道具</a>
-          <a class="vbtn sans" href="https://drive.google.com/file/d/1vq6viZ0N7tKRLD_onGzGjzJqXamnJUn8/view?usp=drivesdk" target="_blank" rel="noopener"><span class="play">▶</span>日報集計システムの解説</a>
+          <a class="vbtn sans" href="https://drive.google.com/file/d/1Z8eccf_G-17KuQabV0Kjh3eVHnSoUYvy/view?usp=drivesdk" data-vid="1Z8eccf_G-17KuQabV0Kjh3eVHnSoUYvy" target="_blank" rel="noopener"><span class="play">▶</span>妥協ゼロの家計簿アプリ</a>
+          <a class="vbtn sans" href="https://drive.google.com/file/d/1lHrY14L9qFvRcm34bwbO3dRJfL9-tw7N/view?usp=drivesdk" data-vid="1lHrY14L9qFvRcm34bwbO3dRJfL9-tw7N" target="_blank" rel="noopener"><span class="play">▶</span>ノーコードで作る自分の道具</a>
+          <a class="vbtn sans" href="https://drive.google.com/file/d/1vq6viZ0N7tKRLD_onGzGjzJqXamnJUn8/view?usp=drivesdk" data-vid="1vq6viZ0N7tKRLD_onGzGjzJqXamnJUn8" target="_blank" rel="noopener"><span class="play">▶</span>日報集計システムの解説</a>
         </div>
         <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
       </div>
@@ -561,6 +569,30 @@ function renderPosts(){
 
 renderApps();
 renderPosts();
+</script>
+<!-- 動画ポップアップ -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <div class="vmodal-frame">
+      <iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var frame=document.getElementById('videoFrame');
+  if(!modal||!frame) return;
+  function openVid(id){ frame.src='https://drive.google.com/file/d/'+id+'/preview'; modal.hidden=false; document.body.style.overflow='hidden'; }
+  function closeVid(){ modal.hidden=true; frame.src=''; document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-vid]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-vid')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
 </script>
 </body>
 </html>
