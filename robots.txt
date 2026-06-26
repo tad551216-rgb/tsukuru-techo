@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tad551216-rgb.github.io/tsukuru-techo/sitemap.xml

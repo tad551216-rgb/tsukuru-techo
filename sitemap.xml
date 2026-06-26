@@ -1,96 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- トップページ -->
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/</loc>
-    <lastmod>2026-06-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- ページ -->
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/characters.html</loc>
-    <lastmod>2026-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- 記事 -->
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/intro-video.html</loc>
-    <lastmod>2026-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/yotei.html</loc>
-    <lastmod>2026-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/dev-syuukei.html</loc>
-    <lastmod>2026-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/nippo.html</loc>
-    <lastmod>2026-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/iron-to-ai.html</loc>
-    <lastmod>2026-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/kakeibo.html</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/ai-app-howto.html</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- 資料（PDF）。不要なら削除してかまいません -->
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/yotei-setup.pdf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/yoteiban-setumei.pdf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/nippo-features.pdf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/nippo-install.pdf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/android-nippo-install.pdf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://tad551216-rgb.github.io/tsukuru-techo/docs/nippo-shukei-manual.pdf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/</loc><lastmod>2026-06-26</lastmod><priority>1.0</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/sitemap.html</loc><lastmod>2026-06-26</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/characters.html</loc><lastmod>2026-06-26</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/intro-video.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/iron-to-ai.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/kakeibo.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/yotei.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/nippo.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/dev-syuukei.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/pinball.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://tad551216-rgb.github.io/tsukuru-techo/articles/ai-app-howto.html</loc><lastmod>2026-06-26</lastmod><priority>0.8</priority></url>
 </urlset>
