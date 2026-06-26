@@ -2,207 +2,55 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LINEに流れる日報を、自動で集計する仕組みをつくった話</title>
-<style>
-  :root{
-    --ink:#23302a; --sub:#5d6b62; --faint:#8a978d;
-    --paper:#f3f1ea; --card:#fbfaf6; --line:#dcd9cd;
-    --green:#2f5d45; --green-soft:#e7efe8; --accent:#c0703f;
-    --code-bg:#202a25; --code-ink:#e8efe9; --code-key:#9ec4a8; --code-pipe:#c0a06f;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--paper); color:var(--ink);
-    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-    line-height:1.95; font-size:17px;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-  .serif{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
-
-  /* ---- サイトへ戻る上部バー ---- */
-  .sitebar{
-    position:sticky; top:0; z-index:20;
-    background:rgba(243,241,234,.92);
-    -webkit-backdrop-filter:saturate(1.2) blur(8px);
-    backdrop-filter:saturate(1.2) blur(8px);
-    border-bottom:1px solid var(--line);
-    padding:12px 0;
-  }
-  .sitebar .bar{
-    max-width:760px; margin:0 auto; padding:0 24px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .sitebar .brand{
-    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    font-weight:600; font-size:21px; color:var(--ink); text-decoration:none;
-    letter-spacing:.02em;
-  }
-  .sitebar .brand em{ font-style:normal; color:var(--accent); }
-  .sitebar .navlinks{ display:flex; gap:22px; }
-  .sitebar .navlinks a{
-    color:var(--green); text-decoration:none; font-size:14px; font-weight:700;
-    letter-spacing:.04em;
-  }
-  .sitebar .navlinks a:hover{ color:var(--accent); }
-
-  /* ---- グリッド地紋（方眼手帖の質感）---- */
-  .hero{
-    position:relative; overflow:hidden;
-    background:var(--green);
-    color:#f2efe6;
-    padding:clamp(64px,11vw,140px) 0 clamp(48px,8vw,96px);
-  }
-  .hero::before{
-    content:""; position:absolute; inset:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
-    background-size:26px 26px;
-    mask-image:radial-gradient(circle at 70% 30%,#000 40%,transparent 78%);
-  }
-  .wrap{ max-width:760px; margin:0 auto; padding:0 24px; position:relative; }
-  .eyebrow{
-    font-size:13px; letter-spacing:.28em; text-transform:uppercase;
-    color:#a9c6b1; margin-bottom:22px; font-weight:700;
-  }
-  .hero h1{
-    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    font-weight:600; font-size:clamp(30px,5.4vw,50px);
-    line-height:1.42; letter-spacing:.01em; margin-bottom:26px;
-  }
-  .hero h1 em{ font-style:normal; color:#f0c9a8; }
-  .hero .lede{
-    font-size:clamp(15px,2.2vw,17px); color:#cdddd0; max-width:60ch;
-  }
-  .meta{
-    margin-top:34px; padding-top:20px; border-top:1px solid rgba(255,255,255,.18);
-    display:flex; gap:24px; flex-wrap:wrap; font-size:13px; color:#a9c6b1;
-    letter-spacing:.04em;
-  }
-  .meta b{ color:#e7efe8; font-weight:700; }
-
-  /* ---- 本文 ---- */
-  article{ padding:clamp(48px,8vw,88px) 0 40px; }
-  article h2{
-    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    font-weight:600; font-size:clamp(22px,3.4vw,28px); line-height:1.5;
-    margin:62px 0 22px; color:var(--ink); position:relative; padding-left:20px;
-  }
-  article h2::before{
-    content:""; position:absolute; left:0; top:.18em; bottom:.18em; width:5px;
-    background:var(--accent); border-radius:3px;
-  }
-  article h2:first-of-type{ margin-top:0; }
-  article p{ margin:0 0 22px; }
-  article p .lead{ font-size:1.05em; }
-  strong{ font-weight:700; background:linear-gradient(transparent 62%, #e7d9b9 62%); padding:0 .05em; }
-
-  /* ---- 引用（現場の声）---- */
-  blockquote{
-    margin:34px 0; padding:22px 26px;
-    background:var(--card); border:1px solid var(--line);
-    border-left:5px solid var(--green); border-radius:4px;
-    position:relative;
-  }
-  blockquote::before{
-    content:"現場の声"; position:absolute; top:-11px; left:18px;
-    background:var(--green); color:#fff; font-size:11px; font-weight:700;
-    letter-spacing:.12em; padding:2px 10px; border-radius:3px;
-  }
-  blockquote p{ margin:0; font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    font-size:1.02em; color:#3b4a41; line-height:1.85; }
-
-  /* ---- コード ---- */
-  .code{
-    background:var(--code-bg); color:var(--code-ink);
-    border-radius:10px; padding:20px 22px; margin:28px 0;
-    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
-    font-size:13.5px; line-height:1.75; overflow-x:auto;
-    box-shadow:0 8px 26px rgba(32,42,37,.22);
-  }
-  .code .cap{
-    display:block; color:#7f8f84; font-size:11px; letter-spacing:.1em;
-    text-transform:uppercase; margin-bottom:12px; font-family:inherit;
-  }
-  .code .k{ color:var(--code-key); }
-  .code .p{ color:var(--code-pipe); }
-  .code .dim{ color:#7f8f84; }
-
-  /* ---- 差し込みノート ---- */
-  .note{
-    margin:30px 0; padding:18px 22px; background:var(--green-soft);
-    border-radius:8px; font-size:15px; color:#33493c; line-height:1.8;
-  }
-  .note .tag{ font-weight:700; color:var(--green); margin-right:.4em; }
-
-  /* ---- 締め ---- */
-  .kicker{
-    margin-top:60px; padding:34px 0 0; border-top:2px solid var(--line);
-  }
-  .pull{
-    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    font-size:clamp(19px,3vw,25px); line-height:1.7; color:var(--green);
-    text-align:center; margin:46px auto; max-width:24ch; font-weight:600;
-  }
-  footer{
-    background:var(--ink); color:#c7cfc8; padding:40px 0; margin-top:60px;
-    font-size:13px; letter-spacing:.04em;
-  }
-  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
-  footer b{ color:#fff; }
-  footer .home{ color:#cbb7a6; text-decoration:none; border-bottom:1px solid currentColor; }
-
-  @media (max-width:560px){
-    body{ font-size:16px; line-height:1.85; }
-    blockquote{ padding:20px 18px; }
-    .sitebar .brand{ font-size:19px; }
-    .sitebar .navlinks{ gap:18px; }
-  }
-  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="../icons/icon-192.png">
+<link rel="apple-touch-icon" href="../icons/icon-180.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="つくる手帖">
+<meta property="og:title" content="LINEに流れる日報を、自動で集計する仕組みをつくった話 — つくる手帖">
+<meta property="og:description" content="作業日報アプリに集計機能を足していった開発記。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/articles/dev-syuukei.html">
+<meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<title>LINEに流れる日報を、自動で集計する仕組みをつくった話 — つくる手帖</title>
+<meta name="description" content="作業日報アプリに集計機能を足していった開発記。">
+<link rel="stylesheet" href="article.css">
 </head>
 <body>
-
-<nav class="sitebar">
-  <div class="bar">
-    <a class="brand" href="../index.html">つくる<em>手帖</em></a>
-    <div class="navlinks">
-      <a href="../index.html#apps">アプリ</a>
-      <a href="../index.html#posts">記事</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">開発ノート — 現場の業務改善</div>
-    <h1>LINEに流れる日報を、<br><em>自動で集計する</em>仕組みをつくった話</h1>
-    <p class="lede serif">放課後等デイサービスの現場で使う「作業日報アプリ」に、集計機能を足していった記録。最初はシンプルな思いつきから始まり、現場の実務に合わせて少しずつ形を変えていった。</p>
-    <div class="meta">
-      <span>テーマ <b>業務アプリ開発</b></span>
-      <span>舞台 <b>放課後等デイサービス</b></span>
-      <span>道具 <b>ブラウザだけ</b></span>
-    </div>
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="../index.html"><span class="mark">つくる<span class="han">手帖</span></span><span class="tag sans">AIで&quot;自分専用&quot;の道具をつくる</span></a>
+    <nav class="site-nav"><a href="../index.html#apps">アプリ</a><a href="../index.html#posts">記事</a><a href="../sitemap.html">サイトマップ</a></nav>
   </div>
 </header>
-
-<article>
+<div class="art-head">
   <div class="wrap">
-
+    <div class="crumb sans"><a href="../index.html">つくる手帖</a> ／ 記録 ／ 開発記</div>
+    <div class="art-meta sans"><span class="cat">開発記</span><span>2026.06.21</span><span>作業日報集計</span></div>
+    <h1>LINEに流れる日報を、自動で集計する仕組みをつくった話</h1>
+    <p class="stand sans">作業日報アプリで出力された日報を集め、月締め・漏れ確認・日報/週報/月報までつなげた記録です。地味な工夫の積み重ねが、現場の手間を変えていきました。</p>
+  </div>
+</div>
+<article class="body">
+  <div class="wrap">
+    <div class="video-card">
+      <div class="video-label sans">MOVIE</div>
+      <video controls playsinline preload="metadata">
+        <source src="../docs/nippo-douga.mp4" type="video/mp4">
+        お使いのブラウザは動画の再生に対応していません。<a href="../docs/nippo-douga.mp4">動画ファイルを直接ひらく</a>
+      </video>
+      <p class="video-cap sans">作業日報＆集計 紹介動画 ／ 音が出ます</p>
+    </div>
     <p class="lead">同じように「手元の小さな業務をなんとか楽にしたい」と考えている人の参考になればと思い、開発の流れを残しておく。技術的に派手なことは何もしていない。むしろ、地味な工夫の積み重ねがどう実務を変えたか、という話だ。</p>
-
-    <h2>はじまりは「貼り付けたら集計してほしい」</h2>
-    <p>きっかけは一言だった。</p>
-    <blockquote><p>作業日報アプリからの日報出力がLINEで集まります。これを複数同時に取り込んで集計作業を自動化したいです。</p></blockquote>
-    <p>すでに、パート従業員が1日の作業を15分単位で記録し、日報のテキストを生成できるアプリは動いていた。各自がそれをLINEで管理者に送る、という運用だ。ただ、集まった日報は管理者が目で見て電卓を叩いて集計する状態。月末になると、これがそれなりの手間になる。</p>
-    <p>「貼り付けたら集計してくれる画面があればいい」——方向性はすぐ決まった。けれど、実際に作ろうとすると、最初の壁にぶつかる。</p>
-
-    <h2>最大の問題は「誰の日報か分からない」こと</h2>
-    <p>当時の日報テキストは、こんな形だった。</p>
-    <div class="code"><span class="cap">当時の日報テキスト</span>【作業日報】2026年6月14日（日）
+<h2>はじまりは「貼り付けたら集計してほしい」</h2>
+<p>きっかけは一言だった。</p>
+<blockquote><p>作業日報アプリからの日報出力がLINEで集まります。これを複数同時に取り込んで集計作業を自動化したいです。</p></blockquote>
+<p>すでに、パート従業員が1日の作業を15分単位で記録し、日報のテキストを生成できるアプリは動いていた。各自がそれをLINEで管理者に送る、という運用だ。ただ、集まった日報は管理者が目で見て電卓を叩いて集計する状態。月末になると、これがそれなりの手間になる。</p>
+<p>「貼り付けたら集計してくれる画面があればいい」——方向性はすぐ決まった。けれど、実際に作ろうとすると、最初の壁にぶつかる。</p>
+<h2>最大の問題は「誰の日報か分からない」こと</h2>
+<p>当時の日報テキストは、こんな形だった。</p>
+<div class="code"><span class="cap">当時の日報テキスト</span>【作業日報】2026年6月14日（日）
 
 ■ 作業時間
 ・送迎中支援：1時間30分
@@ -210,50 +58,47 @@
 
 ■ タイムライン
 09:30〜10:15　送迎中支援</div>
-    <p>人が読むには十分だ。でも、集計プログラムの視点で見ると致命的な欠陥があった。<strong>氏名が入っていない。</strong>複数人の日報を貼り付けても、どれが誰のものか機械には区別できない。日付と作業時間しかないのだ。</p>
-    <p>ここで大事な判断をした。集計アプリを作る前に、まず<strong>日報を出力する側を変える</strong>。具体的には2つ。ひとつは、設定に「氏名」欄を足し、日報の先頭に名前を入れること。もうひとつが今回の肝で、<strong>人が読む日報はそのままに、末尾へ「機械が読むための1行」をこっそり追加する</strong>ことだった。</p>
-    <div class="code"><span class="cap">末尾に静かに付く、機械用の1行</span><span class="k">#NIPPO1</span><span class="p">|</span>田中花子<span class="p">|</span>2026-06-14<span class="p">|</span>送迎中支援=90<span class="p">|</span>養育支援=195<span class="p">|</span>会議=60</div>
-    <p><span class="serif" style="font-weight:600">#NIPPO1</span> で始まるこの行を、集計アプリは拾う。氏名・日付・項目ごとの分数が、区切り記号で並んでいるだけのシンプルな構造だ。人は上の日報部分だけ読めばよく、この行は末尾に静かに付くだけ。<strong>読みやすさを一切犠牲にせず、機械可読性を後付けした</strong>わけだ。</p>
-    <div class="note"><span class="tag">後から効いた工夫</span>バージョン番号（NIPPO<b>1</b>）を埋め込んでおいたことで、将来フォーマットを変えても古い日報と区別できる。小さな保険が、あとで効いてくる。</div>
-
-    <h2>集計アプリ、最初の形</h2>
-    <p>出力側が整ったので、集計アプリ本体を作る。最初のバージョンはとてもシンプルだった。複数の日報をまとめて貼り付け、「集計する」を押すと <span class="serif" style="font-weight:600">#NIPPO1</span> の行だけを拾って解析。人別・項目別・日別の3つの表で表示し、Excel（4シート）で出力する。</p>
-    <p>実際に複数人・複数日のサンプルで試すと、3件の日報から「2名・合計8時間」がきちんと算出された。同じ日報を二重に貼っても自動で1件にまとめ、おかしな行は警告で知らせる。最低限の堅さは持たせた。ここで一区切り——と思いきや、本当の要件はここからだった。</p>
-
-    <h2>「月単位で締めたい」という現実</h2>
-    <p>現場の集計は、最終的に月単位で行う。そして月締めには、思った以上にいろいろな要求がついてきた。</p>
-    <blockquote><p>日々のデータ貼り付けの漏れ確認ができて、月単位での取込みデータの保存および漏れ確認ができて、日報・週報・月報の出力にも対応してください。</p></blockquote>
-    <p>最初のバージョンは「貼り付けて、集計して、終わり」の使い捨てだった。でも月締め運用では、月の途中で届く日報を<strong>その都度ためていく</strong>必要がある。そして月末に「誰の何日分が入っているか」を確認し、漏れがあれば気づける仕組みがいる。そこで集計アプリを作り直した。加えた機能は大きく4つ。</p>
-    <p><strong>データの保存と蓄積。</strong>取り込んだ日報を端末内に保存し、日をまたいで追加していけるようにした。毎回ゼロからではなく、届いた分をその都度足していく。同じ人・同じ日は自動で上書きするので、間違えて貼り直しても大丈夫だ。</p>
-    <p><strong>月単位の管理。</strong>対象月を切り替えられるようにし、各月のデータを独立して見られるようにした。</p>
-    <p><strong>漏れ確認のカレンダー。</strong>これが現場的にいちばん効く機能だった。氏名を縦、日付を横に並べた表で、日報が取り込めている日に「✓」、ない日に「·」を表示する。横スクロールで月末まで見渡せて、各人の合計日数も右端に出る。誰の何日分が抜けているか、ひと目で分かる。</p>
-    <div class="note"><span class="tag">あえて割り切った判断</span>「漏れ」をどう定義するかは少し悩んだ。本来は「勤務日なのにデータがない＝漏れ」と判定したいが、それには各人の勤務曜日の登録が必要で、設定が一気に重くなる。相談の結果、<b>まずは「入っている日を可視化するだけ」に割り切った。</b>休みか未提出かはカレンダーを見れば管理者が判断できる。機能を盛るより、シンプルで確実なほうを選んだ。</div>
-    <p><strong>日報・週報・月報の出力。</strong>月報は対象月の合計（人別・項目別・日別の3シート）、週報は月内を月曜始まりの週ごとに分けて集計、日報は1日ごとの明細。3つの期間でExcelを出し分けられるようにした。</p>
-
-    <h2>最後は「使い心地」の話</h2>
-    <p>機能が揃っても、それで完成ではなかった。実際に使う場面を想像したとき、こんな指摘が出た。</p>
-    <blockquote><p>連続して取り込みするのが、操作性が分かりにくいです。毎回LINEなどの画面に戻ってコピーする前提なら、毎回保存して取込み画面は初期化されている方が良いかと。連続貼り付けは、カーソル位置確認が煩わしいです。</p></blockquote>
-    <p>これは重要な気づきだった。実際の作業は「LINEで日報をコピー → アプリに戻って貼り付け → 取り込む → またLINEへ」の繰り返し。ところが取り込むたびに画面が下（集計表）へ動いてしまい、戻ってきたときに入力欄が画面の外。毎回スクロールして探す羽目になっていた。</p>
-    <p>直し方はシンプルだ。<strong>取り込んだら自動で画面を入力欄まで戻し、カーソルも入力欄に入れておく。</strong>LINEから戻ってきたら、もう貼り付けるだけ。加えて「この画面で合計○件」と累計を出し、1件ずつ取り込む手応えも分かるようにした。</p>
-    <p>機能としては地味な変更だが、毎日くり返す作業では、この「探さなくていい」が効く。</p>
-    <p class="pull serif">いい道具とは、機能の数ではなく、迷う瞬間の少なさで決まる。</p>
-
-    <div class="kicker">
-      <h2 style="margin-top:0">振り返って</h2>
-      <p>この集計アプリは、最初から完成形を設計したわけではない。「貼り付けたら集計してほしい」という素朴な願いから始まり、「氏名が要る」「月で締めたい」「漏れを見たい」「往復が面倒」と、現場の声に応えるたびに形を変えてきた。</p>
-      <p>やったのは、日報の末尾に1行足したこと、データを端末に貯めること、表を3通りに並べ替えること、画面を入力欄に戻すこと。ひとつひとつは小さな工夫だ。でも、それらが積み重なって、月末の電卓仕事がボタン数回に変わった。</p>
-      <p>特別なサーバーも、有料サービスも、アカウント登録も要らない。ブラウザで開くだけ。記録はすべて手元の端末に残る。小さな現場の、小さな困りごと。それを身の丈に合った道具で解いていく——その過程そのものが、いちばんの収穫だったのかもしれない。</p>
-    </div>
-
+<p>人が読むには十分だ。でも、集計プログラムの視点で見ると致命的な欠陥があった。<strong>氏名が入っていない。</strong>複数人の日報を貼り付けても、どれが誰のものか機械には区別できない。日付と作業時間しかないのだ。</p>
+<p>ここで大事な判断をした。集計アプリを作る前に、まず<strong>日報を出力する側を変える</strong>。具体的には2つ。ひとつは、設定に「氏名」欄を足し、日報の先頭に名前を入れること。もうひとつが今回の肝で、<strong>人が読む日報はそのままに、末尾へ「機械が読むための1行」をこっそり追加する</strong>ことだった。</p>
+<div class="code"><span class="cap">末尾に静かに付く、機械用の1行</span><span class="k">#NIPPO1</span><span class="p">|</span>田中花子<span class="p">|</span>2026-06-14<span class="p">|</span>送迎中支援=90<span class="p">|</span>養育支援=195<span class="p">|</span>会議=60</div>
+<p><span class="serif" style="font-weight:600">#NIPPO1</span> で始まるこの行を、集計アプリは拾う。氏名・日付・項目ごとの分数が、区切り記号で並んでいるだけのシンプルな構造だ。人は上の日報部分だけ読めばよく、この行は末尾に静かに付くだけ。<strong>読みやすさを一切犠牲にせず、機械可読性を後付けした</strong>わけだ。</p>
+<div class="note"><span class="tag">後から効いた工夫</span>バージョン番号（NIPPO<b>1</b>）を埋め込んでおいたことで、将来フォーマットを変えても古い日報と区別できる。小さな保険が、あとで効いてくる。</div>
+<h2>集計アプリ、最初の形</h2>
+<p>出力側が整ったので、集計アプリ本体を作る。最初のバージョンはとてもシンプルだった。複数の日報をまとめて貼り付け、「集計する」を押すと <span class="serif" style="font-weight:600">#NIPPO1</span> の行だけを拾って解析。人別・項目別・日別の3つの表で表示し、Excel（4シート）で出力する。</p>
+<p>実際に複数人・複数日のサンプルで試すと、3件の日報から「2名・合計8時間」がきちんと算出された。同じ日報を二重に貼っても自動で1件にまとめ、おかしな行は警告で知らせる。最低限の堅さは持たせた。ここで一区切り——と思いきや、本当の要件はここからだった。</p>
+<h2>「月単位で締めたい」という現実</h2>
+<p>現場の集計は、最終的に月単位で行う。そして月締めには、思った以上にいろいろな要求がついてきた。</p>
+<blockquote><p>日々のデータ貼り付けの漏れ確認ができて、月単位での取込みデータの保存および漏れ確認ができて、日報・週報・月報の出力にも対応してください。</p></blockquote>
+<p>最初のバージョンは「貼り付けて、集計して、終わり」の使い捨てだった。でも月締め運用では、月の途中で届く日報を<strong>その都度ためていく</strong>必要がある。そして月末に「誰の何日分が入っているか」を確認し、漏れがあれば気づける仕組みがいる。そこで集計アプリを作り直した。加えた機能は大きく4つ。</p>
+<p><strong>データの保存と蓄積。</strong>取り込んだ日報を端末内に保存し、日をまたいで追加していけるようにした。毎回ゼロからではなく、届いた分をその都度足していく。同じ人・同じ日は自動で上書きするので、間違えて貼り直しても大丈夫だ。</p>
+<p><strong>月単位の管理。</strong>対象月を切り替えられるようにし、各月のデータを独立して見られるようにした。</p>
+<p><strong>漏れ確認のカレンダー。</strong>これが現場的にいちばん効く機能だった。氏名を縦、日付を横に並べた表で、日報が取り込めている日に「✓」、ない日に「·」を表示する。横スクロールで月末まで見渡せて、各人の合計日数も右端に出る。誰の何日分が抜けているか、ひと目で分かる。</p>
+<div class="note"><span class="tag">あえて割り切った判断</span>「漏れ」をどう定義するかは少し悩んだ。本来は「勤務日なのにデータがない＝漏れ」と判定したいが、それには各人の勤務曜日の登録が必要で、設定が一気に重くなる。相談の結果、<b>まずは「入っている日を可視化するだけ」に割り切った。</b>休みか未提出かはカレンダーを見れば管理者が判断できる。機能を盛るより、シンプルで確実なほうを選んだ。</div>
+<p><strong>日報・週報・月報の出力。</strong>月報は対象月の合計（人別・項目別・日別の3シート）、週報は月内を月曜始まりの週ごとに分けて集計、日報は1日ごとの明細。3つの期間でExcelを出し分けられるようにした。</p>
+<h2>最後は「使い心地」の話</h2>
+<p>機能が揃っても、それで完成ではなかった。実際に使う場面を想像したとき、こんな指摘が出た。</p>
+<blockquote><p>連続して取り込みするのが、操作性が分かりにくいです。毎回LINEなどの画面に戻ってコピーする前提なら、毎回保存して取込み画面は初期化されている方が良いかと。連続貼り付けは、カーソル位置確認が煩わしいです。</p></blockquote>
+<p>これは重要な気づきだった。実際の作業は「LINEで日報をコピー → アプリに戻って貼り付け → 取り込む → またLINEへ」の繰り返し。ところが取り込むたびに画面が下（集計表）へ動いてしまい、戻ってきたときに入力欄が画面の外。毎回スクロールして探す羽目になっていた。</p>
+<p>直し方はシンプルだ。<strong>取り込んだら自動で画面を入力欄まで戻し、カーソルも入力欄に入れておく。</strong>LINEから戻ってきたら、もう貼り付けるだけ。加えて「この画面で合計○件」と累計を出し、1件ずつ取り込む手応えも分かるようにした。</p>
+<p>機能としては地味な変更だが、毎日くり返す作業では、この「探さなくていい」が効く。</p>
+<p class="pull serif">いい道具とは、機能の数ではなく、迷う瞬間の少なさで決まる。</p>
+<div class="kicker">
+<h2 style="margin-top:0">振り返って</h2>
+<p>この集計アプリは、最初から完成形を設計したわけではない。「貼り付けたら集計してほしい」という素朴な願いから始まり、「氏名が要る」「月で締めたい」「漏れを見たい」「往復が面倒」と、現場の声に応えるたびに形を変えてきた。</p>
+<p>やったのは、日報の末尾に1行足したこと、データを端末に貯めること、表を3通りに並べ替えること、画面を入力欄に戻すこと。ひとつひとつは小さな工夫だ。でも、それらが積み重なって、月末の電卓仕事がボタン数回に変わった。</p>
+<p>特別なサーバーも、有料サービスも、アカウント登録も要らない。ブラウザで開くだけ。記録はすべて手元の端末に残る。小さな現場の、小さな困りごと。それを身の丈に合った道具で解いていく——その過程そのものが、いちばんの収穫だったのかもしれない。</p>
+</div>
+    <div class="article-links sans"><a href="nippo.html">← 前の記事：無料でも、安全に。介護現場の「作業日報」をつくった話</a>
+<a href="../index.html#apps">作った道具へ戻る</a>
+<a href="../sitemap.html">サイトマップを見る</a>
+<a href="pinball.html">次の記事：つくる手帖ピンボールを作った話 — アイデアを、かたちに →</a></div>
   </div>
 </article>
-
-<footer>
+<footer class="art-foot">
   <div class="wrap">
-    <span>作業日報アプリ／日報集計アプリ <b>開発ノート</b></span>
-    <a class="home" href="../index.html">← つくる手帖トップへ</a>
+    <a class="backlink" href="../index.html">← つくる手帖トップへ</a>
+    <p class="note-small sans">このページは「つくる手帖／記録」の一部です。動画と開発記を同じ形式で残し、作った道具の背景まで辿れるようにしています。</p>
   </div>
 </footer>
-
 </body>
 </html>
