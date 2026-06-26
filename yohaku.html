@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>手帖の余白 — つくる手帖</title>
+<meta name="description" content="気ままに更新する、つくる手帖の余白。なかまたちの紹介や、ちょっとした遊び・道具・エッセイを、思いついたときに少しずつ。">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="つくる手帖">
+<meta property="og:title" content="手帖の余白 — つくる手帖">
+<meta property="og:description" content="気ままに更新する、つくる手帖の余白。なかまたち・遊び・道具・エッセイを少しずつ。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/yohaku.html">
+<meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<style>
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --card:#FBFAF6;
+    --line:#D8D3C4; --accent:#C2603A; --muted:#7A7567; --grid:#E3DFD3;
+    --green:#3D6B52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ max-width:880px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px; }
+  .brand .han{ color:var(--accent); }
+  .site-nav{ display:flex; gap:20px; }
+  .site-nav a{ color:var(--green); text-decoration:none; font-weight:700; font-size:14px; }
+  .site-nav a:hover{ color:var(--accent); }
+
+  .head{ padding:46px 0 8px; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:clamp(26px,5vw,38px); margin:12px 0 6px; line-height:1.4; }
+  .head .sub{ display:inline-block; font-size:12.5px; font-weight:700; color:var(--green);
+    border:1px solid var(--line); border-radius:999px; padding:3px 12px; margin:6px 0 12px; }
+  .head .lead{ color:var(--ink-soft); max-width:56ch; }
+
+  /* ===== カード一覧 ===== */
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:30px 0 8px; }
+  @media (max-width:680px){ .grid{ grid-template-columns:1fr; } }
+
+  .ycard{ display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:18px; text-decoration:none; color:inherit;
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .ycard:hover{ transform:translateY(-2px); box-shadow:0 6px 18px rgba(27,42,74,.08); border-color:var(--line-strong,#B9B2A0); }
+
+  .ythumb{ background:#fff; border:1px solid var(--line); border-radius:10px;
+    height:118px; display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:10px; margin-bottom:14px; overflow:hidden; }
+  .ythumb img{ max-height:84px; max-width:21%; height:auto; display:block; }
+
+  /* ブロック崩しのミニ模様（画像なしのカード用） */
+  .bricks{ display:flex; flex-direction:column; gap:5px; align-items:center; }
+  .bricks .row{ display:flex; gap:5px; }
+  .bricks i{ width:30px; height:11px; border-radius:3px; display:block; }
+  .bricks .c1{ background:#C2603A; } .bricks .c2{ background:#3D6B52; }
+  .bricks .c3{ background:#3a6fc8; } .bricks .c4{ background:#C9A227; }
+  .bricks .ball{ width:11px; height:11px; border-radius:50%; background:var(--ink); margin-top:4px; }
+
+  .ycat{ display:inline-block; align-self:flex-start; font-size:11.5px; font-weight:700;
+    letter-spacing:.06em; color:var(--accent); border:1px solid var(--line); border-radius:6px; padding:2px 8px; margin-bottom:8px; }
+  .ycat.nakama{ color:var(--green); }
+  .ytitle{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; margin:0 0 6px; line-height:1.45; }
+  .ydesc{ color:var(--ink-soft); font-size:14px; line-height:1.75; flex:1 0 auto; margin-bottom:14px; }
+  .ygo{ align-self:flex-start; color:var(--accent); font-weight:700; font-size:13.5px; letter-spacing:.04em; }
+  .ext{ font-size:11px; font-weight:700; color:var(--muted); border:1px solid var(--line);
+    border-radius:6px; padding:1px 6px; margin-left:6px; vertical-align:1px; }
+
+  .foot{ border-top:1px solid var(--line); margin-top:34px; padding:26px 0 60px; }
+  .foot .backlink{ color:var(--green); text-decoration:none; font-weight:700; border-bottom:1px solid currentColor; }
+  .foot .note{ color:var(--muted); font-size:13px; margin-top:14px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="index.html">つくる<span class="han">手帖</span></a>
+    <nav class="site-nav"><a href="index.html#apps">アプリ</a><a href="index.html#posts">記事</a></nav>
+  </div>
+</header>
+
+<div class="head">
+  <div class="wrap">
+    <div class="eyebrow mincho">YOHAKU &mdash; MARGIN NOTES</div>
+    <h1>手帖の余白</h1>
+    <div class="sub">気ままに更新</div>
+    <p class="lead">本文には載せきれない、小さなもの置き場です。なかまたちの紹介、ちょっとした遊び、便利な道具、思いついたエッセイ——気の向くままに、少しずつ足していきます。</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+
+    <!-- ============================================================ -->
+    <!-- カードの追加方法                                              -->
+    <!--   下の <a class="ycard"> … </a> を1つまるごとコピーして、       -->
+    <!--   この grid の中に貼り、文章とリンク先(href)を書き換えるだけ。  -->
+    <!--   ・サイト内のページへ → href="○○.html"                        -->
+    <!--   ・別サイト/外部へ   → href="https://…" に                    -->
+    <!--       target="_blank" rel="noopener" を付け、<span class="ext">別サイト</span> を添える -->
+    <!-- ============================================================ -->
+
+    <!-- ① なかまたち（サイト内） -->
+    <a class="ycard" href="characters.html">
+      <div class="ythumb">
+        <img src="characters/techon.png" alt="">
+        <img src="characters/grassplot.png" alt="">
+        <img src="characters/rgb.png" alt="">
+        <img src="characters/tsukumogra.png" alt="">
+      </div>
+      <span class="ycat nakama">なかま</span>
+      <h2 class="ytitle">つくる手帖の、なかまたち</h2>
+      <p class="ydesc">「つくる」を記録し、育て、カタチにする物語を、いっしょに歩むなかまたち。テチョン、グラスプロト、R・G・B、ツクモグラの、役割と口ぐせを紹介します。</p>
+      <span class="ygo">なかまたちに会う　→</span>
+    </a>
+
+    <!-- ② 記録のかけら（別サイト・ブロック崩し） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/blockbreaker/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="bricks" aria-hidden="true">
+          <div class="row"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+          <div class="row"><i class="c4"></i><i class="c3"></i><i class="c2"></i><i class="c1"></i></div>
+          <div class="ball"></div>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">記録のかけら<span class="ext">別サイト</span></h2>
+      <p class="ydesc">一玉の行動で、日々の断片をページにする小さなブロック崩し。指でパドルを動かして言葉のブロックを崩すと、崩した言葉が下の記録欄にたまっていきます。</p>
+      <span class="ygo">あそんでみる　↗</span>
+    </a>
+
+    <!-- ③ ここから下に、新しいカードを足していけます -->
+
+  </div>
+
+  <div class="foot">
+    <a class="backlink" href="index.html">&larr; つくる手帖にもどる</a>
+    <p class="note">余白には、まだ名前のついていないものを置いておきます。いつか本文に育つかもしれません。</p>
+  </div>
+</div>
+
+</body>
+</html>
