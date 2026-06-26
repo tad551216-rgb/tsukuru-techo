@@ -241,6 +241,59 @@
   footer.site .f-brand .han{color:var(--accent);}
   footer.site .f-note{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11.5px;color:var(--muted);}
 
+
+  /* ===== アプリ起動案内ポップアップ ===== */
+  .appmodal{
+    position:fixed; inset:0; z-index:2100;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .appmodal[hidden]{ display:none; }
+  .appmodal-backdrop{
+    position:absolute; inset:0;
+    background:rgba(20,25,40,.76);
+  }
+  .appmodal-box{
+    position:relative; width:min(92vw,430px);
+    background:var(--surface); color:var(--ink);
+    border:1px solid var(--line); border-radius:16px;
+    padding:28px 26px 24px;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+  }
+  .appmodal-box h3{
+    font-size:22px; line-height:1.45; margin:0 0 12px;
+    letter-spacing:.02em;
+  }
+  .appmodal-box p{
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    font-size:14.5px; line-height:1.95; color:var(--ink-soft);
+    margin:0 0 14px;
+  }
+  .appmodal-help{
+    display:inline-flex; align-items:center; gap:.35em;
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    color:var(--accent); font-weight:700; font-size:13.5px;
+    text-decoration:none; border-bottom:1px solid currentColor;
+    margin-top:2px;
+  }
+  .appmodal-buttons{
+    display:flex; justify-content:flex-end; gap:10px;
+    margin-top:22px;
+  }
+  .appmodal-buttons button{
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    border:0; border-radius:8px; padding:10px 16px;
+    font-size:14px; font-weight:700; cursor:pointer;
+  }
+  .appmodal-buttons .cancel{
+    background:var(--paper-2); color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+  .appmodal-buttons .go{
+    background:var(--ink); color:#fff;
+  }
+  .appmodal-buttons .go:hover{ background:var(--accent); }
+
   @media(max-width:640px){
     .post{grid-template-columns:1fr;gap:8px;}
     .post .meta{display:flex;gap:12px;align-items:center;}
@@ -303,6 +356,7 @@
           <a class="vbtn vbtn-solid sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
           <a class="vbtn vbtn-solid sans" href="docs/yotei3-douga.mp4" data-video="docs/yotei3-douga.mp4"><span class="play">▶</span>わが家の予定板</a>
           <a class="vbtn vbtn-solid sans" href="docs/nippo-douga.mp4" data-video="docs/nippo-douga.mp4"><span class="play">▶</span>作業日報＆集計</a>
+          <a class="vbtn vbtn-solid sans" href="docs/tukuru-pinball.mp4" data-video="docs/tukuru-pinball.mp4"><span class="play">▶</span>つくる手帖ピンボール</a>
           <a class="vbtn sans" href="docs/tukurutetyou-douga.mp4" data-video="docs/tukurutetyou-douga.mp4"><span class="play">▶</span>つくる手帖の紹介</a>
         </div>
         <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
@@ -595,6 +649,23 @@ renderPosts();
     <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
   </div>
 </div>
+
+<!-- アプリ起動案内ポップアップ -->
+<div id="appModal" class="appmodal" hidden>
+  <div class="appmodal-backdrop" data-app-close></div>
+  <div class="appmodal-box">
+    <h3>📱 アプリとして使えます</h3>
+    <p>
+      ホーム画面に追加すると、普通のアプリのように起動できます。<br>
+      入力したデータは、この端末だけに保存されます。
+    </p>
+    <a id="installGuide" class="appmodal-help" href="viewer.html?f=docs/nippo-install.pdf&t=iPhone" target="_blank" rel="noopener">ホーム画面への追加方法を見る →</a>
+    <div class="appmodal-buttons">
+      <button class="cancel" type="button">あとで</button>
+      <button class="go" type="button">使ってみる</button>
+    </div>
+  </div>
+</div>
 <script>
 (function(){
   var modal=document.getElementById('videoModal');
@@ -607,6 +678,65 @@ renderPosts();
   });
   modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
+</script>
+
+<script>
+(function(){
+  var modal=document.getElementById('appModal');
+  if(!modal) return;
+
+  var guide=document.getElementById('installGuide');
+  var cancel=modal.querySelector('.cancel');
+  var go=modal.querySelector('.go');
+  var targetUrl='';
+  var openNewTab=false;
+
+  var ua=navigator.userAgent || '';
+  var isApple=/iphone|ipad|ipod/i.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  guide.href=isApple
+    ? 'viewer.html?f=docs/nippo-install.pdf&t=' + encodeURIComponent('ホーム画面への登録手順 iPhone')
+    : 'viewer.html?f=docs/android-nippo-install.pdf&t=' + encodeURIComponent('ホーム画面への登録手順 Android');
+
+  function openModal(){
+    modal.hidden=false;
+    document.body.style.overflow='hidden';
+  }
+
+  function closeModal(){
+    modal.hidden=true;
+    document.body.style.overflow='';
+  }
+
+  function proceed(){
+    try{ localStorage.setItem('tsukuruAppGuideShown','1'); }catch(e){}
+    closeModal();
+
+    if(openNewTab){
+      var w=window.open(targetUrl,'_blank','noopener');
+      if(!w) location.href=targetUrl;
+    }else{
+      location.href=targetUrl;
+    }
+  }
+
+  document.querySelectorAll('.appcard .links a.primary').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      try{
+        if(localStorage.getItem('tsukuruAppGuideShown')) return;
+      }catch(err){}
+
+      e.preventDefault();
+      targetUrl=btn.href;
+      openNewTab=(btn.getAttribute('target')==='_blank');
+      openModal();
+    });
+  });
+
+  cancel.addEventListener('click',proceed);
+  go.addEventListener('click',proceed);
+  modal.querySelector('[data-app-close]').addEventListener('click',closeModal);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !modal.hidden) closeModal(); });
 })();
 </script>
 </body>
