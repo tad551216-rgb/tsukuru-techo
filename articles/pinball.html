@@ -8,51 +8,227 @@
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="つくる手帖">
-<meta property="og:title" content="つくる手帖ピンボールを作った話 — アイデアを、かたちに — つくる手帖">
-<meta property="og:description" content="一玉のボールをアイデアに見立て、思う・作る・届けるという創作の流れをピンボールで表現したPWAゲームの開発記。">
+<meta property="og:title" content="つくる手帖ピンボールを作った話 — アイデアを、かたちに">
+<meta property="og:description" content="一玉のボールをアイデアに見立て、思う・作る・届けるという創作の流れをピンボールで表現した小さなPWAゲームの開発記。">
 <meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/articles/pinball.html">
 <meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
 <meta name="twitter:card" content="summary_large_image">
-<title>つくる手帖ピンボールを作った話 — アイデアを、かたちに — つくる手帖</title>
-<meta name="description" content="一玉のボールをアイデアに見立て、思う・作る・届けるという創作の流れをピンボールで表現したPWAゲームの開発記。">
-<link rel="stylesheet" href="article.css">
+<title>つくる手帖ピンボールを作った話 — アイデアを、かたちに</title>
+<meta name="description" content="一玉のボールをアイデアに見立て、思う・作る・届けるという創作の流れをピンボールで表現した小さなPWAゲームの開発記。">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#3A4A66;
+    --paper:#F3F1EA;
+    --surface:#FFFFFF;
+    --line:#D8D3C4;
+    --line-strong:#B9B2A0;
+    --accent:#C2603A;
+    --accent-deep:#9F4A2B;
+    --muted:#7A7567;
+    --grid:#E3DFD3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);background:var(--paper);line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px;}
+  header.site{border-bottom:1px solid var(--line);background:rgba(243,241,234,.92);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand .mark{font-size:21px;font-weight:700;letter-spacing:.04em;}
+  .brand .mark .han{color:var(--accent);}
+  .brand .tag{font-size:11px;color:var(--muted);letter-spacing:.08em;}
+  nav.site-nav{display:flex;gap:20px;}
+  nav.site-nav a{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;}
+  nav.site-nav a:hover{color:var(--accent);}
+
+  .article-hero{position:relative;padding:58px 0 36px;border-bottom:1px solid var(--line);}
+  .article-hero::before{content:"";position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;opacity:.45;}
+  .article-hero .wrap{position:relative;z-index:1;}
+  .breadcrumb{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:18px;}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--accent);}
+  .label{font-family:-apple-system,"Hiragino Sans",sans-serif;display:inline-block;color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.16em;margin-bottom:14px;}
+  h1{font-size:clamp(30px,5vw,46px);line-height:1.35;letter-spacing:.02em;margin-bottom:18px;}
+  .lead{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:16px;line-height:2;color:var(--ink-soft);max-width:740px;}
+  .meta{font-family:-apple-system,"Hiragino Sans",sans-serif;color:var(--muted);font-size:12px;margin-top:18px;}
+
+  main.article{padding:42px 0 64px;}
+  .video-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 34px;box-shadow:0 10px 28px rgba(27,42,74,.08);}
+  .video-card video{width:100%;display:block;border-radius:10px;background:#000;max-height:70vh;}
+  .video-card figcaption{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px;}
+  .toc{background:rgba(255,255,255,.55);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 36px;}
+  .toc .toc-title{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.12em;margin-bottom:8px;}
+  .toc a{font-family:-apple-system,"Hiragino Sans",sans-serif;display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:4px 0;}
+  .toc a:hover{color:var(--accent);}
+  section.block{margin:0 0 42px;}
+  h2{font-size:25px;line-height:1.55;letter-spacing:.03em;margin:0 0 16px;padding-top:4px;}
+  h2::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:middle;}
+  h3{font-size:18px;margin:24px 0 10px;color:var(--ink);}
+  p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:15.5px;line-height:2;color:var(--ink-soft);margin:0 0 14px;}
+  .quote{border-left:4px solid var(--accent);background:rgba(255,255,255,.55);padding:14px 18px;margin:18px 0;border-radius:0 10px 10px 0;}
+  .quote p{margin:0;color:var(--ink);}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:20px 0;}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .step .k{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:34px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:8px;}
+  .step .t{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px;}
+  .step p{font-size:13.5px;line-height:1.8;margin:0;}
+  .note{font-family:-apple-system,"Hiragino Sans",sans-serif;background:#fff;border:1px dashed var(--line-strong);border-radius:12px;padding:18px 20px;margin:20px 0;color:var(--ink-soft);font-size:14px;line-height:1.9;}
+  ul{font-family:-apple-system,"Hiragino Sans",sans-serif;color:var(--ink-soft);margin:8px 0 18px 1.2em;line-height:1.9;}
+  li{margin-bottom:4px;}
+  .cta{background:var(--ink);color:#fff;border-radius:16px;padding:26px;margin-top:44px;text-align:center;}
+  .cta h2{color:#fff;margin-bottom:10px;padding:0;}
+  .cta h2::before{display:none;}
+  .cta p{color:#DAD7CE;margin-bottom:18px;}
+  .cta a{font-family:-apple-system,"Hiragino Sans",sans-serif;display:inline-block;background:#fff;color:var(--ink);font-weight:700;text-decoration:none;border-radius:9px;padding:11px 18px;margin:4px 6px;}
+  .cta a:hover{background:#F1E3DA;color:var(--accent-deep);}
+  .back{font-family:-apple-system,"Hiragino Sans",sans-serif;margin-top:36px;}
+  .back a{color:var(--accent);font-weight:700;text-decoration:none;}
+  footer.site{border-top:1px solid var(--line);padding:30px 0 48px;}
+  footer.site .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer.site .f-brand{font-size:16px;font-weight:700;}
+  footer.site .f-brand .han{color:var(--accent);}
+  footer.site .f-note{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11.5px;color:var(--muted);}
+  @media(max-width:640px){.brand .tag{display:none;}nav.site-nav{gap:14px;}nav.site-nav a.hide-sp{display:none;}.site-inner{height:56px;}main.article{padding-top:30px;}p{font-size:16px;}h2{font-size:23px;}.video-card{margin-left:-6px;margin-right:-6px;}}
+</style>
 </head>
 <body>
 <header class="site">
-  <div class="site-inner">
-    <a class="brand" href="../index.html"><span class="mark">つくる<span class="han">手帖</span></span><span class="tag sans">AIで&quot;自分専用&quot;の道具をつくる</span></a>
-    <nav class="site-nav"><a href="../index.html#apps">アプリ</a><a href="../index.html#posts">記事</a><a href="../sitemap.html">サイトマップ</a></nav>
+  <div class="wrap site-inner">
+    <a class="brand" href="../index.html">
+      <span class="mark">つくる<span class="han">手帖</span></span>
+      <span class="tag sans">AIで&quot;自分専用&quot;の道具をつくる</span>
+    </a>
+    <nav class="site-nav">
+      <a href="../index.html#apps">アプリ</a>
+      <a href="../index.html#posts">記事</a>
+      <a href="../characters.html">なかまたち</a>
+      <a href="../index.html#about" class="hide-sp">このサイトについて</a>
+    </nav>
   </div>
 </header>
-<div class="art-head">
+
+<section class="article-hero">
   <div class="wrap">
-    <div class="crumb sans"><a href="../index.html">つくる手帖</a> ／ 記録 ／ 開発記</div>
-    <div class="art-meta sans"><span class="cat">開発記</span><span>2026.06.26</span><span>PWAゲーム</span></div>
-    <h1>つくる手帖ピンボールを作った話 — アイデアを、かたちに</h1>
-    <p class="stand sans">一玉のボールを「アイデア」に見立て、思う・作る・届けるという創作の流れをピンボールの盤面で表現しました。遊びであり、つくる手帖の考え方を伝える小さな道具でもあります。</p>
+    <div class="breadcrumb sans"><a href="../index.html">つくる手帖</a> ／ <a href="../index.html#posts">記録</a> ／ 開発記</div>
+    <div class="label sans">DEVELOPMENT NOTE</div>
+    <h1>つくる手帖ピンボールを作った話</h1>
+    <p class="lead">一玉のボールを「アイデア」に見立て、思いつく、作る、届けるという創作の流れをピンボールの盤面にしました。これは、ただのゲームというより、私がAIと一緒に小さな道具を作っていく感覚を、そのまま遊びにしたものです。</p>
+    <div class="meta sans">2026.06.26　開発記 ／ PWA ／ ゲーム ／ Canvas</div>
   </div>
-</div>
-<article class="body">
+</section>
+
+<main class="article">
   <div class="wrap">
-    <div class="video-card">
-      <div class="video-label sans">MOVIE</div>
-      <video controls playsinline preload="metadata">
-        <source src="../docs/tukuru-pinball.mp4" type="video/mp4">
-        お使いのブラウザは動画の再生に対応していません。<a href="../docs/tukuru-pinball.mp4">動画ファイルを直接ひらく</a>
-      </video>
-      <p class="video-cap sans">つくる手帖ピンボール 紹介動画 ／ 音が出ます</p>
+    <figure class="video-card">
+      <video controls playsinline preload="metadata" src="../docs/tukuru-pinball.mp4"></video>
+      <figcaption>つくる手帖ピンボール紹介動画。アイデアが「思・作・届」をめぐり、完成へ向かう流れを表現しています。</figcaption>
+    </figure>
+
+    <nav class="toc">
+      <div class="toc-title">目次</div>
+      <a href="#why">なぜピンボールにしたのか</a>
+      <a href="#cycle">「思・作・届」という創作サイクル</a>
+      <a href="#game">ゲームとしての仕組み</a>
+      <a href="#pwa">PWAとして作った理由</a>
+      <a href="#howto">操作方法と公開方法</a>
+      <a href="#meaning">この道具で伝えたかったこと</a>
+    </nav>
+
+    <section class="block" id="why">
+      <h2>なぜピンボールにしたのか</h2>
+      <p>「つくる手帖」では、自分や家族のために、小さな道具を作っています。家計簿、予定板、作業日報、集計アプリ。どれも最初は、ほんの小さな困りごとや思いつきから始まりました。</p>
+      <p>けれど、思いついただけでは形になりません。考え、試し、直し、誰かが使えるところまで持っていく。その流れには、一直線ではない跳ね返りがあります。</p>
+      <p>そこで、一玉のボールを「アイデア」に見立てました。盤面の中で跳ね、ぶつかり、戻されながら、少しずつ完成へ向かっていく。ピンボールは、アイデアが形になるまでの寄り道や偶然を表すのに、ちょうどよい題材でした。</p>
+      <div class="quote"><p>アイデアは、最初から完成品として出てくるわけではありません。弾いて、育てて、何度もぶつけて、ようやく形になります。</p></div>
+    </section>
+
+    <section class="block" id="cycle">
+      <h2>「思・作・届」という創作サイクル</h2>
+      <p>盤面には、創作に欠かせない3つのバンパーを置きました。「思」「作」「届」です。この3つをすべて鳴らすと、ひとつの「完成」としてカウントされます。</p>
+      <div class="steps">
+        <div class="step">
+          <div class="k">思</div>
+          <div class="t">まずは、じっくり考える</div>
+          <p>草の子のバンパーです。頭の中に浮かんだ小さな違和感や希望を、アイデアとして育てます。</p>
+        </div>
+        <div class="step">
+          <div class="k">作</div>
+          <div class="t">実際に手を動かす</div>
+          <p>もぐらのバンパーです。考えただけで終わらせず、試作品として具体的な形にしていきます。</p>
+        </div>
+        <div class="step">
+          <div class="k">届</div>
+          <div class="t">誰かに届ける</div>
+          <p>手帖くんのバンパーです。作ったものを自分だけで抱え込まず、誰かが使える形にして完成させます。</p>
+        </div>
+      </div>
+      <p>この3つは、私にとってアプリ作りそのものです。便利そうな機能を思いつき、AIと相談しながら作り、最後にサイトへ置いて人に使ってもらう。小さくても、そこまで進んで初めて「完成」と言える気がします。</p>
+    </section>
+
+    <section class="block" id="game">
+      <h2>ゲームとしての仕組み</h2>
+      <p>ルールは単純です。ボールを落とさないようにフリッパーで打ち返しながら、「思・作・届」のバンパーを狙います。3つのバンパーをすべて鳴らすと、盤面に「完成」の朱印が押され、ボーナスとして1000ポイントが加算されます。</p>
+      <p>朱印にしたのは、「つくる手帖」らしさを出したかったからです。単なるスコアではなく、手帖にひとつ記録が残るような感覚。何度もアイデアを弾き、完成を重ねることで、自分の創作の軌跡が少しずつ積み上がっていきます。</p>
+      <p>ゲーム画面は、製図用紙のような背景、手帖らしい朱色、そして「完成」の印で構成しました。遊びながらも、どこか記録帳の中にいるような雰囲気にしたかったのです。</p>
+    </section>
+
+    <section class="block" id="pwa">
+      <h2>PWAとして作った理由</h2>
+      <p>このピンボールは、ブラウザで開くだけで遊べます。さらにホーム画面に追加すれば、普通のアプリのように全画面で起動できます。</p>
+      <p>大事にしたのは、次の3点です。</p>
+      <ul>
+        <li><strong>ローカル完結</strong>：通信を必要とせず、オフラインでも動くこと。</li>
+        <li><strong>データ保護</strong>：ハイスコアは端末内の localStorage にだけ保存すること。</li>
+        <li><strong>インストール性</strong>：ホーム画面に追加して、アプリのように起動できること。</li>
+      </ul>
+      <p>小さな道具は、重くしすぎない方がよいと思っています。アカウント登録も、サーバー保存も、通信も必須にしない。必要なものだけを端末の中で完結させる。これは、家計簿や予定板など、他の「つくる手帖」アプリと同じ考え方です。</p>
+      <div class="note">技術的には、ゲーム本体、マニフェスト、サービスワーカー、アイコンを組み合わせたPWA構成です。公開はGitHub Pagesを使い、静的ファイルだけで動く形にしています。</div>
+    </section>
+
+    <section class="block" id="howto">
+      <h2>操作方法と公開方法</h2>
+      <p>PCではキーボード、スマホでは画面タップで操作できます。</p>
+      <ul>
+        <li>PC：左右キー、または A / L キーでフリッパー操作</li>
+        <li>PC：スペースキー長押しから離すと発射</li>
+        <li>PC：Enter キーでリスタート</li>
+        <li>スマホ：画面の左半分・右半分をタップしてフリッパー操作</li>
+        <li>スマホ：発射ボタンの長押しで、打ち出しの強さを調整</li>
+      </ul>
+      <p>公開はGitHub Pagesを使いました。リポジトリを作り、必要なファイルを配置し、Pagesの設定で公開します。特別なサーバーは不要です。</p>
+      <p>既存の「つくる手帖」トップページには、アプリ一覧の `APPS` 配列へ項目を追加し、`article` にこの記事へのパスを指定することで統合できます。これでカードの「作り方を読む」から、この開発記へ移動できるようになります。</p>
+      <div class="note">注意点として、JavaScriptの配列に記事パスを追加するときは、半角のダブルクォーテーションではなく、既存コードと同じ形で正しく区切ることが大事です。小さな記号の違いで、一覧全体が表示されなくなることがあります。</div>
+    </section>
+
+    <section class="block" id="meaning">
+      <h2>この道具で伝えたかったこと</h2>
+      <p>「つくる手帖ピンボール」は、大きな目的を持ったゲームではありません。けれど、私にとっては、AIと一緒にものを作る感覚を表す小さな模型のようなものです。</p>
+      <p>思いつく。作ってみる。誰かに届ける。うまくいかないときは、また跳ね返って考える。その繰り返しの中で、少しずつ形になっていく。</p>
+      <p>70歳になってからでも、スマホとAIがあれば、自分だけの小さな道具を作れる。しかも、それを公開して誰かに届けることもできる。このピンボールは、その楽しさを遊びとして残したものです。</p>
+      <div class="quote"><p>あなたのアイデアを、弾いて、育てて、形にする。そんな創作のサイクルを、楽しみながら回してみるための小さな道具です。</p></div>
+    </section>
+
+    <div class="cta">
+      <h2>つくる手帖ピンボールを試す</h2>
+      <p>ブラウザで開くだけで遊べます。ホーム画面に追加すれば、アプリのように起動できます。</p>
+      <a href="https://tad551216-rgb.github.io/pinball/">使ってみる</a>
+      <a href="../index.html#apps">アプリ一覧へ</a>
     </div>
-    
-    <div class="article-links sans"><a href="dev-syuukei.html">← 前の記事：LINEに流れる日報を、自動で集計する仕組みをつくった話</a>
-<a href="../index.html#apps">作った道具へ戻る</a>
-<a href="../sitemap.html">サイトマップを見る</a>
-<a href="ai-app-howto.html">次の記事：AIでアプリを作るときの勘所と、必要なスキル →</a></div>
+
+    <div class="back"><a href="../index.html#posts">← 記録一覧へ戻る</a></div>
   </div>
-</article>
-<footer class="art-foot">
+</main>
+
+<footer class="site">
   <div class="wrap">
-    <a class="backlink" href="../index.html">← つくる手帖トップへ</a>
-    <p class="note-small sans">このページは「つくる手帖／記録」の一部です。動画と開発記を同じ形式で残し、作った道具の背景まで辿れるようにしています。</p>
+    <div class="f-brand">つくる<span class="han">手帖</span></div>
+    <div class="f-note sans">© 2026 つくる手帖 / GitHub Pages で公開 / 各アプリのデータは利用者の端末内にのみ保存されます</div>
   </div>
 </footer>
 </body>
