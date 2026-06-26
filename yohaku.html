@@ -16,16 +16,27 @@
 <meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
 <style>
   :root{
-    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --card:#FBFAF6;
-    --line:#D8D3C4; --accent:#C2603A; --muted:#7A7567; --grid:#E3DFD3;
-    --green:#3D6B52;
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
-    background:var(--paper); color:var(--ink);
+    color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
     line-height:1.9; -webkit-font-smoothing:antialiased;
+    /* === コルクボードの背景（画像なし・CSSのみ／透明は iOS Safari 対策で rgba(255,255,255,0)） === */
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
   }
   .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
   .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
@@ -39,29 +50,39 @@
   .site-nav a{ color:var(--green); text-decoration:none; font-weight:700; font-size:14px; }
   .site-nav a:hover{ color:var(--accent); }
 
-  .head{ padding:46px 0 8px; }
-  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent); font-weight:700; }
+  .head{ padding:44px 0 8px; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700;
+    text-shadow:0 1px 0 rgba(255,245,225,.35); }
   .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
-    font-size:clamp(26px,5vw,38px); margin:12px 0 6px; line-height:1.4; }
+    font-size:clamp(26px,5vw,38px); margin:12px 0 6px; line-height:1.4; color:#241a0e;
+    text-shadow:0 1px 0 rgba(255,245,225,.4); }
   .head .sub{ display:inline-block; font-size:12.5px; font-weight:700; color:var(--green);
-    border:1px solid var(--line); border-radius:999px; padding:3px 12px; margin:6px 0 12px; }
-  .head .lead{ color:var(--ink-soft); max-width:56ch; }
+    background:var(--note); border:1px solid var(--line-strong); border-radius:999px; padding:3px 12px; margin:6px 0 12px;
+    box-shadow:0 2px 5px rgba(60,40,20,.18); }
+  .head .lead{ color:#37291a; max-width:56ch; text-shadow:0 1px 0 rgba(255,245,225,.25); }
 
-  /* ===== カード一覧 ===== */
-  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:30px 0 8px; }
-  @media (max-width:680px){ .grid{ grid-template-columns:1fr; } }
+  /* ===== カード（コルクにピンで留めたメモ） ===== */
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px 24px; padding:34px 0 8px; }
+  @media (max-width:680px){ .grid{ grid-template-columns:1fr; gap:30px; } }
 
-  .ycard{ display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line);
-    border-radius:14px; padding:18px; text-decoration:none; color:inherit;
-    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
-  .ycard:hover{ transform:translateY(-2px); box-shadow:0 6px 18px rgba(27,42,74,.08); border-color:var(--line-strong,#B9B2A0); }
+  .ycard{ position:relative; display:flex; flex-direction:column;
+    background:var(--note); border:1px solid #E7E1D2; border-radius:10px; padding:18px;
+    text-decoration:none; color:inherit; transform:rotate(-1.2deg);
+    box-shadow:0 8px 18px rgba(50,32,12,.30), 0 2px 4px rgba(50,32,12,.20);
+    transition:transform .14s ease, box-shadow .14s ease; }
+  .ycard:nth-of-type(even){ transform:rotate(1.1deg); }
+  .ycard:hover{ transform:rotate(0) translateY(-3px); box-shadow:0 14px 26px rgba(50,32,12,.34); }
+  /* ピン（飾り） */
+  .ycard::before{ content:""; position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+    width:16px; height:16px; border-radius:50%;
+    background:radial-gradient(circle at 34% 30%, #e9926c, var(--accent) 58%, var(--accent-deep));
+    box-shadow:0 3px 5px rgba(0,0,0,.38), inset 0 -2px 2px rgba(0,0,0,.22); z-index:2; }
 
   .ythumb{ background:#fff; border:1px solid var(--line); border-radius:10px;
     height:118px; display:flex; align-items:center; justify-content:center; gap:8px;
     padding:10px; margin-bottom:14px; overflow:hidden; }
   .ythumb img{ max-height:84px; max-width:21%; height:auto; display:block; }
 
-  /* ブロック崩しのミニ模様（画像なしのカード用） */
   .bricks{ display:flex; flex-direction:column; gap:5px; align-items:center; }
   .bricks .row{ display:flex; gap:5px; }
   .bricks i{ width:30px; height:11px; border-radius:3px; display:block; }
@@ -78,9 +99,14 @@
   .ext{ font-size:11px; font-weight:700; color:var(--muted); border:1px solid var(--line);
     border-radius:6px; padding:1px 6px; margin-left:6px; vertical-align:1px; }
 
-  .foot{ border-top:1px solid var(--line); margin-top:34px; padding:26px 0 60px; }
-  .foot .backlink{ color:var(--green); text-decoration:none; font-weight:700; border-bottom:1px solid currentColor; }
-  .foot .note{ color:var(--muted); font-size:13px; margin-top:14px; }
+  .foot{ border-top:1px solid rgba(250,248,242,.45); margin-top:36px; padding:26px 0 60px; }
+  .foot .backlink{ color:var(--note); text-decoration:none; font-weight:700; border-bottom:1px solid currentColor;
+    text-shadow:0 1px 2px rgba(40,25,10,.5); }
+  .foot .note{ color:#33271a; font-size:13px; margin-top:14px; text-shadow:0 1px 0 rgba(255,245,225,.25); }
+
+  @media (prefers-reduced-motion: reduce){
+    .ycard{ transition:none; }
+  }
 </style>
 </head>
 <body>
@@ -97,7 +123,7 @@
     <div class="eyebrow mincho">YOHAKU &mdash; MARGIN NOTES</div>
     <h1>手帖の余白</h1>
     <div class="sub">気ままに更新</div>
-    <p class="lead">本文には載せきれない、小さなもの置き場です。なかまたちの紹介、ちょっとした遊び、便利な道具、思いついたエッセイ——気の向くままに、少しずつ足していきます。</p>
+    <p class="lead">本文には載せきれない、小さなもの置き場です。なかまたちの紹介、ちょっとした遊び、便利な道具、思いついたエッセイ——気の向くままに、コルクボードへ少しずつ留めていきます。</p>
   </div>
 </div>
 
@@ -111,6 +137,7 @@
     <!--   ・サイト内のページへ → href="○○.html"                        -->
     <!--   ・別サイト/外部へ   → href="https://…" に                    -->
     <!--       target="_blank" rel="noopener" を付け、<span class="ext">別サイト</span> を添える -->
+    <!--   ※ ピンとカードの傾きは自動で付きます。                       -->
     <!-- ============================================================ -->
 
     <!-- ① なかまたち（サイト内） -->
