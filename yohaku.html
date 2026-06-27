@@ -46,8 +46,8 @@
   .site-inner{ max-width:880px; margin:0 auto; padding:13px 22px; display:flex; align-items:center; justify-content:space-between; }
   .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px; }
   .brand .han{ color:var(--accent); }
-  .site-nav{ display:flex; gap:20px; }
-  .site-nav a{ color:var(--green); text-decoration:none; font-weight:700; font-size:14px; }
+  .site-nav{ display:flex; gap:22px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
   .site-nav a:hover{ color:var(--accent); }
 
   .head{ padding:44px 0 8px; }
@@ -108,6 +108,8 @@
   @media (prefers-reduced-motion: reduce){
     .ycard{ transition:none; }
   }
+
+  @media(max-width:640px){ .site-nav{ gap:15px; } .site-nav a.hide-sp{ display:none; } }
 </style>
 </head>
 <body>
@@ -115,7 +117,7 @@
 <header class="site">
   <div class="site-inner">
     <a class="brand" href="index.html">つくる<span class="han">手帖</span></a>
-    <nav class="site-nav"><a href="index.html#apps">アプリ</a><a href="index.html#posts">記事</a></nav>
+    <nav class="site-nav"><a href="index.html#apps">アプリ</a><a href="index.html#posts">記事</a><a href="yohaku.html">手帖の余白</a><a href="sitemap.html" class="hide-sp">サイトマップ</a><a href="index.html#about" class="hide-sp">このサイトについて</a></nav>
   </div>
 </header>
 
