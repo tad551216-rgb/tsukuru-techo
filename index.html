@@ -115,8 +115,18 @@
     color:var(--accent);text-decoration:none;font-weight:700;
     border-bottom:1px solid currentColor;margin-left:.4em;white-space:nowrap;
   }
+  .hero .hero-message{
+    margin:6px 0 24px;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);
+    font-size:clamp(16px,2.2vw,20px);
+    line-height:2;
+    letter-spacing:.02em;
+  }
+  .hero .hero-message p{margin:0 0 14px;}
+  .hero .hero-message p:last-child{margin-bottom:0;}
   .hero .hero-video-lead{
-    margin:14px 0 10px;font-size:14.5px;font-weight:700;color:var(--ink);
+    margin:20px 0 10px;font-size:14.5px;font-weight:700;color:var(--ink);
   }
   .hero-videos{ display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2px; }
   .hero-videos .vbtn{
@@ -308,6 +318,7 @@
 
     /* スマホでの可読性: 読む文字を少し大きく・濃く・押しやすく */
     .hero .lede{font-size:17px;line-height:2;}
+    .hero .hero-message{font-size:16.5px;line-height:2;margin:4px 0 22px;}
     .sec-head h2{font-size:23px;}
     .appcard .body{padding:20px 20px 22px;}
     .appcard h3{font-size:19px;}
@@ -352,6 +363,10 @@
     <div class="hero-min">
       <div class="hero-min-text">
         <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
+        <div class="hero-message">
+          <p>でも、<br>家族はだれも見てくれません。</p>
+          <p>だから、<br>どこかの誰か一人に届けば、<br>それで十分だと思っています。</p>
+        </div>
         <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
         <div class="hero-videos">
           <a class="vbtn vbtn-solid sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
