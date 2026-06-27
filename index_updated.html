@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="つくる手帖">
+<meta property="og:title" content="つくる手帖 — AIで&quot;自分専用&quot;の道具をつくる">
+<meta property="og:description" content="70歳。スマホとAIで、自分や家族が日々使う小さな道具をつくる記録。作り方・勘所・つまずきまで、正直に残しています。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/">
+<meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="つくる手帖 — AIで&quot;自分専用&quot;の道具をつくる">
+<meta name="twitter:description" content="70歳。スマホとAIで、自分や家族が日々使う小さな道具をつくる記録。">
+<meta name="twitter:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<title>つくる手帖 — AIで"自分専用"の道具をつくる</title>
+<meta name="description" content="70歳。スマホとAIで、自分や家族のための小さな道具をつくっています。どれもブラウザですぐ試せるPWA。作り方・勘所・つまずきまで、正直に残す記録。">
+<style>
+  :root{
+    --ink:#1B2A4A;        /* 濃紺(主役) */
+    --ink-soft:#3A4A66;
+    --paper:#F3F1EA;      /* 製図用紙のような淡い生成り */
+    --paper-2:#ECE9DF;
+    --surface:#FFFFFF;
+    --line:#D8D3C4;       /* 罫線 */
+    --line-strong:#B9B2A0;
+    --accent:#C2603A;     /* 朱(印・要点) */
+    --accent-deep:#9F4A2B;
+    --muted:#7A7567;
+    --grid:#E3DFD3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);background:var(--paper);
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 22px;}
+
+  /* ===== ヘッダー ===== */
+  header.site{
+    border-bottom:1px solid var(--line);
+    background:rgba(243,241,234,.9);backdrop-filter:blur(6px);
+    position:sticky;top:0;z-index:20;
+  }
+  .site-inner{display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand .mark{
+    font-family:"Hiragino Mincho ProN",serif;font-size:21px;font-weight:700;letter-spacing:.04em;
+  }
+  .brand .mark .han{color:var(--accent);}
+  .brand .tag{font-size:11px;color:var(--muted);letter-spacing:.08em;}
+  nav.site-nav{display:flex;gap:22px;}
+  nav.site-nav a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;
+  }
+  nav.site-nav a:hover{color:var(--accent);}
+
+  /* ===== ヒーロー ===== */
+  .hero{padding:54px 0 44px;position:relative;}
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
+    opacity:.6;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:760px;}
+  .eyebrow{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:12px;letter-spacing:.22em;color:var(--accent);font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:clamp(30px,5.4vw,52px);line-height:1.32;font-weight:700;letter-spacing:.01em;
+    margin-bottom:24px;
+  }
+  .hero h1 .em{
+    background:linear-gradient(transparent 64%,rgba(194,96,58,.22) 64%);
+    padding:0 .05em;
+  }
+  .hero p.lede{
+    font-size:clamp(15px,2.1vw,18px);color:var(--ink);max-width:620px;line-height:1.95;margin-bottom:16px;
+  }
+  .hero .sig{
+    margin-top:30px;display:flex;align-items:center;gap:14px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12.5px;color:var(--muted);
+  }
+  .hero .sig .seal{
+    width:46px;height:46px;border:1.5px solid var(--accent);color:var(--accent);
+    border-radius:7px;display:flex;align-items:center;justify-content:center;
+    font-family:"Hiragino Mincho ProN",serif;font-size:12px;line-height:1.2;text-align:center;
+    transform:rotate(-3deg);
+  }
+  .hero-min{display:flex;align-items:center;gap:16px;}
+  .hero-min .hero-min-text{flex:1;min-width:0;}
+  .hero .hero-techon{
+    width:clamp(60px,15vw,96px);height:auto;flex:none;
+    mix-blend-mode:multiply;
+  }
+  .hero .hero-try{
+    margin-top:14px;font-size:14px;color:var(--ink-soft);
+  }
+  .hero .hero-try a{
+    color:var(--accent);text-decoration:none;font-weight:700;
+    border-bottom:1px solid currentColor;margin-left:.4em;white-space:nowrap;
+  }
+  .hero .hero-message{
+    margin:6px 0 24px;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);
+    font-size:clamp(16px,2.2vw,20px);
+    line-height:2;
+    letter-spacing:.02em;
+  }
+  .hero .hero-message p{margin:0 0 14px;}
+  .hero .hero-message p:last-child{margin-bottom:0;}
+  .hero .hero-video-lead{
+    margin:20px 0 10px;font-size:14.5px;font-weight:700;color:var(--ink);
+  }
+  .hero-videos{ display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2px; }
+  .hero-videos .vbtn{
+    display:inline-flex;align-items:center;gap:.45em;
+    padding:9px 15px;border:1px solid var(--line);border-radius:999px;
+    background:var(--card);color:var(--ink);text-decoration:none;
+    font-size:13px;font-weight:600;line-height:1.2;
+  }
+  .hero-videos .vbtn:hover{ border-color:var(--accent);color:var(--accent); }
+  .hero-videos .vbtn .play{ color:var(--accent);font-size:.85em; }
+  .hero-videos .vbtn-solid{ background:var(--ink); color:#fff; border-color:var(--ink); border-radius:8px; font-weight:700; }
+  .hero-videos .vbtn-solid:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .hero-videos .vbtn-solid .play{ color:#fff; }
+  /* 動画ポップアップ（自前video） */
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,25,40,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:12px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
+
+  /* ===== セクション見出し ===== */
+  .section{padding:54px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;}
+  .sec-head .idx{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.1em;
+  }
+  .sec-head h2{font-size:25px;font-weight:700;letter-spacing:.03em;}
+  .sec-head .note{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;color:var(--muted);margin-left:auto;
+  }
+
+  /* ===== アプリ・カード ===== */
+  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+  .appcard{
+    background:var(--surface);border:1px solid var(--line);border-radius:13px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .appcard:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(27,42,74,.10);}
+  .appcard .thumb{
+    height:140px;background:var(--ink);position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .appcard .thumb .glyph{font-size:46px;}
+  .appcard .thumb .grid-bg{
+    position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+    background-size:22px 22px;
+  }
+  .appcard .body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1;}
+  .appcard .status{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:10.5px;font-weight:700;
+    letter-spacing:.06em;padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;
+    align-self:flex-start;
+  }
+  .status.live{background:#E4EEE7;color:#2E7D5B;}
+  .status.wip{background:#F2E9D8;color:#9F7A2B;}
+  .appcard h3{font-size:18px;font-weight:700;margin-bottom:8px;letter-spacing:.02em;}
+  .appcard p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14px;color:var(--ink-soft);line-height:1.8;flex:1;}
+  .appcard .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;}
+  .appcard .tags span{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:10.5px;color:var(--muted);
+    border:1px solid var(--line);border-radius:5px;padding:2px 7px;
+  }
+  .appcard .links{display:flex;gap:10px;margin-top:16px;}
+  .appcard .links a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12.5px;font-weight:700;
+    text-decoration:none;padding:9px 14px;border-radius:8px;letter-spacing:.03em;
+  }
+  .appcard .links a.primary{background:var(--ink);color:#fff;}
+  .appcard .links a.primary:hover{background:var(--accent);}
+  .appcard .links a.ghost{color:var(--ink);border:1px solid var(--line-strong);}
+  .appcard .links a.ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .appcard .docs{display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+  .appcard .docs a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;color:var(--ink-soft);
+    text-decoration:none;display:flex;align-items:center;gap:8px;line-height:1.5;
+  }
+  .appcard .docs a:hover{color:var(--accent);}
+  .appcard .docs a::before{
+    content:"PDF";font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--accent);
+    border:1px solid var(--accent);border-radius:4px;padding:1px 5px;flex:none;
+  }
+
+  /* ===== 記事 ===== */
+  .posts{display:flex;flex-direction:column;}
+  .post{
+    display:grid;grid-template-columns:130px 1fr;gap:24px;
+    padding:24px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);
+    transition:background .12s ease;
+  }
+  .post:hover{background:rgba(255,255,255,.5);}
+  .post:hover h3{color:var(--accent);}
+  .post .meta{font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .post .meta .date{font-size:12px;color:var(--muted);letter-spacing:.04em;}
+  .post .meta .cat{
+    display:inline-block;margin-top:8px;font-size:10.5px;font-weight:700;color:var(--accent);
+    letter-spacing:.06em;
+  }
+  .post .main h3{font-size:19px;font-weight:700;margin-bottom:8px;line-height:1.5;transition:color .12s;}
+  .post .main p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14px;color:var(--ink-soft);line-height:1.8;}
+  .post .main .readmark{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11.5px;color:var(--muted);margin-top:10px;display:inline-block;
+  }
+
+  /* ===== 概要(このサイトについて) ===== */
+  .about-band{background:var(--ink);color:#EDEBE3;}
+  .about-band .wrap{padding:58px 22px;}
+  .about-band .eyebrow{color:#D98A66;}
+  .about-band h2{font-size:24px;font-weight:700;margin-bottom:18px;letter-spacing:.03em;}
+  .about-band p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:15px;line-height:1.95;color:#C9C6BD;max-width:680px;margin:0 0 14px;}
+  .about-band .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px;margin-top:30px;}
+  .about-band .pillar .n{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11px;color:#D98A66;font-weight:700;letter-spacing:.1em;margin-bottom:6px;}
+  .about-band .pillar .h{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .about-band .pillar p{font-size:12.5px;color:#B4B1A7;margin:0;}
+
+  /* ===== フッター ===== */
+  footer.site{border-top:1px solid var(--line);padding:30px 0 50px;}
+  footer.site .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer.site .f-brand{font-family:"Hiragino Mincho ProN",serif;font-size:16px;font-weight:700;}
+  footer.site .f-brand .han{color:var(--accent);}
+  footer.site .f-note{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11.5px;color:var(--muted);}
+
+
+  /* ===== アプリ起動案内ポップアップ ===== */
+  .appmodal{
+    position:fixed; inset:0; z-index:2100;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .appmodal[hidden]{ display:none; }
+  .appmodal-backdrop{
+    position:absolute; inset:0;
+    background:rgba(20,25,40,.76);
+  }
+  .appmodal-box{
+    position:relative; width:min(92vw,430px);
+    background:var(--surface); color:var(--ink);
+    border:1px solid var(--line); border-radius:16px;
+    padding:28px 26px 24px;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+  }
+  .appmodal-box h3{
+    font-size:22px; line-height:1.45; margin:0 0 12px;
+    letter-spacing:.02em;
+  }
+  .appmodal-box p{
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    font-size:14.5px; line-height:1.95; color:var(--ink-soft);
+    margin:0 0 14px;
+  }
+  .appmodal-help{
+    display:inline-flex; align-items:center; gap:.35em;
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    color:var(--accent); font-weight:700; font-size:13.5px;
+    text-decoration:none; border-bottom:1px solid currentColor;
+    margin-top:2px;
+  }
+  .appmodal-buttons{
+    display:flex; justify-content:flex-end; gap:10px;
+    margin-top:22px;
+  }
+  .appmodal-buttons button{
+    font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;
+    border:0; border-radius:8px; padding:10px 16px;
+    font-size:14px; font-weight:700; cursor:pointer;
+  }
+  .appmodal-buttons .cancel{
+    background:var(--paper-2); color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+  .appmodal-buttons .go{
+    background:var(--ink); color:#fff;
+  }
+  .appmodal-buttons .go:hover{ background:var(--accent); }
+
+  @media(max-width:640px){
+    .post{grid-template-columns:1fr;gap:8px;}
+    .post .meta{display:flex;gap:12px;align-items:center;}
+    .post .meta .cat{margin-top:0;}
+    nav.site-nav{gap:15px;}
+    nav.site-nav a.hide-sp{display:none;}
+    .brand .tag{display:none;}
+    .brand .mark{font-size:19px;}
+    .site-inner{height:56px;}
+    .sec-head{flex-wrap:wrap;gap:8px 14px;}
+    .sec-head .note{margin-left:0;width:100%;}
+
+    /* スマホでの可読性: 読む文字を少し大きく・濃く・押しやすく */
+    .hero .lede{font-size:17px;line-height:2;}
+    .hero .hero-message{font-size:16.5px;line-height:2;margin:4px 0 22px;}
+    .sec-head h2{font-size:23px;}
+    .appcard .body{padding:20px 20px 22px;}
+    .appcard h3{font-size:19px;}
+    .appcard p{font-size:16px;line-height:1.9;color:#2f3c57;}
+    .appcard .status{font-size:11.5px;}
+    .appcard .tags span{font-size:11.5px;}
+    .appcard .links a{font-size:13.5px;padding:10px 16px;}
+    .appcard .docs a{font-size:13.5px;}
+    .post .main h3{font-size:20px;}
+    .post .main p{font-size:16px;line-height:1.9;color:#2f3c57;}
+    .post .meta .date{font-size:12.5px;}
+    .post .meta .cat{font-size:11.5px;}
+    .about-band h2{font-size:22px;}
+    .about-band p{font-size:16px;line-height:2;}
+    .about-band .pillar .h{font-size:17px;}
+    .about-band .pillar p{font-size:14px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="./index.html">
+      <span class="mark">つくる<span class="han">手帖</span></span>
+      <span class="tag sans">AIで"自分専用"の道具をつくる</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#apps">アプリ</a>
+      <a href="#posts">記事</a>
+      <a href="yohaku.html">手帖の余白</a>
+      <a href="sitemap.html" class="hide-sp">サイトマップ</a>
+      <a href="#about" class="hide-sp">このサイトについて</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== ヒーロー ===== -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow sans">MAKING MY OWN TOOLS WITH AI</div>
+    <div class="hero-min">
+      <div class="hero-min-text">
+        <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
+        <div class="hero-message">
+          <p>でも、<br>家族はだれも見てくれません。</p>
+          <p>だから、<br>どこかの誰か一人に届けば、<br>それで十分だと思っています。</p>
+        </div>
+        <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
+        <div class="hero-videos">
+          <a class="vbtn vbtn-solid sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
+          <a class="vbtn vbtn-solid sans" href="docs/yotei3-douga.mp4" data-video="docs/yotei3-douga.mp4"><span class="play">▶</span>わが家の予定板</a>
+          <a class="vbtn vbtn-solid sans" href="docs/nippo-douga.mp4" data-video="docs/nippo-douga.mp4"><span class="play">▶</span>作業日報＆集計</a>
+          <a class="vbtn vbtn-solid sans" href="docs/tukuru-pinball.mp4" data-video="docs/tukuru-pinball.mp4"><span class="play">▶</span>つくる手帖ピンボール</a>
+          <a class="vbtn sans" href="docs/tukurutetyou-douga.mp4" data-video="docs/tukurutetyou-douga.mp4"><span class="play">▶</span>つくる手帖の紹介</a>
+        </div>
+        <p class="hero-try sans">どれもブラウザで、すぐ試せます。<a href="#apps">つくった道具を見る ↓</a></p>
+      </div>
+      <img class="hero-techon" src="characters/techon.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<!-- ===== はじめに（この手帖について） ===== -->
+<style>
+  .intro-note{ padding:2px 0 26px; }
+  .intro-note .wrap{ max-width:680px; }
+  .intro-note .intro-label{ font-size:12px; letter-spacing:.14em; color:var(--accent); font-weight:700; margin-bottom:10px; }
+  .intro-note .intro-lead{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    font-size:clamp(17px,2.7vw,21px); line-height:2; color:var(--ink); margin:0 0 14px;
+  }
+  .intro-note .intro-sub{ font-size:14.5px; line-height:2; color:var(--ink-soft); margin:0; }
+</style>
+<section class="intro-note">
+  <div class="wrap">
+    <div class="intro-label sans">はじめに</div>
+    <p class="intro-lead">このサイトは、私が人生の中で困ったこと、考えたこと、そして作ったものを残していくための記録帳です。</p>
+    <p class="intro-sub sans">多くの人には意味が分からないかもしれません。<br>それでも、どこかの誰かが「少し分かる」と感じてくれたら嬉しく思います。</p>
+  </div>
+</section>
+
+<!-- ===== アプリ一覧 ===== -->
+<section class="section" id="apps">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="idx sans">01</span>
+      <h2>つくった道具</h2>
+      <span class="note sans">順次ふやしていきます</span>
+    </div>
+    <p class="apps-note" style="margin:.1rem 0 1.7rem;max-width:62ch;color:var(--ink-soft,#3A4A66);line-height:1.95;font-size:.98rem;">
+      どのアプリも、ブラウザで開くだけで使える「PWA」です。アプリを開いて<span style="color:var(--accent,#C2603A);font-weight:600">ホーム画面に追加</span>すれば、ふつうのアプリのように起動できます。入力したデータは<span style="color:var(--accent,#C2603A);font-weight:600">すべて手元の端末の中だけ</span>に保存され、サーバーには送られません。
+    </p>
+    <div class="apps" id="appGrid"></div>
+  </div>
+</section>
+
+<!-- ===== 記事 ===== -->
+<section class="section" id="posts">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="idx sans">02</span>
+      <h2>記録 — AIでアプリをつくる</h2>
+      <span class="note sans">経緯・勘所・必要なスキル</span>
+    </div>
+    <div class="posts" id="postList"></div>
+  </div>
+</section>
+
+<!-- ===== このサイトについて ===== -->
+<section class="about-band" id="about">
+  <div class="wrap">
+    <div class="eyebrow sans">ABOUT</div>
+    <h2>このサイトについて</h2>
+    <figure style="margin:6px 0 28px;">
+      <img src="images/overview.jpeg" alt="つくる手帖の概要図。AIで「自分専用」の道具を自作する。活動を支える3つの柱（つくる・のこす・わたす）、端末完結型のプライバシー保護とインストール不要のPWA、生活に根ざした自作アプリ（家計簿・予定板・作業日報集計など）を一枚にまとめた図。" loading="lazy" style="width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:12px;">
+      <figcaption class="sans" style="margin-top:9px;font-size:13px;color:var(--muted);text-align:center;">サイトの全体像を、一枚にまとめました。</figcaption>
+    </figure>
+    <p>70歳になりました。</p>
+    <p>
+      出発点は、父が営む鉄工所でした。新幹線の架線金物をつくる工場でしたが、国鉄の経営難で整備新幹線の建設が凍結され、受注が途絶えて倒産。残ったのは、私が工場の生産管理と原価計算のために独学していたパソコンの知識だけでした。
+    </p>
+    <p>
+      その経験を頼りに、30歳でシステム開発を個人として始め、5年後に法人化。製造業向けの生産管理・原価管理システムを手がけてきました。一貫して大事にしてきたのは、「モノづくりの発想で、現場の手間を極限まで減らす」こと。
+    </p>
+    <p>
+      65歳で会長に退き、セミリタイヤして自分の時間ができたいま、出会ったのがAIです。大きな成功を狙うつもりはありません。誰か一人の役に立てば、それで価値がある。作って終わりにせず、何を考え、どこでつまずき、どんなスキルが効いたのか——過程ごと正直に書き残していきます。
+    </p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="n sans">つくる</div>
+        <div class="h">欲しい道具を、自分で</div>
+        <p class="sans">既製品で妥協しない。必要な機能だけを、自分の使い方に合わせて。</p>
+      </div>
+      <div class="pillar">
+        <div class="n sans">のこす</div>
+        <div class="h">作り方を、正直に</div>
+        <p class="sans">うまくいった点も、回り道も。再現できる粒度で書き残す。</p>
+      </div>
+      <div class="pillar">
+        <div class="n sans">わたす</div>
+        <div class="h">勘所と必要スキルを</div>
+        <p class="sans">AIに任せる部分、人が決める部分。その線引きを共有する。</p>
+      </div>
+    </div>
+    <p class="sans" style="text-align:center;margin:36px 0 14px;font-size:13.5px;color:#C9C6BD;">この歩みを、短い動画にもまとめました。</p>
+    <div style="text-align:center;">
+      <a class="vbtn sans" href="docs/tetukaraai-douga.mp4" data-video="docs/tetukaraai-douga.mp4"><span class="play">▶</span>鉄からAIへ</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap" style="flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:24px;">
+    <a href="yohaku.html" aria-label="手帖の余白" style="display:inline-flex;gap:14px;align-items:flex-end;justify-content:center;flex-wrap:wrap;text-decoration:none;">
+      <span style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;width:76px;height:76px;display:inline-flex;align-items:center;justify-content:center;"><img src="characters/techon.png" alt="" style="max-width:100%;max-height:100%;display:block;"></span>
+      <span style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;width:76px;height:76px;display:inline-flex;align-items:center;justify-content:center;"><img src="characters/grassplot.png" alt="" style="max-width:100%;max-height:100%;display:block;"></span>
+      <span style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;width:76px;height:76px;display:inline-flex;align-items:center;justify-content:center;"><img src="characters/rgb.png" alt="" style="max-width:100%;max-height:100%;display:block;"></span>
+      <span style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;width:76px;height:76px;display:inline-flex;align-items:center;justify-content:center;"><img src="characters/tsukumogra.png" alt="" style="max-width:100%;max-height:100%;display:block;"></span>
+    </a>
+    <a href="yohaku.html" style="color:var(--accent);font-weight:700;text-decoration:none;font-size:13.5px;letter-spacing:.04em;">手帖の余白　→</a>
+    <a href="sitemap.html" style="color:var(--accent);font-weight:700;text-decoration:none;font-size:13.5px;letter-spacing:.04em;">サイトマップ　→</a>
+  </div>
+  <div class="wrap">
+    <div class="f-brand">つくる<span class="han">手帖</span></div>
+    <div class="f-note sans">© 2026 つくる手帖 / GitHub Pages で公開 / 各アプリのデータは利用者の端末内にのみ保存されます</div>
+  </div>
+</footer>
+
+<script>
+// ===== データ(ここに追記すれば一覧が増えます) =====
+const APPS = [
+  {
+    name:"わが家の家計簿",
+    status:"live",            // live=公開中 / wip=制作中
+    glyph:"📒",
+    summary:"銀行・カードのCSVを取り込んで、家計の収支から確定申告の概算までを一つに。データは端末内だけに保存。",
+    tags:["PWA","IndexedDB","CSV取込","確定申告"],
+    demo:"https://tad551216-rgb.github.io/demo-kakeibo/",   // デモ公開URL
+    article:"articles/kakeibo.html"
+  },
+  {
+    name:"わが家の予定板",
+    status:"live",
+    glyph:"🗓️",
+    summary:"父・母・長男の予定を1枚で共有。月間カレンダーと週間リスト、写真付き日記まで。データは端末内だけに保存。",
+    tags:["PWA","カレンダー","家族共有","写真日記"],
+    link:"https://tad551216-rgb.github.io/yotei3/",          // 公開URL(開く)
+    article:"articles/yotei.html",
+    docs:[
+      { label:"セットアップガイド（PDF）", file:"docs/yotei-setup.pdf" },
+      { label:"操作説明書（PDF）", file:"docs/yoteiban-setumei.pdf" }
+    ]
+  },
+  {
+    name:"放課後等デイサービス 作業日報",
+    status:"live",
+    glyph:"⏱️",
+    summary:"パート従業員の作業を15分単位で簡単に報告。勤怠・時間計算の元になる作業報告に特化し、個人情報や療育内容は一切扱わない。",
+    tags:["PWA","福祉","勤怠・作業報告","15分単位"],
+    link:"https://tad551216-rgb.github.io/nippo/",
+    article:"articles/nippo.html",
+    docs:[
+      { label:"機能のご紹介（PDF）", file:"docs/nippo-features.pdf" },
+      { label:"ホーム画面への登録手順 iPhone（PDF）", file:"docs/nippo-install.pdf" },
+      { label:"ホーム画面への登録手順 Android（PDF）", file:"docs/android-nippo-install.pdf" }
+    ]
+  },
+  {
+    name:"作業日報集計",
+    status:"live",
+    glyph:"📊",
+    summary:"作業日報アプリで記録した作業を、従業員別・期間別に集計。勤怠や作業時間の集計を、まとめて確認できます。",
+    tags:["PWA","集計","勤怠","作業時間"],
+    link:"https://tad551216-rgb.github.io/nippo-syuukei/",
+    article:"articles/dev-syuukei.html",
+    docs:[
+      { label:"操作マニュアル（PDF）", file:"docs/nippo-shukei-manual.pdf" }
+    ]
+  },
+  {
+    name:"つくる手帖ピンボール",
+    status:"live",
+    glyph:"🕹️",
+    summary:"思いつく・つくる・届ける——アイデアの玉を弾いて遊ぶ手帖のピンボール。『思・作・届』のバンパーを全部ならすとひとつ完成。データは端末内だけ、通信なしで遊べます。",
+    tags:["PWA","ゲーム","オフライン","Canvas"],
+    link:"https://tad551216-rgb.github.io/pinball/",
+    article:"articles/pinball.html"
+  }
+  // 例) 次のアプリを追加するときは下の形式で足すだけ:
+  // ,{ name:"○○", status:"wip", glyph:"🧰", summary:"…", tags:["PWA","…"], link:"https://…", article:"articles/xxx.html" }
+];
+
+const POSTS = [
+  {
+    date:"2026-06-26",
+    cat:"開発記",
+    title:"つくる手帖ピンボールを作った話",
+    excerpt:"一玉のボールをアイデアに見立て、思う・作る・届けるという創作の流れをピンボールで表現した小さなPWAゲームの開発記。",
+    url:"articles/pinball.html"
+  },
+  {
+    date:"2026-06-21",
+    cat:"紹介",
+    title:"たった一人のための AI ——「つくる手帖」紹介動画",
+    excerpt:"このサイトが何をしているところなのかを、約2分の動画にまとめました。動画そのものも、AIで制作しています。",
+    url:"articles/intro-video.html"
+  },
+  {
+    date:"2026-06-21",
+    cat:"開発記",
+    title:"家族の予定板アプリを、プログラミングなしで作った話",
+    excerpt:"プログラムを書かず、AIとの会話だけで作った家族の予定共有アプリ。注文を重ねて形にしていく過程と、専門知識がなくてもたどれる「5つのステップ」を、つまずきも含めて記録。",
+    url:"articles/yotei.html"
+  },
+  {
+    date:"2026-06-21",
+    cat:"開発記",
+    title:"LINEに流れる日報を、自動で集計する仕組みをつくった話",
+    excerpt:"作業日報アプリに集計機能を足していった記録。氏名の埋め込み、月締め、漏れ確認カレンダー、日報・週報・月報の出力まで、現場の声に応えて少しずつ形を変えた過程を残した。",
+    url:"articles/dev-syuukei.html"
+  },
+  {
+    date:"2026-06-21",
+    cat:"開発記",
+    title:"無料でも、安全に。介護現場の「作業日報」をつくった話",
+    excerpt:"長男のひとことがきっかけ。小さな介護事業所ではLINEが事実上の情報共有インフラになっている——その現実の中で、個人情報を載せず端末内に閉じ、無料で安全に使える作業日報をつくった記録。",
+    url:"articles/nippo.html"
+  },
+  {
+    date:"2026-06-19",
+    cat:"エッセイ",
+    title:"鉄からシステム、そしてAIへ",
+    excerpt:"父の鉄工所が消えた日から、独学のパソコン、そして70歳のいまのAIまで。道具は変わっても、やってきたことは一つだった——その半生の記録。",
+    url:"articles/iron-to-ai.html"
+  },
+  {
+    date:"2026-06-16",
+    cat:"開発記",
+    title:"家計簿アプリを、AIと作り切るまで",
+    excerpt:"既製の家計簿に感じていた不満を起点に、CSV自動取込・確定申告概算まで備えた『自分専用』を作った記録。設計判断、つまずき、AIへの頼り方を順を追って。",
+    url:"articles/kakeibo.html"
+  },
+  {
+    date:"2026-06-16",
+    cat:"ノウハウ",
+    title:"AIでアプリを作るときの勘所と、必要なスキル",
+    excerpt:"AIに任せられること・人が決めるべきこと。35年の開発経験から見た、AIものづくりで効くスキルと、最初の一歩の踏み出し方。",
+    url:"articles/ai-app-howto.html"
+  }
+];
+
+// ===== 描画 =====
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+function renderApps(){
+  const g=document.getElementById("appGrid");
+  g.innerHTML = APPS.map(a=>{
+    const st = a.status==="live"
+      ? '<span class="status live sans">公開中</span>'
+      : '<span class="status wip sans">制作中</span>';
+    const tags = (a.tags||[]).map(t=>`<span>${esc(t)}</span>`).join("");
+    const links = [];
+    if(a.status==="live" && a.demo){
+      const ext = /^https?:/.test(a.demo);
+      links.push(`<a class="primary" href="${esc(a.demo)}"${ext?' target="_blank" rel="noopener"':''}>使ってみる</a>`);
+    }
+    if(a.status==="live" && a.link){
+      const blank = a.sameTab ? '' : ' target="_blank" rel="noopener"';
+      links.push(`<a class="primary" href="${esc(a.link)}"${blank}>使ってみる</a>`);
+    }
+    if(a.article) links.push(`<a class="ghost" href="${esc(a.article)}">作り方を読む</a>`);
+    const docs = (a.docs||[]).map(d=>`<a href="viewer.html?f=${encodeURIComponent(d.file)}&t=${encodeURIComponent(d.label)}">${esc(d.label)}</a>`).join("");
+    return `<article class="appcard">
+      <div class="thumb"><div class="grid-bg"></div><div class="glyph">${a.glyph||"🧩"}</div></div>
+      <div class="body">
+        ${st}
+        <h3>${esc(a.name)}</h3>
+        <p>${esc(a.summary)}</p>
+        <div class="tags">${tags}</div>
+        <div class="links">${links.join("")}</div>
+        ${docs ? `<div class="docs">${docs}</div>` : ""}
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function renderPosts(){
+  const fmt=d=>{const[y,m,da]=d.split("-");return `${y}.${m}.${da}`;};
+  document.getElementById("postList").innerHTML = POSTS.map(p=>`
+    <a class="post" href="${esc(p.url)}">
+      <div class="meta">
+        <span class="date">${fmt(p.date)}</span>
+        <span class="cat">${esc(p.cat)}</span>
+      </div>
+      <div class="main">
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.excerpt)}</p>
+        <span class="readmark">読む →</span>
+      </div>
+    </a>`).join("");
+}
+
+renderApps();
+renderPosts();
+</script>
+<!-- 動画ポップアップ（自前video） -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+
+<!-- アプリ起動案内ポップアップ -->
+<div id="appModal" class="appmodal" hidden>
+  <div class="appmodal-backdrop" data-app-close></div>
+  <div class="appmodal-box">
+    <h3>📱 アプリとして使えます</h3>
+    <p>
+      ホーム画面に追加すると、普通のアプリのように起動できます。<br>
+      入力したデータは、この端末だけに保存されます。
+    </p>
+    <a id="installGuide" class="appmodal-help" href="viewer.html?f=docs/nippo-install.pdf&t=iPhone" target="_blank" rel="noopener">ホーム画面への追加方法を見る →</a>
+    <div class="appmodal-buttons">
+      <button class="cancel" type="button">あとで</button>
+      <button class="go" type="button">使ってみる</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var vid=document.getElementById('videoEl');
+  if(!modal||!vid) return;
+  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
+  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
+</script>
+
+<script>
+(function(){
+  var modal=document.getElementById('appModal');
+  if(!modal) return;
+
+  var guide=document.getElementById('installGuide');
+  var cancel=modal.querySelector('.cancel');
+  var go=modal.querySelector('.go');
+  var targetUrl='';
+  var openNewTab=false;
+
+  var ua=navigator.userAgent || '';
+  var isApple=/iphone|ipad|ipod/i.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  guide.href=isApple
+    ? 'viewer.html?f=docs/nippo-install.pdf&t=' + encodeURIComponent('ホーム画面への登録手順 iPhone')
+    : 'viewer.html?f=docs/android-nippo-install.pdf&t=' + encodeURIComponent('ホーム画面への登録手順 Android');
+
+  function openModal(){
+    modal.hidden=false;
+    document.body.style.overflow='hidden';
+  }
+
+  function closeModal(){
+    modal.hidden=true;
+    document.body.style.overflow='';
+  }
+
+  function proceed(){
+    try{ localStorage.setItem('tsukuruAppGuideShown','1'); }catch(e){}
+    closeModal();
+
+    if(openNewTab){
+      var w=window.open(targetUrl,'_blank','noopener');
+      if(!w) location.href=targetUrl;
+    }else{
+      location.href=targetUrl;
+    }
+  }
+
+  document.querySelectorAll('.appcard .links a.primary').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      try{
+        if(localStorage.getItem('tsukuruAppGuideShown')) return;
+      }catch(err){}
+
+      e.preventDefault();
+      targetUrl=btn.href;
+      openNewTab=(btn.getAttribute('target')==='_blank');
+      openModal();
+    });
+  });
+
+  cancel.addEventListener('click',proceed);
+  go.addEventListener('click',proceed);
+  modal.querySelector('[data-app-close]').addEventListener('click',closeModal);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !modal.hidden) closeModal(); });
+})();
+</script>
+</body>
+</html>
