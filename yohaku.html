@@ -96,6 +96,23 @@
   .kuma-scene .bear{ position:absolute; left:82px; bottom:39px; font-size:30px; filter:drop-shadow(0 2px 1px rgba(0,0,0,.18)); }
   .kuma-scene .label{ position:absolute; right:8px; top:7px; font-size:10px; font-weight:700; color:#fff; background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
 
+
+  .pinball-scene{ position:relative; width:100%; height:100%; min-height:92px; border-radius:8px;
+    background:
+      linear-gradient(180deg, rgba(27,42,74,.08), rgba(194,96,58,.07)),
+      repeating-linear-gradient(0deg, rgba(27,42,74,.07) 0 1px, transparent 1px 15px),
+      repeating-linear-gradient(90deg, rgba(27,42,74,.07) 0 1px, transparent 1px 15px),
+      #fbfaf5; overflow:hidden; }
+  .pinball-scene .rail{ position:absolute; inset:12px 24px 11px; border:3px solid var(--ink); border-top-left-radius:52px; border-top-right-radius:52px; border-bottom-left-radius:14px; border-bottom-right-radius:14px; opacity:.9; }
+  .pinball-scene .bumper{ position:absolute; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:700; font-size:14px; box-shadow:0 3px 0 rgba(0,0,0,.18); }
+  .pinball-scene .b1{ left:62px; top:28px; background:var(--accent); }
+  .pinball-scene .b2{ left:50%; top:17px; transform:translateX(-50%); background:var(--green); }
+  .pinball-scene .b3{ right:62px; top:28px; background:#3A6FC8; }
+  .pinball-scene .pball{ position:absolute; right:54px; bottom:34px; width:14px; height:14px; border-radius:50%; background:#fff; border:2px solid var(--ink); box-shadow:0 2px 4px rgba(0,0,0,.25); }
+  .pinball-scene .flipper{ position:absolute; bottom:20px; width:48px; height:10px; border-radius:999px; background:var(--accent); box-shadow:0 2px 0 rgba(0,0,0,.16); }
+  .pinball-scene .f1{ left:58px; transform:rotate(18deg); }
+  .pinball-scene .f2{ right:58px; transform:rotate(-18deg); }
+
   .bricks{ display:flex; flex-direction:column; gap:5px; align-items:center; }
   .bricks .row{ display:flex; gap:5px; }
   .bricks i{ width:30px; height:11px; border-radius:3px; display:block; }
@@ -176,7 +193,27 @@
     </a>
 
 
-    <!-- ② くまさん叩き in 秋田市（別サイト・kumasan リポジトリ） -->
+    <!-- ② つくる手帖ピンボール（別サイト） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/pinball/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="pinball-scene" aria-hidden="true">
+          <span class="rail"></span>
+          <span class="bumper b1">思</span>
+          <span class="bumper b2">作</span>
+          <span class="bumper b3">届</span>
+          <span class="pball"></span>
+          <span class="flipper f1"></span>
+          <span class="flipper f2"></span>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">つくる手帖ピンボール<span class="ext">別サイト</span></h2>
+      <p class="ydesc">「思う」「つくる」「届ける」をテーマにした、つくる手帖の小さなピンボール。アイデアの玉を弾きながら、ものづくりの楽しさを遊びにしました。</p>
+      <span class="ygo">あそんでみる　↗</span>
+    </a>
+
+
+    <!-- ③ くまさん叩き in 秋田市（別サイト・kumasan リポジトリ） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/kumasan/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="kuma-scene" aria-hidden="true">
@@ -193,7 +230,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ③ 記録のかけら（別サイト・ブロック崩し） -->
+    <!-- ④ 記録のかけら（別サイト・ブロック崩し） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/blockbreaker/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="bricks" aria-hidden="true">
@@ -208,7 +245,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ④ 方眼インベーダー（別サイト） -->
+    <!-- ⑤ 方眼インベーダー（別サイト） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/invader/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="invaders">
@@ -223,7 +260,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑤ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
+    <!-- ⑥ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="crud" aria-hidden="true">
