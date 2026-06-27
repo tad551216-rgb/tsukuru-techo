@@ -83,6 +83,19 @@
     padding:10px; margin-bottom:14px; overflow:hidden; }
   .ythumb img{ max-height:84px; max-width:21%; height:auto; display:block; }
 
+
+  .kuma-scene{ position:relative; width:100%; height:100%; min-height:92px; border-radius:8px;
+    background:linear-gradient(#d9eef6 0 45%, #cfe6d1 45% 72%, #b8bcc2 72% 100%); overflow:hidden; }
+  .kuma-scene::before{ content:""; position:absolute; left:12px; right:12px; bottom:20px; height:10px;
+    background:rgba(27,42,74,.16); border-radius:999px; }
+  .kuma-scene .tree{ position:absolute; left:22px; bottom:20px; width:18px; height:48px; background:#7B5436; border-radius:8px 8px 3px 3px; }
+  .kuma-scene .tree::before{ content:""; position:absolute; left:-17px; top:-24px; width:52px; height:42px; border-radius:50%; background:#3D6B52; box-shadow:28px 6px 0 #4f7f61; }
+  .kuma-scene .bush{ position:absolute; left:68px; bottom:21px; width:70px; height:28px; background:#5F8F64; border-radius:40px 40px 10px 10px; }
+  .kuma-scene .drain{ position:absolute; right:28px; bottom:17px; width:58px; height:22px; background:#5f6874; border-radius:6px; border:3px solid #394351; }
+  .kuma-scene .drain::after{ content:""; position:absolute; inset:5px 8px; background:repeating-linear-gradient(90deg,#202938 0 4px, transparent 4px 9px); opacity:.65; }
+  .kuma-scene .bear{ position:absolute; left:82px; bottom:39px; font-size:30px; filter:drop-shadow(0 2px 1px rgba(0,0,0,.18)); }
+  .kuma-scene .label{ position:absolute; right:8px; top:7px; font-size:10px; font-weight:700; color:#fff; background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
+
   .bricks{ display:flex; flex-direction:column; gap:5px; align-items:center; }
   .bricks .row{ display:flex; gap:5px; }
   .bricks i{ width:30px; height:11px; border-radius:3px; display:block; }
@@ -162,7 +175,25 @@
       <span class="ygo">なかまたちに会う　→</span>
     </a>
 
-    <!-- ② 記録のかけら（別サイト・ブロック崩し） -->
+
+    <!-- ② くまさん叩き in 秋田市（サイト内・PWAゲーム） -->
+    <a class="ycard" href="kuma-hide/">
+      <div class="ythumb">
+        <div class="kuma-scene" aria-hidden="true">
+          <span class="tree"></span>
+          <span class="bush"></span>
+          <span class="drain"></span>
+          <span class="bear">🐻</span>
+          <span class="label">NEW</span>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">くまさん叩き in 秋田市</h2>
+      <p class="ydesc">木の後ろや植え込み、石の陰、下水路などに隠れたくまさんを探してタップ。秋田市街地をイメージした、つくる手帖のおまけゲームです。</p>
+      <span class="ygo">あそんでみる　→</span>
+    </a>
+
+    <!-- ③ 記録のかけら（別サイト・ブロック崩し） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/blockbreaker/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="bricks" aria-hidden="true">
@@ -177,7 +208,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ③ 方眼インベーダー（別サイト） -->
+    <!-- ④ 方眼インベーダー（別サイト） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/invader/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="invaders">
@@ -192,7 +223,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ④ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
+    <!-- ⑤ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="crud" aria-hidden="true">
@@ -205,7 +236,7 @@
       <span class="ygo">ひらく　↗</span>
     </a>
 
-    <!-- ③ ここから下に、新しいカードを足していけます -->
+    <!-- ⑥ ここから下に、新しいカードを足していけます -->
 
   </div>
 
