@@ -24,21 +24,29 @@
   :root{
     --ink:#1B2A4A;        /* 濃紺(主役) */
     --ink-soft:#3A4A66;
-    --paper:#F3F1EA;      /* 製図用紙のような淡い生成り */
-    --paper-2:#ECE9DF;
-    --surface:#FFFFFF;
-    --line:#D8D3C4;       /* 罫線 */
-    --line-strong:#B9B2A0;
+    --paper:#F6F3EA;      /* スクリーンショットに合わせた淡い生成り */
+    --paper-2:#EFEADF;
+    --surface:rgba(255,255,255,.82);
+    --line:#DDD5C5;       /* 罫線 */
+    --line-strong:#BFAF98;
     --accent:#C2603A;     /* 朱(印・要点) */
     --accent-deep:#9F4A2B;
     --muted:#7A7567;
-    --grid:#E3DFD3;
+    --grid:#E9E0D1;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
     font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    color:var(--ink);background:var(--paper);
+    color:var(--ink);
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      radial-gradient(circle at 22% 10%, rgba(255,255,255,.72), rgba(255,255,255,0) 34%),
+      radial-gradient(circle at 88% 18%, rgba(255,255,255,.50), rgba(255,255,255,0) 30%);
+    background-size:28px 28px, 28px 28px, 100% 100%, 100% 100%;
+    background-attachment:fixed, fixed, fixed, fixed;
     line-height:1.85;
     -webkit-font-smoothing:antialiased;
   }
@@ -48,7 +56,7 @@
   /* ===== ヘッダー ===== */
   header.site{
     border-bottom:1px solid var(--line);
-    background:rgba(243,241,234,.9);backdrop-filter:blur(6px);
+    background:rgba(246,243,234,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
     position:sticky;top:0;z-index:20;
   }
   .site-inner{display:flex;align-items:center;justify-content:space-between;height:62px;}
@@ -69,11 +77,8 @@
   .hero{padding:54px 0 44px;position:relative;}
   .hero::before{
     content:"";position:absolute;inset:0;z-index:0;
-    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-    background-size:28px 28px;
-    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
-    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
-    opacity:.6;
+    background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0) 72%);
+    pointer-events:none;
   }
   .hero-inner{position:relative;z-index:1;max-width:760px;}
   .eyebrow{
