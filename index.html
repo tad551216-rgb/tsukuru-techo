@@ -24,29 +24,21 @@
   :root{
     --ink:#1B2A4A;        /* 濃紺(主役) */
     --ink-soft:#3A4A66;
-    --paper:#F6F3EA;      /* スクリーンショットに合わせた淡い生成り */
-    --paper-2:#EFEADF;
-    --surface:rgba(255,255,255,.82);
-    --line:#DDD5C5;       /* 罫線 */
-    --line-strong:#BFAF98;
+    --paper:#F3F1EA;      /* 製図用紙のような淡い生成り */
+    --paper-2:#ECE9DF;
+    --surface:#FFFFFF;
+    --line:#D8D3C4;       /* 罫線 */
+    --line-strong:#B9B2A0;
     --accent:#C2603A;     /* 朱(印・要点) */
     --accent-deep:#9F4A2B;
     --muted:#7A7567;
-    --grid:#E9E0D1;
+    --grid:#E3DFD3;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
     font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    color:var(--ink);
-    background-color:var(--paper);
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-      radial-gradient(circle at 22% 10%, rgba(255,255,255,.72), rgba(255,255,255,0) 34%),
-      radial-gradient(circle at 88% 18%, rgba(255,255,255,.50), rgba(255,255,255,0) 30%);
-    background-size:28px 28px, 28px 28px, 100% 100%, 100% 100%;
-    background-attachment:fixed, fixed, fixed, fixed;
+    color:var(--ink);background:var(--paper);
     line-height:1.85;
     -webkit-font-smoothing:antialiased;
   }
@@ -56,7 +48,7 @@
   /* ===== ヘッダー ===== */
   header.site{
     border-bottom:1px solid var(--line);
-    background:rgba(246,243,234,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    background:rgba(243,241,234,.9);backdrop-filter:blur(6px);
     position:sticky;top:0;z-index:20;
   }
   .site-inner{display:flex;align-items:center;justify-content:space-between;height:62px;}
@@ -77,8 +69,11 @@
   .hero{padding:54px 0 44px;position:relative;}
   .hero::before{
     content:"";position:absolute;inset:0;z-index:0;
-    background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0) 72%);
-    pointer-events:none;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 70%);
+    opacity:.6;
   }
   .hero-inner{position:relative;z-index:1;max-width:760px;}
   .eyebrow{
@@ -120,30 +115,8 @@
     color:var(--accent);text-decoration:none;font-weight:700;
     border-bottom:1px solid currentColor;margin-left:.4em;white-space:nowrap;
   }
-  .hero .hero-message{
-    margin:6px 0 24px;
-    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-    color:var(--ink);
-    font-size:clamp(16px,2.2vw,20px);
-    line-height:2;
-    letter-spacing:.02em;
-  }
-  .hero .hero-message p{margin:0 0 14px;}
-  .hero .hero-message p:last-child{margin-bottom:0;}
-  .hero .hero-yohaku{
-    margin:-6px 0 24px;
-    font-size:14.5px;
-  }
-  .hero .hero-yohaku a{
-    display:inline-flex;align-items:center;
-    padding:9px 14px;border:1px solid var(--line);border-radius:999px;
-    background:rgba(255,255,255,.68);
-    color:var(--accent);text-decoration:none;font-weight:700;
-  }
-  .hero .hero-yohaku a:hover{ border-color:var(--accent);background:#fff; }
-
   .hero .hero-video-lead{
-    margin:20px 0 10px;font-size:14.5px;font-weight:700;color:var(--ink);
+    margin:14px 0 10px;font-size:14.5px;font-weight:700;color:var(--ink);
   }
   .hero-videos{ display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2px; }
   .hero-videos .vbtn{
@@ -335,7 +308,6 @@
 
     /* スマホでの可読性: 読む文字を少し大きく・濃く・押しやすく */
     .hero .lede{font-size:17px;line-height:2;}
-    .hero .hero-message{font-size:16.5px;line-height:2;margin:4px 0 22px;}
     .sec-head h2{font-size:23px;}
     .appcard .body{padding:20px 20px 22px;}
     .appcard h3{font-size:19px;}
@@ -380,11 +352,6 @@
     <div class="hero-min">
       <div class="hero-min-text">
         <h1>自分や家族のための<span class="em">小さな道具</span>を、スマホとAIでつくっています。</h1>
-        <div class="hero-message">
-          <p>息抜きに、<br>ゲームや小さなツールも、<br>気ままにアップしています。</p>
-          <p>本文には入りきらない寄り道は、<br>「手帖の余白」に置いています。</p>
-        </div>
-        <p class="hero-yohaku sans"><a href="yohaku.html">手帖の余白を見る　→</a></p>
         <p class="hero-video-lead sans">まずは、動画をご覧頂けます。</p>
         <div class="hero-videos">
           <a class="vbtn vbtn-solid sans" href="docs/kakeibo-douga.mp4" data-video="docs/kakeibo-douga.mp4"><span class="play">▶</span>わが家の家計簿</a>
@@ -538,7 +505,6 @@ const APPS = [
     summary:"パート従業員の作業を15分単位で簡単に報告。勤怠・時間計算の元になる作業報告に特化し、個人情報や療育内容は一切扱わない。",
     tags:["PWA","福祉","勤怠・作業報告","15分単位"],
     link:"https://tad551216-rgb.github.io/nippo/",
-    article:"articles/nippo.html",
     docs:[
       { label:"機能のご紹介（PDF）", file:"docs/nippo-features.pdf" },
       { label:"ホーム画面への登録手順 iPhone（PDF）", file:"docs/nippo-install.pdf" },
