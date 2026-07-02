@@ -157,6 +157,22 @@
   .crud span{ width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center;
     font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:700; font-size:16px; color:#fff; }
   .crud .c{ background:#C2603A; } .crud .r{ background:#3D6B52; } .crud .u{ background:#3A6FC8; } .crud .d{ background:#1B2A4A; }
+  .secret-scene{ position:relative; width:100%; height:100%; min-height:92px; border-radius:8px;
+    background:
+      repeating-linear-gradient(0deg, rgba(27,42,74,.07) 0 1px, transparent 1px 13px),
+      repeating-linear-gradient(90deg, rgba(27,42,74,.07) 0 1px, transparent 1px 13px),
+      #fbfaf5; overflow:hidden; display:flex; align-items:center; justify-content:center; gap:16px; }
+  .secret-scene .slock{ position:relative; width:42px; height:34px; background:var(--ink); border-radius:8px; margin-top:16px; }
+  .secret-scene .slock::before{ content:""; position:absolute; left:8px; top:-16px; width:26px; height:26px;
+    border:5px solid var(--ink); border-bottom:none; border-radius:14px 14px 0 0; }
+  .secret-scene .slock::after{ content:""; position:absolute; left:50%; top:9px; transform:translateX(-50%);
+    width:10px; height:15px; background:var(--accent); border-radius:5px 5px 2px 2px; }
+  .secret-scene .cipher{ display:flex; flex-direction:column; gap:4px; font-size:12.5px; font-weight:700; line-height:1.4; }
+  .secret-scene .cipher .plain{ color:var(--ink); letter-spacing:.08em; }
+  .secret-scene .cipher .arrow{ color:var(--muted); font-size:10.5px; font-weight:400; }
+  .secret-scene .cipher .enc{ color:var(--accent); font-family:ui-monospace,Menlo,Consolas,monospace; letter-spacing:.04em; }
+  .secret-scene .label{ position:absolute; right:8px; top:7px; font-size:10px; font-weight:700; color:#fff;
+    background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
   .ycat.dougu{ color:#2F5AA8; }
 
   .ycat{ display:inline-block; align-self:flex-start; font-size:11.5px; font-weight:700;
@@ -255,7 +271,6 @@
           <span class="bpin p4"></span><span class="bpin p5"></span>
           <span class="bpin p6"></span>
           <span class="bball"></span>
-          <span class="label">NEW</span>
         </div>
       </div>
       <span class="ycat">あそび</span>
@@ -336,6 +351,25 @@
       <span class="ycat dougu">どうぐ</span>
       <h2 class="ytitle">CRUD一覧ジェネレーター<span class="ext">別サイト</span></h2>
       <p class="ydesc">Forguncyのプロジェクトファイル（.fgcp）から、ページ別のCRUD（作成・参照・更新・削除）一覧Excelを作る保守ツール。解凍・解析・Excel生成はすべてブラウザ内で完結し、ファイルは端末から外に出ません。</p>
+      <span class="ygo">ひらく　↗</span>
+    </a>
+
+    <!-- ⑨ ひみつ文書（別サイト・実用ツール） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/himitsu/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="secret-scene" aria-hidden="true">
+          <span class="slock"></span>
+          <div class="cipher">
+            <span class="plain">こんにちは</span>
+            <span class="arrow">↓ 合言葉で変換</span>
+            <span class="enc">🔒Xk9=aQ7…</span>
+          </div>
+          <span class="label">NEW</span>
+        </div>
+      </div>
+      <span class="ycat dougu">どうぐ</span>
+      <h2 class="ytitle">ひみつ文書<span class="ext">別サイト</span></h2>
+      <p class="ydesc">LINEで送る文章を、ふたりだけの合言葉で暗号文に変える道具。届いた側は同じ合言葉で元の文章にもどせます。暗号化も復号もすべて端末の中だけで行い、文章も合言葉もどこにも送信されません。</p>
       <span class="ygo">ひらく　↗</span>
     </a>
 
