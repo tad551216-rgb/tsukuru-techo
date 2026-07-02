@@ -120,6 +120,18 @@
   .bricks .c3{ background:#3a6fc8; } .bricks .c4{ background:#C9A227; }
   .bricks .ball{ width:11px; height:11px; border-radius:50%; background:var(--ink); margin-top:4px; }
   .invaders{ display:flex; gap:13px; align-items:center; justify-content:center; }
+
+  .rev-scene{ position:relative; width:150px; padding:6px; border-radius:8px; background:var(--ink);
+    display:grid; grid-template-columns:repeat(4,1fr); gap:3px; box-shadow:0 2px 0 #10203c; }
+  .rev-scene i{ aspect-ratio:1/1; background:#F5EFDC; border-radius:2px;
+    display:flex; align-items:center; justify-content:center; }
+  .rev-scene i b{ display:block; width:72%; height:72%; border-radius:50%; }
+  .rev-scene .bk b{ background:var(--ink); }
+  .rev-scene .wh b{ background:var(--note); border:1.5px solid var(--ink); }
+  .rev-scene .ht b{ width:34%; height:34%; background:var(--accent); opacity:.85; }
+  .rev-scene .label{ position:absolute; right:-10px; top:-10px; font-size:10px; font-weight:700; color:#fff;
+    background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em;
+    box-shadow:0 2px 4px rgba(0,0,0,.25); }
   .crud{ display:flex; gap:8px; }
   .crud span{ width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center;
     font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:700; font-size:16px; color:#fff; }
@@ -213,7 +225,24 @@
     </a>
 
 
-    <!-- ③ くまさん叩き in 秋田市（別サイト・kumasan リポジトリ） -->
+    <!-- ③ 方眼リバーシ（別サイト） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/reversi/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="rev-scene" aria-hidden="true">
+          <i></i><i class="bk"><b></b></i><i class="wh"><b></b></i><i class="ht"><b></b></i>
+          <i class="wh"><b></b></i><i class="bk"><b></b></i><i class="bk"><b></b></i><i></i>
+          <i class="ht"><b></b></i><i class="wh"><b></b></i><i class="bk"><b></b></i><i></i>
+          <span class="label">NEW</span>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">方眼リバーシ<span class="ext">別サイト</span></h2>
+      <p class="ydesc">方眼ノートの上で遊ぶ、藍と朱のリバーシ。置ける場所に朱色の印が付くので、タップするだけで打てます。コンピュータ相手（強さ三段階）でも、ひとつの画面でふたり交互でも。「待った」もできます。</p>
+      <span class="ygo">あそんでみる　↗</span>
+    </a>
+
+
+    <!-- ④ くまさん叩き in 秋田市（別サイト・kumasan リポジトリ） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/kumasan/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="kuma-scene" aria-hidden="true">
@@ -221,7 +250,6 @@
           <span class="bush"></span>
           <span class="drain"></span>
           <span class="bear">🐻</span>
-          <span class="label">NEW</span>
         </div>
       </div>
       <span class="ycat">あそび</span>
@@ -230,7 +258,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ④ 記録のかけら（別サイト・ブロック崩し） -->
+    <!-- ⑤ 記録のかけら（別サイト・ブロック崩し） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/blockbreaker/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="bricks" aria-hidden="true">
@@ -245,7 +273,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑤ 方眼インベーダー（別サイト） -->
+    <!-- ⑥ 方眼インベーダー（別サイト） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/invader/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="invaders">
@@ -260,7 +288,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑥ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
+    <!-- ⑦ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="crud" aria-hidden="true">
@@ -273,7 +301,8 @@
       <span class="ygo">ひらく　↗</span>
     </a>
 
-    <!-- ⑥ ここから下に、新しいカードを足していけます -->
+
+    <!-- ここから下に、新しいカードを足していけます -->
 
   </div>
 
