@@ -132,6 +132,27 @@
   .rev-scene .label{ position:absolute; right:-14px; top:-5px; font-size:10px; font-weight:700; color:#fff;
     background:var(--accent); border-radius:999px; padding:1px 7px; letter-spacing:.04em; line-height:1.5;
     box-shadow:0 2px 4px rgba(0,0,0,.25); }
+  .bowl-scene{ position:relative; width:100%; height:100%; min-height:92px; border-radius:8px;
+    background:
+      repeating-linear-gradient(0deg, rgba(27,42,74,.07) 0 1px, transparent 1px 13px),
+      repeating-linear-gradient(90deg, rgba(27,42,74,.07) 0 1px, transparent 1px 13px),
+      #fbfaf5; overflow:hidden; }
+  .bowl-scene::before, .bowl-scene::after{ content:""; position:absolute; top:8px; bottom:8px; width:3px;
+    background:var(--ink); opacity:.85; border-radius:2px; }
+  .bowl-scene::before{ left:25%; } .bowl-scene::after{ right:25%; }
+  .bowl-scene .bpin{ position:absolute; width:16px; height:16px; border-radius:50%; background:#fff;
+    border:2.5px solid var(--ink); }
+  .bowl-scene .bpin::after{ content:""; position:absolute; inset:2px; border-radius:50%; border:2px solid var(--accent); }
+  .bowl-scene .p1{ top:9px; left:calc(50% - 27px); } .bowl-scene .p2{ top:9px; left:calc(50% - 8px); }
+  .bowl-scene .p3{ top:9px; left:calc(50% + 11px); }
+  .bowl-scene .p4{ top:25px; left:calc(50% - 18px); } .bowl-scene .p5{ top:25px; left:calc(50% + 2px); }
+  .bowl-scene .p6{ top:41px; left:calc(50% - 8px); }
+  .bowl-scene .bball{ position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
+    width:26px; height:26px; border-radius:50%; background:var(--ink); box-shadow:0 2px 4px rgba(0,0,0,.22); }
+  .bowl-scene .bball::after{ content:""; position:absolute; left:8px; top:6px; width:4px; height:4px;
+    border-radius:50%; background:#FAF8F2; box-shadow:6px 0 0 #FAF8F2, 3px 5px 0 #FAF8F2; }
+  .bowl-scene .label{ position:absolute; right:8px; top:7px; font-size:10px; font-weight:700; color:#fff;
+    background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
   .crud{ display:flex; gap:8px; }
   .crud span{ width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center;
     font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:700; font-size:16px; color:#fff; }
@@ -225,14 +246,31 @@
     </a>
 
 
-    <!-- ③ 方眼リバーシ（別サイト） -->
+
+    <!-- ③ 方眼ボウリング（別サイト） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/bowling/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="bowl-scene" aria-hidden="true">
+          <span class="bpin p1"></span><span class="bpin p2"></span><span class="bpin p3"></span>
+          <span class="bpin p4"></span><span class="bpin p5"></span>
+          <span class="bpin p6"></span>
+          <span class="bball"></span>
+          <span class="label">NEW</span>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">方眼ボウリング<span class="ext">別サイト</span></h2>
+      <p class="ydesc">方眼ノートの上のボウリング場。ボールを下に引いてはなすと投球、左右にずらすとカーブがかかります。ストライクもスペアも本式に計算する、10フレームの真剣勝負です。</p>
+      <span class="ygo">あそんでみる　↗</span>
+    </a>
+
+    <!-- ④ 方眼リバーシ（別サイト） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/reversi/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="rev-scene" aria-hidden="true">
           <i></i><i class="bk"><b></b></i><i class="wh"><b></b></i><i class="ht"><b></b></i>
           <i class="wh"><b></b></i><i class="bk"><b></b></i><i class="bk"><b></b></i><i></i>
           <i class="ht"><b></b></i><i class="wh"><b></b></i><i class="bk"><b></b></i><i></i>
-          <span class="label">NEW</span>
         </div>
       </div>
       <span class="ycat">あそび</span>
@@ -242,7 +280,7 @@
     </a>
 
 
-    <!-- ④ くまさん叩き in 秋田市（別サイト・kumasan リポジトリ） -->
+    <!-- ⑤ くまさん叩き in 秋田市（別サイト・kumasan リポジトリ） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/kumasan/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="kuma-scene" aria-hidden="true">
@@ -258,7 +296,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑤ 記録のかけら（別サイト・ブロック崩し） -->
+    <!-- ⑥ 記録のかけら（別サイト・ブロック崩し） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/blockbreaker/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="bricks" aria-hidden="true">
@@ -273,7 +311,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑥ 方眼インベーダー（別サイト） -->
+    <!-- ⑦ 方眼インベーダー（別サイト） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/invader/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="invaders">
@@ -288,7 +326,7 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑦ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
+    <!-- ⑧ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="crud" aria-hidden="true">
