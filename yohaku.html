@@ -187,6 +187,23 @@
   .secret-scene .cipher .enc{ color:var(--accent); font-family:ui-monospace,Menlo,Consolas,monospace; letter-spacing:.04em; }
   .secret-scene .label{ position:absolute; right:8px; top:7px; font-size:10px; font-weight:700; color:#fff;
     background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
+
+  .sol-scene{ position:relative; width:100%; height:100%; min-height:92px; display:flex; align-items:center; justify-content:center;
+    border-radius:8px; overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg, rgba(27,42,74,.06) 0 1px, transparent 1px 12px),
+      repeating-linear-gradient(90deg, rgba(27,42,74,.06) 0 1px, transparent 1px 12px),
+      #fbfaf5; }
+  .sol-scene .pcard{ position:relative; width:40px; height:56px; background:#FFFDF7; border:2px solid var(--ink);
+    border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:700;
+    box-shadow:0 2px 3px rgba(0,0,0,.14); }
+  .sol-scene .pcard i{ font-style:normal; font-size:20px; line-height:1; }
+  .sol-scene .pcard .rank{ position:absolute; left:4px; top:2px; font-size:10px; line-height:1; }
+  .sol-scene .p1{ transform:rotate(-10deg) translate(9px,4px); z-index:1; border-color:var(--accent); color:var(--accent); }
+  .sol-scene .p2{ transform:translateY(-6px); z-index:3; width:44px; height:62px; color:var(--ink); }
+  .sol-scene .p3{ transform:rotate(10deg) translate(-9px,4px); z-index:2; border-color:var(--accent); color:var(--accent); }
+  .sol-scene .label{ position:absolute; right:8px; top:7px; font-size:10px; font-weight:700; color:#fff;
+    background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
   .ycat.dougu{ color:#2F5AA8; }
 
   .ycat{ display:inline-block; align-self:flex-start; font-size:11.5px; font-weight:700;
@@ -394,7 +411,6 @@
             <span class="arrow">↓ 合言葉で変換</span>
             <span class="enc">🔒Xk9=aQ7…</span>
           </div>
-          <span class="label">NEW</span>
         </div>
       </div>
       <span class="ycat dougu">どうぐ</span>
@@ -403,6 +419,22 @@
       <span class="ygo">ひらく　↗</span>
     </a>
 
+
+    <!-- ⑪ 方眼ソリティア（別サイト） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/solitaire/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="sol-scene" aria-hidden="true">
+          <span class="pcard p1"><span class="rank">A</span><i>♥</i></span>
+          <span class="pcard p2"><span class="rank">A</span><i>♠</i></span>
+          <span class="pcard p3"><span class="rank">A</span><i>♦</i></span>
+          <span class="label">NEW</span>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">方眼ソリティア<span class="ext">別サイト</span></h2>
+      <p class="ydesc">一人でじっくり遊べる、方眼紙のクロンダイク。カードをタップすると置ける場所へ自動で動き、指でつかんで運ぶこともできます。困ったときはヒントボタンが次の一手をそっと教えてくれます。</p>
+      <span class="ygo">あそんでみる　↗</span>
+    </a>
 
     <!-- ここから下に、新しいカードを足していけます -->
 
