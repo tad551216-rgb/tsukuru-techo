@@ -204,6 +204,14 @@
 
   /* ===== 記事 ===== */
   .posts{display:flex;flex-direction:column;}
+  .cat-filter{display:flex;flex-wrap:wrap;gap:8px;margin:-8px 0 22px;}
+  .cat-filter button{
+    appearance:none;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.06em;
+    padding:7px 14px;border-radius:999px;border:1px solid var(--line-strong);
+    background:var(--surface);color:var(--ink-soft);transition:all .12s;
+  }
+  .cat-filter button:hover{border-color:var(--accent);color:var(--accent);}
+  .cat-filter button.on{background:var(--ink);border-color:var(--ink);color:#fff;}
   .post{
     display:grid;grid-template-columns:130px 1fr;gap:24px;
     padding:24px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);
@@ -410,6 +418,7 @@
       <h2>記録 — AIでアプリをつくる</h2>
       <span class="note sans">経緯・勘所・必要なスキル</span>
     </div>
+    <div class="cat-filter sans" id="catFilter" role="group" aria-label="記事の絞り込み"></div>
     <div class="posts" id="postList"></div>
   </div>
 </section>
@@ -532,6 +541,22 @@ const APPS = [
     tags:["PWA","ゲーム","オフライン","Canvas"],
     link:"https://tad551216-rgb.github.io/pinball/",
     article:"articles/pinball.html"
+  },
+  {
+    name:"方眼インベーダー",
+    status:"live",
+    glyph:"👾",
+    summary:"方眼紙の宇宙に、インディゴのインベーダー。手帖の意匠そのままの小さなシューティング。データは端末内だけ、通信なしで遊べます。",
+    tags:["PWA","ゲーム","オフライン","Canvas"],
+    link:"https://tad551216-rgb.github.io/invader/"
+  },
+  {
+    name:"つくる手帖ブロック崩し",
+    status:"live",
+    glyph:"🧱",
+    summary:"最後の一枚が逃げ出す、ちょっと意地悪なブロック崩し。追いつめて割った瞬間の手応えが売りです。データは端末内だけ、通信なしで遊べます。",
+    tags:["PWA","ゲーム","オフライン","Canvas"],
+    link:"https://tad551216-rgb.github.io/blockbreaker/"
   }
   // 例) 次のアプリを追加するときは下の形式で足すだけ:
   // ,{ name:"○○", status:"wip", glyph:"🧰", summary:"…", tags:["PWA","…"], link:"https://…", article:"articles/xxx.html" }
@@ -631,9 +656,10 @@ function renderApps(){
   }).join("");
 }
 
-function renderPosts(){
+function renderPosts(cat){
   const fmt=d=>{const[y,m,da]=d.split("-");return `${y}.${m}.${da}`;};
-  document.getElementById("postList").innerHTML = POSTS.map(p=>`
+  const list = cat ? POSTS.filter(p=>p.cat===cat) : POSTS;
+  document.getElementById("postList").innerHTML = list.map(p=>`
     <a class="post" href="${esc(p.url)}">
       <div class="meta">
         <span class="date">${fmt(p.date)}</span>
@@ -647,7 +673,21 @@ function renderPosts(){
     </a>`).join("");
 }
 
+function renderCatFilter(){
+  const cats = [...new Set(POSTS.map(p=>p.cat))];
+  const box = document.getElementById("catFilter");
+  box.innerHTML = ['<button class="on" data-cat="">すべて</button>']
+    .concat(cats.map(c=>`<button data-cat="${esc(c)}">${esc(c)}</button>`)).join("");
+  box.addEventListener("click", e=>{
+    const b = e.target.closest("button");
+    if(!b) return;
+    box.querySelectorAll("button").forEach(x=>x.classList.toggle("on", x===b));
+    renderPosts(b.dataset.cat || null);
+  });
+}
+
 renderApps();
+renderCatFilter();
 renderPosts();
 </script>
 <!-- 動画ポップアップ（自前video） -->
