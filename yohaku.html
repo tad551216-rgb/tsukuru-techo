@@ -121,6 +121,20 @@
   .bricks .ball{ width:11px; height:11px; border-radius:50%; background:var(--ink); margin-top:4px; }
   .invaders{ display:flex; gap:13px; align-items:center; justify-content:center; }
 
+  .mj-scene{ position:relative; width:100%; height:100%; min-height:92px; display:flex; align-items:center; justify-content:center; }
+  .mj-scene .mjtile{ position:relative; width:44px; height:58px; background:#FFFDF7; border:2px solid #C9BFA8;
+    border-left-width:5px; border-bottom-width:6px; border-left-color:#E4D9C0; border-bottom-color:#E4D9C0;
+    border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow:2px 3px 4px rgba(60,60,50,.25); font-weight:800; line-height:1; }
+  .mj-scene .mjtile b{ font-size:17px; }
+  .mj-scene .t1{ transform:rotate(-7deg) translate(6px,4px); z-index:1; }
+  .mj-scene .t1 b{ color:#2c4a63; }
+  .mj-scene .t2{ transform:translateY(-8px); z-index:3; width:50px; height:66px; }
+  .mj-scene .t2 b{ font-size:15px; }
+  .mj-scene .t2 .k1{ color:#2c4a63; } .mj-scene .t2 .k2{ color:var(--accent); }
+  .mj-scene .t3{ transform:rotate(7deg) translate(-6px,4px); z-index:2; }
+  .mj-scene .t3 b{ color:#3A7D44; }
+
   .rev-scene{ position:relative; width:118px; padding:6px; border-radius:8px; background:var(--ink);
     display:grid; grid-template-columns:repeat(4,1fr); gap:3px; box-shadow:0 2px 0 #10203c; }
   .rev-scene i{ aspect-ratio:1/1; background:#F5EFDC; border-radius:2px;
@@ -341,7 +355,23 @@
       <span class="ygo">あそんでみる　↗</span>
     </a>
 
-    <!-- ⑧ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
+    <!-- ⑧ 方眼上海（別サイト） -->
+    <a class="ycard" href="https://tad551216-rgb.github.io/shanghai/" target="_blank" rel="noopener">
+      <div class="ythumb">
+        <div class="mj-scene" aria-hidden="true">
+          <span class="mjtile t1"><b>筒</b></span>
+          <span class="mjtile t2"><b class="k1">上</b><b class="k2">海</b></span>
+          <span class="mjtile t3"><b>索</b></span>
+        </div>
+      </div>
+      <span class="ycat">あそび</span>
+      <h2 class="ytitle">方眼上海<span class="ext">別サイト</span></h2>
+      <p class="ydesc">積み上げた牌から同じ絵柄をふたつ探して取っていく、方眼紙の上海。必ず解ける並びで配るので、じっくり考えれば最後まで取り切れます。牌が特大のミニ盤や、果物や動物で遊べる絵あわせモードも。</p>
+      <span class="ygo">あそんでみる　↗</span>
+    </a>
+
+
+    <!-- ⑨ CRUD一覧ジェネレーター（別サイト・実用ツール） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="crud" aria-hidden="true">
@@ -354,7 +384,7 @@
       <span class="ygo">ひらく　↗</span>
     </a>
 
-    <!-- ⑨ ひみつ文書（別サイト・実用ツール） -->
+    <!-- ⑩ ひみつ文書（別サイト・実用ツール） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/himitsu/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="secret-scene" aria-hidden="true">
