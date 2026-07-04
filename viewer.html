@@ -41,11 +41,11 @@
   .open:hover{text-decoration:underline;}
   .act{
     appearance:none; -webkit-appearance:none; cursor:pointer; font:inherit;
-    font-size:12px; font-weight:700; letter-spacing:.03em; color:var(--ink);
-    background:transparent; border:1px solid var(--line-strong); border-radius:8px;
-    padding:8px 12px; white-space:nowrap;
+    font-size:12px; font-weight:700; letter-spacing:.03em; color:#fff;
+    background:var(--accent); border:none; border-radius:8px;
+    padding:9px 14px; text-decoration:none; white-space:nowrap;
   }
-  .act:hover{border-color:var(--accent); color:var(--accent);}
+  .act:hover{opacity:.9;}
   /* PDF描画領域 */
   #pages{
     max-width:900px; margin:0 auto;
@@ -91,8 +91,7 @@
 <div class="bar">
   <button class="back" id="back" type="button">‹ もどる</button>
   <div class="ttl" id="ttl">PDF</div>
-  <button class="act" id="print" type="button">印刷</button>
-  <a class="open" id="open" target="_blank" rel="noopener" hidden>新しいタブで開く</a>
+  <a class="act" id="save" download>保存</a>
 </div>
 
 <div id="pages">
@@ -116,10 +115,6 @@
     else location.href = "index.html#apps";
   });
 
-  // 印刷: 画面遷移せず印刷シートを開く(アプリ表示でも戻れる)
-  var printBtn = document.getElementById("print");
-  printBtn.addEventListener("click", function(){ window.print(); });
-
   // 安全のため docs/◯◯.pdf 形式のみ許可
   var safe = /^docs\/[A-Za-z0-9_\-]+\.pdf$/.test(fileParam);
 
@@ -129,22 +124,12 @@
 
   var pagesEl = document.getElementById("pages");
   var stateEl = document.getElementById("state");
+  var saveBtn = document.getElementById("save");
+  saveBtn.hidden = true; // ファイルが安全と確認できるまでは出さない
 
-  // ホーム画面アプリ(スタンドアロン表示)かどうか。
-  // この場合 target="_blank" は効かず、生PDFを開くと戻れなくなるため、直接開く導線は出さない。
-  var standalone = (window.navigator.standalone === true) ||
-    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
-
-  // 印刷ボタンはアプリ表示のときだけ出す。
-  // Safariでは window.print() が確認ダイアログを出すうえ、「新しいタブで開く」から
-  // 実PDFを鮮明に印刷できるため、そちらに任せる。
-  printBtn.hidden = !standalone;
-
-  // 行き止まりにならない代替文。Safariなら直接開くリンク、アプリなら上の「もどる」へ誘導。
+  // 行き止まりにならない代替文。画面はそのままなので「もどる」で必ず戻れる。
   function directLink(){
-    return standalone
-      ? '上の「‹ もどる」でお戻りください。'
-      : '<a href="'+fileParam+'" target="_blank" rel="noopener">PDFを直接開く</a>';
+    return '上の「‹ もどる」でお戻りください。';
   }
 
   function fail(msgHtml){
@@ -152,18 +137,19 @@
   }
 
   if (!safe){
-    printBtn.hidden = true;
     fail('<span class="em">PDFを表示できませんでした</span>リンクが正しくありません。<br><a href="index.html#apps">一覧にもどる</a>');
     return;
   }
 
-  // 「新しいタブで開く」(保存・印刷用)。アプリ表示では出さない。
-  var openA = document.getElementById("open");
-  openA.href = fileParam;
-  openA.hidden = standalone;
+  // 保存ボタン: download属性でその場から画面遷移せず保存する。
+  // (window.print()はiOSのホーム画面アプリ内で不安定なため使わない。
+  //  画面が動かないので「もどる」が使えなくなることも無い。)
+  var fileName = fileParam.split("/").pop();
+  saveBtn.href = fileParam;
+  saveBtn.download = fileName;
+  saveBtn.hidden = false;
 
   if (typeof pdfjsLib === "undefined"){
-    printBtn.hidden = true;
     fail('<span class="em">表示用の部品を読み込めませんでした</span>通信環境をご確認のうえ開き直してください。<br>'+directLink());
     return;
   }
