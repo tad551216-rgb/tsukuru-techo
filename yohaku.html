@@ -206,6 +206,23 @@
     background:var(--accent); border-radius:999px; padding:2px 7px; letter-spacing:.04em; }
   .ycat.dougu{ color:#2F5AA8; }
 
+  .barcode-scene{ position:relative; width:100%; height:100%; min-height:92px; border-radius:8px;
+    background:
+      repeating-linear-gradient(0deg, rgba(27,42,74,.07) 0 1px, transparent 1px 13px),
+      repeating-linear-gradient(90deg, rgba(27,42,74,.07) 0 1px, transparent 1px 13px),
+      #fbfaf5; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .barcode-scene .frame{ position:relative; width:88px; height:58px; border-radius:8px; background:#fff;
+    display:flex; align-items:flex-end; justify-content:center; padding:8px; }
+  .barcode-scene .frame::before, .barcode-scene .frame::after{ content:""; position:absolute; width:16px; height:16px; border:3px solid var(--accent); }
+  .barcode-scene .frame::before{ left:-3px; top:-3px; border-right:none; border-bottom:none; border-radius:6px 0 0 0; }
+  .barcode-scene .frame::after{ right:-3px; bottom:-3px; border-left:none; border-top:none; border-radius:0 0 6px 0; }
+  .barcode-scene .bars{ display:flex; align-items:flex-end; gap:2px; height:100%; }
+  .barcode-scene .bars i{ display:block; background:var(--ink); border-radius:1px; }
+
+  .yactions{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .yactions > a:not(:last-child){ margin-right:16px; }
+  .ygo.alt{ color:var(--ink-soft); }
+
   .ycat{ display:inline-block; align-self:flex-start; font-size:11.5px; font-weight:700;
     letter-spacing:.06em; color:var(--accent); border:1px solid var(--line); border-radius:6px; padding:2px 8px; margin-bottom:8px; }
   .ycat.nakama{ color:var(--green); }
@@ -419,8 +436,36 @@
       <span class="ygo">ひらく　↗</span>
     </a>
 
+    <!-- ⑪ バーコードスキャン（別サイト・実用ツール） -->
+    <div class="ycard">
+      <div class="ythumb">
+        <div class="barcode-scene" aria-hidden="true">
+          <div class="frame">
+            <div class="bars">
+              <i style="width:3px;height:100%"></i>
+              <i style="width:2px;height:65%"></i>
+              <i style="width:4px;height:100%"></i>
+              <i style="width:2px;height:50%"></i>
+              <i style="width:3px;height:100%"></i>
+              <i style="width:2px;height:80%"></i>
+              <i style="width:5px;height:100%"></i>
+              <i style="width:2px;height:55%"></i>
+              <i style="width:3px;height:100%"></i>
+              <i style="width:2px;height:90%"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="ycat dougu">どうぐ</span>
+      <h2 class="ytitle">バーコードスキャン<span class="ext">別サイト</span></h2>
+      <p class="ydesc">Forguncyアプリをブラウザで実行する際、標準機能では使えないカメラでのバーコード／QRコード読み取りを行うカスタム部品。ZXingで端末内完結、映像・読み取り結果はどこにも送信されません。</p>
+      <div class="yactions">
+        <a class="ygo" href="https://tad551216-rgb.github.io/barcode-scanner/" target="_blank" rel="noopener">ひらく　↗</a>
+        <a class="ygo alt" href="docs/forguncy-barcode-manual.pdf" target="_blank" rel="noopener">手順書PDF　↓</a>
+      </div>
+    </div>
 
-    <!-- ⑪ 方眼ソリティア（別サイト） -->
+    <!-- ⑫ 方眼ソリティア（別サイト） -->
     <a class="ycard" href="https://tad551216-rgb.github.io/solitaire/" target="_blank" rel="noopener">
       <div class="ythumb">
         <div class="sol-scene" aria-hidden="true">
