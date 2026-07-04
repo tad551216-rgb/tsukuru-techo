@@ -33,6 +33,7 @@
     --accent-deep:#9F4A2B;
     --muted:#7A7567;
     --grid:#E3DFD3;
+    --green:#3D6B52;      /* 緑(リンクボタンの強調用) */
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -121,12 +122,13 @@
   .hero-videos{ display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2px; }
   .hero-videos .vbtn{
     display:inline-flex;align-items:center;gap:.45em;
-    padding:9px 15px;border:1px solid var(--line);border-radius:999px;
-    background:var(--card);color:var(--ink);text-decoration:none;
+    padding:9px 15px;border:1px solid var(--green);border-radius:999px;
+    background:var(--card);color:var(--green);text-decoration:none;
     font-size:13px;font-weight:600;line-height:1.2;
   }
-  .hero-videos .vbtn:hover{ border-color:var(--accent);color:var(--accent); }
-  .hero-videos .vbtn .play{ color:var(--accent);font-size:.85em; }
+  .hero-videos .vbtn:hover{ background:var(--green);border-color:var(--green);color:#fff; }
+  .hero-videos .vbtn .play{ color:var(--green);font-size:.85em; }
+  .hero-videos .vbtn:hover .play{ color:#fff; }
   .hero-videos .vbtn-solid{ background:var(--ink); color:#fff; border-color:var(--ink); border-radius:8px; font-weight:700; }
   .hero-videos .vbtn-solid:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
   .hero-videos .vbtn-solid .play{ color:#fff; }
