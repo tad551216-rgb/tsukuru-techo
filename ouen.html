@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>放課後デイ応援帖 — つくる手帖</title>
+<meta name="description" content="放課後等デイサービスの小さな事業所向け、無料・広告なし・データは端末の中だけのお役立ちアプリ集。お迎えルート、実績記録と保護者サイン、保護者連携、作業日報まで。">
+<style>
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; }
+  .site-nav{ display:flex; gap:16px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
+  .site-nav a:hover{ color:var(--accent-deep); }
+
+  .head{ padding:52px 0 20px; text-align:center; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:34px; letter-spacing:.10em; margin:10px 0 6px; color:var(--paper);
+    text-shadow:0 1px 0 rgba(0,0,0,.18); }
+  .head .lede{ color:#FBF7EE; font-size:14.5px; max-width:600px; margin:0 auto; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+
+  .paper{
+    background:var(--note); border:1px solid var(--line); border-radius:8px;
+    box-shadow:0 6px 16px rgba(60,40,15,.22), 0 1px 0 rgba(255,255,255,.5) inset;
+    padding:26px 24px; margin:26px 0; position:relative;
+  }
+  .paper::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E8875A, var(--accent-deep) 70%);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);
+  }
+  .paper.tilt-l{ transform:rotate(-.4deg); }
+  .paper.tilt-r{ transform:rotate(.35deg); }
+  h2.sec{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px;
+    letter-spacing:.08em; margin-bottom:14px; padding-left:12px;
+    border-left:4px solid var(--accent); color:var(--ink);
+  }
+  h2.sec small{ display:block; font-size:11px; letter-spacing:.22em; color:var(--accent-deep);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:700; margin-bottom:2px; border:none; }
+  p.body{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+  p.body b{ color:var(--ink); }
+
+  .promise{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  @media(max-width:640px){ .promise{ grid-template-columns:1fr; } }
+  .promise .p{
+    background:var(--paper); border:1px dashed var(--line-strong); border-radius:8px;
+    padding:14px 12px; text-align:center;
+  }
+  .promise .p .ic{ font-size:26px; }
+  .promise .p .t{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:4px 0 2px; }
+  .promise .p .d{ font-size:12px; color:var(--muted); line-height:1.7; }
+
+  .flow{ counter-reset:step; margin-top:8px; }
+  .flow .st{
+    display:flex; gap:12px; padding:11px 4px; border-bottom:1px dashed var(--line);
+    align-items:flex-start;
+  }
+  .flow .st:last-child{ border-bottom:none; }
+  .flow .st::before{
+    counter-increment:step; content:counter(step);
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink);
+    color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; margin-top:3px;
+  }
+  .flow .st .tt{ font-weight:700; font-size:14px; }
+  .flow .st .tt .app{ color:var(--accent-deep); font-size:12px; margin-left:6px; }
+  .flow .st .dd{ font-size:13px; color:var(--ink-soft); }
+
+  .appcard{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:18px 16px; margin:16px 0;
+  }
+  .appcard .top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .appcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; letter-spacing:.06em; }
+  .appcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--accent);
+    border-radius:999px; padding:1px 9px; letter-spacing:.04em; }
+  .appcard .tag.g{ background:var(--green); }
+  .appcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .appcard ul{ margin:0 0 12px 2px; list-style:none; }
+  .appcard li{ font-size:13px; color:var(--ink-soft); padding-left:16px; position:relative; margin:3px 0; }
+  .appcard li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .links{ display:flex; flex-wrap:wrap; gap:8px; }
+  .lbtn{
+    display:inline-block; text-decoration:none; font-size:13px; font-weight:700;
+    border-radius:8px; padding:8px 14px; letter-spacing:.03em;
+  }
+  .lbtn.app{ background:var(--accent); color:#fff; box-shadow:0 2px 0 var(--accent-deep); }
+  .lbtn.app:hover{ background:var(--accent-deep); }
+  .lbtn.doc{ background:#fff; color:var(--ink); border:1.5px solid var(--line-strong); }
+  .lbtn.doc:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .soon{ font-size:11px; color:var(--muted); }
+
+  .install ol{ margin:6px 0 4px 4px; list-style:none; counter-reset:ins; }
+  .install ol li{ font-size:13.5px; color:var(--ink-soft); padding:6px 0 6px 30px; position:relative; }
+  .install ol li::before{ counter-increment:ins; content:counter(ins);
+    position:absolute; left:0; top:6px; width:22px; height:22px; border-radius:50%;
+    background:var(--paper-2); border:1px solid var(--line-strong); color:var(--ink);
+    font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .os{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:12px 0 2px; color:var(--ink); }
+
+  .caution li{ font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative; margin:6px 0; list-style:none; }
+  .caution li::before{ content:"※"; position:absolute; left:0; color:var(--accent-deep); }
+
+  footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+  footer a{ color:#FFE7C9; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="#top">放課後デイ応援帖</a>
+    <nav class="site-nav">
+      <a href="#apps">アプリ</a>
+      <a href="#omake">おまけ</a>
+      <a href="#install">インストール</a>
+      <a href="index.html">つくる手帖</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head" id="top">
+  <div class="eyebrow">FOR SMALL AFTER-SCHOOL DAY SERVICES</div>
+  <h1 class="mincho">放課後デイ応援帖</h1>
+  <p class="lede">送迎の段取りから、記録とサイン、保護者とのやり取りまで。<br>小さな事業所の一日を、すこし軽くする道具箱です。</p>
+</div>
+
+<main class="wrap">
+
+<!-- 公開の趣旨 -->
+<section class="paper tilt-l">
+  <h2 class="sec mincho"><small>ABOUT</small>公開の趣旨</h2>
+  <p class="body">このページの道具は、業務システムの開発を40年あまり続けてきた者が、現場で働く方々への恩返しのつもりで作っているものです。放課後等デイサービスの小さな事業所では、送迎の段取り、実績記録、保護者への連絡といった毎日の事務が、支援そのものの時間を圧迫しがちです。高価な業務システムを入れる余裕はなくても、<b>スマホひとつで今日から</b>使えるものを、と考えました。</p>
+  <p class="body">どのアプリも、サーバーを持たない「端末完結型」です。児童の情報がどこかのクラウドに送られることはなく、<b>データはお使いの端末の中だけ</b>に保存されます。アプリ間のやり取りは実名を含まないニックネーム方式で、暗号化にも対応しています。</p>
+  <div class="promise">
+    <div class="p"><div class="ic">🆓</div><div class="t">無料・広告なし</div><div class="d">利用料も登録も不要。アカウント作成もありません。</div></div>
+    <div class="p"><div class="ic">🔒</div><div class="t">データは端末の中だけ</div><div class="d">サーバーに送信しません。個人情報はお手元で完結します。</div></div>
+    <div class="p"><div class="ic">📱</div><div class="t">インストールは1分</div><div class="d">ホーム画面に追加するだけ。オフラインでも動きます。</div></div>
+  </div>
+</section>
+
+<!-- 一日の流れ -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>ONE DAY</small>アプリでつながる一日</h2>
+  <div class="flow">
+    <div class="st"><div><div class="tt">朝、お迎えの段取り<span class="app">おむかえルート帖</span></div><div class="dd">学校ごとの下校時刻を確認し、車両とルートを組んで、担当者へLINEで指示。</div></div></div>
+    <div class="st"><div><div class="tt">下校時、送迎<span class="app">おむかえルート帖 → 支援きろく帖</span></div><div class="dd">確定したお迎え時刻は、記録アプリの送迎欄に自動で反映されます。</div></div></div>
+    <div class="st"><div><div class="tt">施設で、記録<span class="app">支援きろく帖</span></div><div class="dd">入退室の時刻から算定時間数を自動計算。活動や様子などの支援記録もその場で。</div></div></div>
+    <div class="st"><div><div class="tt">お送り時、保護者のサイン<span class="app">支援きろく帖／おむかえルート帖</span></div><div class="dd">スマホの画面に指でサイン。「提供の都度の確認」がその場で完了します。</div></div></div>
+    <div class="st"><div><div class="tt">夜、保護者へ連絡帳<span class="app">支援きろく帖 → おうち連絡帖</span></div><div class="dd">確定した記録を暗号化して送信。保護者は内容を確認してデジタル署名を返せます。</div></div></div>
+    <div class="st"><div><div class="tt">月末、締めと請求<span class="app">支援きろく帖</span></div><div class="dd">サイン漏れ・記録漏れを点検して、算定時間数つきCSVと実績記録票を出力。</div></div></div>
+  </div>
+</section>
+
+<!-- アプリ本体（データ駆動） -->
+<section class="paper tilt-l" id="apps">
+  <h2 class="sec mincho"><small>APPS</small>3つの柱アプリ</h2>
+  <p class="body">3つで一組ですが、1つだけでも使えます。まずはおむかえルート帖からがおすすめです。</p>
+  <div id="appList"></div>
+</section>
+
+<!-- おまけ -->
+<section class="paper tilt-r" id="omake">
+  <h2 class="sec mincho"><small>BONUS</small>おまけ：作業日報のセット</h2>
+  <p class="body">パート従業員の勤怠・作業記録に。LINEで日報を送る運用をそのまま活かして、入力と集計をアプリ化したものです。介護・福祉の現場で実際に使われています。</p>
+  <div id="omakeList"></div>
+</section>
+
+<!-- インストールガイド -->
+<section class="paper tilt-l install" id="install">
+  <h2 class="sec mincho"><small>INSTALL</small>ホーム画面に追加する（共通）</h2>
+  <p class="body">アプリストアは使いません。ブラウザで開いて「ホーム画面に追加」するだけで、アプリとして使えます。</p>
+  <div class="os">iPhone・iPad（Safari）</div>
+  <ol>
+    <li>上のボタンからアプリを開く</li>
+    <li>画面下の「共有」ボタン（□に↑）をタップ</li>
+    <li>「ホーム画面に追加」を選んで「追加」</li>
+  </ol>
+  <div class="os">Android（Chrome）</div>
+  <ol>
+    <li>上のボタンからアプリを開く</li>
+    <li>右上の「︙」メニューをタップ</li>
+    <li>「ホーム画面に追加」（または「アプリをインストール」）を選ぶ</li>
+  </ol>
+  <p class="body" style="font-size:12.5px;color:var(--muted);">ホーム画面のアイコンから開くと全画面で動き、電波のない場所でも使えます。データは端末内に保存されるため、機種変更の前には各アプリの「バックアップ」で控えを取ってください。</p>
+</section>
+
+<!-- 大事なこと -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>NOTES</small>お使いいただく前に、大事なこと</h2>
+  <ul class="caution">
+    <li>支援きろく帖が表示する算定時間の「区分」は参考表示です。実際の請求区分・加算の可否は、最新の告示・自治体の取り扱い・お使いの請求ソフトの判定に従ってください。</li>
+    <li>電子サイン・デジタル署名の取り扱いは自治体（指定権者）により運用が異なる場合があります。導入前の確認をおすすめします。</li>
+    <li>記録は法令により5年間の保管が必要です。データは端末内に保存されるため、月に一度はバックアップを取り、端末以外の場所にも控えを置いてください。</li>
+    <li>個人の作成物であり、動作の保証やサポートの約束はできませんが、現場の声は今後の改善の一番の材料です。</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
+  <div style="margin-top:6px;"><a href="index.html">つくる手帖 ポータルへ</a></div>
+</footer>
+
+<script>
+'use strict';
+/* ===============================================================
+   リンクの管理はここだけ。リポジトトリ名を変えたらURLを直してください。
+   guide / manual が空("")のボタンは表示されません。
+   =============================================================== */
+const DOCS = 'docs/';
+const APPS = [
+  {
+    name:'おむかえルート帖', tag:'送迎', tagClass:'',
+    lead:'学校ごとの下校時刻から、車両の割り振りとお迎えルートをつくる段取りアプリ。地図・所要時間の目安・車両別のLINE指示文まで。',
+    items:[
+      '地域から学校を検索して一括登録（名前と住所はあとから正式表記に直せます）',
+      '当日の学校をタップで選び、時刻・人数・児童のニックネームをメモ',
+      '車両ごとのルートと到着目安、Googleマップへの引き継ぎ',
+      'お送り時の保護者サイン取得（記録アプリと連携）'
+    ],
+    app:'https://tad551216-rgb.github.io/omukae-route/',
+    guide:'#install', manual:DOCS+'omukae-route-manual.pdf'
+  },
+  {
+    name:'支援きろく帖', tag:'記録・請求', tagClass:'',
+    lead:'サービス提供実績記録と支援記録（療育日誌）を1枚のカードで。算定時間数の自動計算と、その場での保護者サインに対応。',
+    items:[
+      '入室〜退室から算定時間数を自動計算（送迎時間は含めない設計）',
+      '保護者の電子サイン（提供の都度・時刻つき）',
+      '体調・活動・様子・ヒヤリハット・身体拘束・記録者の支援記録',
+      '月次の点検（サイン漏れ・記録漏れ・契約支給量オーバー）',
+      '算定時間数つきCSV・サイン画像つき実績記録票の印刷・5年保管用バックアップ'
+    ],
+    app:'https://tad551216-rgb.github.io/shien-kiroku/',
+    guide:'#install', manual:DOCS+'shien-kiroku-manual.pdf'
+  },
+  {
+    name:'おうち連絡帖', tag:'保護者向け', tagClass:'g',
+    lead:'保護者のスマホで使う連絡帳アプリ。施設からの連絡を合言葉でひらいて、内容を確認したらデジタル署名。利用の予約やおやすみの連絡も送れます。',
+    items:[
+      '施設からの連絡帳・お知らせを暗号化テキストで受信（LINEには暗号文しか残りません）',
+      '内容を確認して、改ざん検知つきのデジタル署名を返信',
+      '利用したい日の予約・変更・おやすみの連絡を送信',
+      '受け取った記録は端末に残り、家庭側の連絡帳控えに'
+    ],
+    app:'https://tad551216-rgb.github.io/ouchi-renraku/',
+    guide:'#install', manual:DOCS+'ouchi-renraku-manual.pdf'
+  }
+];
+const OMAKE = [
+  {
+    name:'作業日報', tag:'従業員向け', tagClass:'g',
+    lead:'その日の作業をスマホで手早く記録して、LINEで報告。個人情報を載せず、端末内で完結します。',
+    items:['作業内容・時間の入力とLINE報告文の自動作成','氏名の埋め込み・よく使う項目の登録'],
+    app:'https://tad551216-rgb.github.io/nippo/',
+    guide:DOCS+'nippo-install.pdf',
+    guideAndroid:DOCS+'android-nippo-install.pdf',
+    manual:DOCS+'nippo-features.pdf'
+  },
+  {
+    name:'作業日報集計', tag:'管理者向け', tagClass:'',
+    lead:'LINEに流れてきた日報を貼り付けるだけで、従業員別・期間別に自動集計。月締めや漏れ確認カレンダーも。',
+    items:['日報テキストの貼り付け集計（従業員別・期間別）','月締め・記入漏れカレンダー・日報/週報/月報の出力'],
+    app:'https://tad551216-rgb.github.io/nippo-syuukei/',
+    guide:'#install',
+    manual:DOCS+'nippo-shukei-manual.pdf'
+  }
+];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function card(a){
+  let links='<a class="lbtn app" href="'+esc(a.app)+'">▶ アプリをひらく</a>';
+  if(a.guide) links+='<a class="lbtn doc" href="'+esc(a.guide)+'">'+(a.guide.startsWith('#')?'インストールの手順':'インストールガイド（iPhone）')+'</a>';
+  if(a.guideAndroid) links+='<a class="lbtn doc" href="'+esc(a.guideAndroid)+'">インストールガイド（Android）</a>';
+  if(a.manual) links+='<a class="lbtn doc" href="'+esc(a.manual)+'">マニュアル</a>';
+  return '<div class="appcard">'+
+    '<div class="top"><span class="nm mincho">'+esc(a.name)+'</span><span class="tag '+esc(a.tagClass)+'">'+esc(a.tag)+'</span></div>'+
+    '<p class="lead">'+esc(a.lead)+'</p>'+
+    '<ul>'+a.items.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul>'+
+    '<div class="links">'+links+'</div></div>';
+}
+document.getElementById('appList').innerHTML=APPS.map(card).join('');
+document.getElementById('omakeList').innerHTML=OMAKE.map(card).join('');
+</script>
+</body>
+</html>
