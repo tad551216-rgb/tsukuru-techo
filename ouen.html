@@ -33,7 +33,7 @@
   header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
     -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
   .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
-  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; white-space:nowrap; }
   .site-nav{ display:flex; gap:16px; }
   .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
   .site-nav a:hover{ color:var(--accent-deep); }
@@ -139,9 +139,6 @@
   <div class="wrap site-inner">
     <a class="brand" href="#top">放課後デイ応援帖</a>
     <nav class="site-nav">
-      <a href="#apps">アプリ</a>
-      <a href="#omake">おまけ</a>
-      <a href="#install">インストール</a>
       <a href="index.html">つくる手帖</a>
     </nav>
   </div>
@@ -229,8 +226,14 @@
     <li>支援きろく帖が表示する算定時間の「区分」は参考表示です。実際の請求区分・加算の可否は、最新の告示・自治体の取り扱い・お使いの請求ソフトの判定に従ってください。</li>
     <li>電子サイン・デジタル署名の取り扱いは自治体（指定権者）により運用が異なる場合があります。導入前の確認をおすすめします。</li>
     <li>記録は法令により5年間の保管が必要です。データは端末内に保存されるため、月に一度はバックアップを取り、端末以外の場所にも控えを置いてください。</li>
-    <li>個人の作成物であり、動作の保証やサポートの約束はできませんが、現場の声は今後の改善の一番の材料です。</li>
   </ul>
+</section>
+
+<!-- 免責事項 -->
+<section class="paper tilt-l">
+  <h2 class="sec mincho"><small>DISCLAIMER</small>免責事項</h2>
+  <p class="body">本ページのアプリおよび資料は、個人が無償で公開しているものです。動作や内容の正確性を保証するものではなく、ご利用によって生じたいかなる損害についても、作成者は責任を負いかねます。請求や記録の最終的な確認は、各事業所のご判断と責任においてお願いいたします。</p>
+  <p class="body">各アプリのソースコードは <a href="https://github.com/tad551216-rgb" style="color:var(--accent-deep);">GitHub</a> で公開しています。サーバーへの送信がないことを含め、どなたでも中身を確認できます。</p>
 </section>
 
 </main>
