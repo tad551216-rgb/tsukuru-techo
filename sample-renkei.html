@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>マスター連携 サンプルデータ — つくる手帖</title>
+<meta name="description" content="放課後デイ応援帖の3アプリ(おむかえルート帖・支援きろく帖・おうち連絡帖)のマスター連携を、架空のサンプルデータで体験するための配布ページ。">
+<meta name="robots" content="noindex">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<style>
+:root{--ink:#1B2A4A;--ink-soft:#3A4A66;--paper:#F3F1EA;--line:#D8D3C4;--line-strong:#B9B2A0;
+--accent:#C2603A;--accent-deep:#9F4A2B;--muted:#7A7567;--grid:#E3DFD3;--green:#3D6B52;--note:#FAF8F2;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.9;
+background-color:var(--paper);
+background-image:linear-gradient(var(--grid) 1px,rgba(255,255,255,0) 1px),linear-gradient(90deg,var(--grid) 1px,rgba(255,255,255,0) 1px);
+background-size:24px 24px;}
+.mincho{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+header.site{border-bottom:1px solid var(--line);background:rgba(243,241,234,.92);position:sticky;top:0;z-index:10;
+-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+.site-inner{max-width:760px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;}
+.brand{text-decoration:none;color:var(--ink);font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-weight:600;font-size:19px;}
+.brand .han{color:var(--accent);}
+.site-nav a{color:var(--ink-soft);text-decoration:none;font-size:13px;margin-left:16px;}
+.site-nav a:hover{color:var(--accent);}
+.head{padding:40px 0 8px;}
+.head .eyebrow{font-size:11.5px;letter-spacing:.24em;color:var(--accent-deep);font-weight:700;}
+.head h1{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-weight:600;font-size:clamp(23px,5vw,32px);margin:10px 0 8px;line-height:1.45;}
+.head .lead{color:var(--ink-soft);font-size:14.5px;}
+section{background:var(--note);border:1px solid var(--line);border-radius:14px;
+padding:20px 18px;margin:22px 0;box-shadow:0 3px 10px rgba(60,45,20,.07);}
+section h2{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-weight:600;font-size:19px;margin-bottom:4px;}
+section h2 .no{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;
+background:var(--accent);color:#fff;font-size:14px;margin-right:8px;vertical-align:-2px;font-family:inherit;}
+section .to{font-size:13px;color:var(--green);font-weight:700;margin-bottom:10px;}
+section .desc{font-size:13.5px;color:var(--ink-soft);margin-bottom:12px;}
+textarea{width:100%;height:120px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;
+color:var(--ink);background:#fff;border:1px solid var(--line-strong);border-radius:10px;padding:10px;resize:vertical;}
+.cbtn{display:inline-flex;align-items:center;gap:.5em;margin-top:10px;padding:11px 22px;border-radius:999px;
+border:1px solid var(--green);background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer;}
+.cbtn:active{transform:translateY(1px);}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;}
+th{background:#ECE9DF;font-size:12.5px;white-space:nowrap;}
+td b{color:var(--accent-deep);}
+.foot{padding:8px 0 60px;}
+.backlink{font-weight:700;color:var(--accent-deep);text-decoration:none;}
+.warn{background:#FDEDE5;border:1px solid var(--accent);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--ink);margin:14px 0;}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;
+padding:10px 20px;border-radius:999px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:99;}
+.toast.on{opacity:1;}
+a.doc{color:var(--accent-deep);font-weight:700;}
+</style>
+</head>
+<body>
+<header class="site"><div class="site-inner">
+<a class="brand" href="index.html">つくる<span class="han">手帖</span></a>
+<nav class="site-nav"><a href="ouen.html">放課後デイ応援帖</a><a href="sitemap.html">サイトマップ</a></nav>
+</div></header>
+
+<div class="wrap">
+<div class="head">
+<div class="eyebrow">SAMPLE DATA</div>
+<h1>マスター連携 サンプルデータ</h1>
+<p class="lead">架空の「みどり市」を舞台に、おむかえルート帖・支援きろく帖・おうち連絡帖のマスター連携をひととおり体験できるサンプル一式です。使い方は<a class="doc" href="viewer.html?f=docs%2Fsample-renkei-guide.pdf&amp;t=%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E4%BD%93%E9%A8%93%E6%89%8B%E9%A0%86%E6%9B%B8">体験手順書（PDF）</a>をご覧ください。</p>
+<div class="warn">ここに登場する市・学校・児童・番号はすべて架空です。すでに実データでお使いの端末で試すときは、先に各アプリの「書き出し」「JSONで保存」で控えを取ってから始めてください。</div>
+</div>
+
+<section>
+<h2><span class="no">1</span>学校データ（5校）</h2>
+<div class="to">貼り付け先：おむかえルート帖「設定タブ → 読み込む」／支援きろく帖「連携タブ → 受け取った記録を取り込む」</div>
+<p class="desc">架空のみどり市の学校5校（小3・支援1・中1）。座標入りなので、地図とルート計算がそのまま動きます。</p>
+<textarea readonly id="t1">おむかえルート帖 学校データ（5校）
+{"schools":[{"name":"みどり市立ひばり小学校","kind":"小","addr":"みどり市ひばり町1-2-3","lat":34.4921,"lng":135.4315,"time":"14:30"},{"name":"みどり市立つばめ小学校","kind":"小","addr":"みどり市つばめ台2-4-5","lat":34.4858,"lng":135.4419,"time":"15:00"},{"name":"みどり市立かえで小学校","kind":"小","addr":"みどり市かえで町3-1-8","lat":34.4779,"lng":135.4247,"time":"15:00"},{"name":"みどり市立わかば支援学校","kind":"支","addr":"みどり市わかば丘4-6-1","lat":34.4712,"lng":135.4368,"time":"14:45"},{"name":"みどり市立みなみ中学校","kind":"中","addr":"みどり市みなみ町5-3-2","lat":34.4684,"lng":135.4189,"time":"15:30"}]}</textarea>
+<button class="cbtn" data-t="t1">📋 学校データをコピー</button>
+</section>
+
+<section>
+<h2><span class="no">2</span>児童マスター（8名）</h2>
+<div class="to">貼り付け先：支援きろく帖「連携タブ → 受け取った記録を取り込む」／おむかえルート帖「サインタブ → マスターを読み込む」</div>
+<p class="desc">ニックネームと学校だけの児童マスター。支援きろく帖に取り込むと児童8名が登録され（氏名はニックネームのまま）、おむかえルート帖に取り込むとサインの準備が整います。</p>
+<textarea readonly id="t2">支援きろく帖マスター（ニックネームと学校のみ）
+{"app":"shien-kiroku-master","ver":1,"children":[{"nick":"たっくん","school":"みどり市立ひばり小学校"},{"nick":"さーちゃん","school":"みどり市立ひばり小学校"},{"nick":"けんちゃん","school":"みどり市立つばめ小学校"},{"nick":"ゆうこりん","school":"みどり市立つばめ小学校"},{"nick":"りょうくん","school":"みどり市立かえで小学校"},{"nick":"まーくん","school":"みどり市立かえで小学校"},{"nick":"みっちゃん","school":"みどり市立わかば支援学校"},{"nick":"そらくん","school":"みどり市立みなみ中学校"}],"schools":[{"name":"みどり市立ひばり小学校","kind":"小"},{"name":"みどり市立つばめ小学校","kind":"小"},{"name":"みどり市立かえで小学校","kind":"小"},{"name":"みどり市立わかば支援学校","kind":"支"},{"name":"みどり市立みなみ中学校","kind":"中"}]}</textarea>
+<button class="cbtn" data-t="t2">📋 児童マスターをコピー</button>
+</section>
+
+<section>
+<h2><span class="no">3</span>手で入力するサンプル値</h2>
+<p class="desc">次の値は各アプリに手で入力します（実際の運用開始と同じ手順を体験するためです）。</p>
+<table>
+<tr><th colspan="2">事業所（おむかえルート帖・設定タブ）</th></tr>
+<tr><td>事業所名</td><td>サンプルデイサービスひまわり</td></tr>
+<tr><td>場所</td><td>「地図から取得」で、目安 <b>北緯34.4813／東経135.4278</b> のあたりに合わせます（学校5校の中心付近）</td></tr>
+<tr><th colspan="2">車両（おむかえルート帖・設定タブ）</th></tr>
+<tr><td>1台目</td><td>ひまわり号（定員 <b>6</b>）</td></tr>
+<tr><td>2台目</td><td>すみれ号（定員 <b>4</b>）</td></tr>
+<tr><th colspan="2">施設情報（支援きろく帖・出力タブ）</th></tr>
+<tr><td>施設名</td><td>サンプルデイサービスひまわり</td></tr>
+<tr><td>お知らせ用の合言葉</td><td><b>ひまわりだより</b></td></tr>
+</table>
+</section>
+
+<section>
+<h2><span class="no">4</span>児童の実名サンプルと合言葉</h2>
+<p class="desc">支援きろく帖の児童タブで、ニックネームのままの児童に実名などを補うときの見本です（すべて架空）。おうち連絡帖の体験には、この合言葉を使います。</p>
+<table>
+<tr><th>ニックネーム</th><th>実名（ふりがな）</th><th>学校</th><th>合言葉</th></tr>
+<tr><td><b>たっくん</b></td><td>翠川 太一（みどりかわ たいち）</td><td>ひばり小</td><td>みどり01</td></tr>
+<tr><td><b>さーちゃん</b></td><td>翠川 咲良（みどりかわ さくら）</td><td>ひばり小</td><td>みどり02</td></tr>
+<tr><td><b>けんちゃん</b></td><td>青葉 健太（あおば けんた）</td><td>つばめ小</td><td>みどり03</td></tr>
+<tr><td><b>ゆうこりん</b></td><td>白鳥 優子（しらとり ゆうこ）</td><td>つばめ小</td><td>みどり04</td></tr>
+<tr><td><b>りょうくん</b></td><td>茜部 涼（あかねべ りょう）</td><td>かえで小</td><td>みどり05</td></tr>
+<tr><td><b>まーくん</b></td><td>桃山 真人（ももやま まさと）</td><td>かえで小</td><td>みどり06</td></tr>
+<tr><td><b>みっちゃん</b></td><td>藍原 美月（あいはら みづき）</td><td>わかば支援</td><td>みどり07</td></tr>
+<tr><td><b>そらくん</b></td><td>空田 大空（そらた そら）</td><td>みなみ中</td><td>みどり08</td></tr>
+</table>
+<p class="desc" style="margin-top:10px;">受給者証番号の見本：<b>0012345601</b> から連番（0012345608 まで）。契約支給量の見本：<b>23</b> 日。</p>
+</section>
+
+<div class="foot">
+<p style="margin-bottom:14px;"><a class="doc" href="viewer.html?f=docs%2Fsample-renkei-guide.pdf&amp;t=%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E4%BD%93%E9%A8%93%E6%89%8B%E9%A0%86%E6%9B%B8">📄 体験手順書（PDF）を読む</a></p>
+<a class="backlink" href="ouen.html">&larr; 放課後デイ応援帖にもどる</a>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+'use strict';
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},1800);}
+document.querySelectorAll('.cbtn').forEach(function(b){
+  b.addEventListener('click',function(){
+    var ta=document.getElementById(b.dataset.t);
+    var txt=ta.value;
+    function fallback(){ta.focus();ta.select();ta.setSelectionRange(0,txt.length);
+      try{document.execCommand('copy');toast('コピーしました');}catch(e){toast('長押しで全選択してコピーしてください');}}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){toast('コピーしました。アプリに貼り付けできます');},fallback);
+    }else{fallback();}
+  });
+});
+</script>
+</body>
+</html>
