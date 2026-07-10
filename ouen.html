@@ -155,11 +155,20 @@
 
 <main class="wrap">
 
+<!-- 紹介ムービー -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>MOVIE</small>8分でわかる紹介ムービー</h2>
+  <video controls playsinline preload="metadata"
+    style="width:100%; border:1px solid var(--line); border-radius:8px; background:#000; display:block;">
+    <source src="docs/houday-douga.mp4" type="video/mp4">
+    お使いのブラウザは動画に対応していません。
+  </video>
+</section>
+
 <!-- 公開の趣旨 -->
 <section class="paper tilt-l">
   <h2 class="sec mincho"><small>ABOUT</small>公開の趣旨</h2>
-  <p class="body">このページの道具は、業務システムの開発を40年あまり続けてきた者が、現場で働く方々への恩返しのつもりで作っているものです。放課後等デイサービスの小さな事業所では、送迎の段取り、実績記録、保護者への連絡といった毎日の事務が、支援そのものの時間を圧迫しがちです。高価な業務システムを入れる余裕はなくても、<b>スマホひとつで今日から</b>使えるものを、と考えました。</p>
-  <p class="body">どのアプリも、サーバーを持たない「端末完結型」です。児童の情報がどこかのクラウドに送られることはなく、<b>データはお使いの端末の中だけ</b>に保存されます。アプリ間のやり取りは実名を含まないニックネーム方式で、暗号化にも対応しています。</p>
+  <p class="body">小さな事業所では、送迎の段取り・実績記録・保護者への連絡といった事務が、支援の時間を圧迫しがちです。業務システムの開発を40年あまり続けてきた者が、恩返しのつもりで、<b>スマホひとつで今日から</b>使える道具を作りました。児童の情報がクラウドに送られることはなく、<b>データはお使いの端末の中だけ</b>に保存されます。</p>
   <div class="promise">
     <div class="p"><div class="ic">🆓</div><div class="t">無料・広告なし</div><div class="d">利用料も登録も不要。アカウント作成もありません。</div></div>
     <div class="p"><div class="ic">🔒</div><div class="t">データは端末の中だけ</div><div class="d">サーバーに送信しません。個人情報はお手元で完結します。</div></div>
@@ -297,11 +306,15 @@ const OMAKE = [
   }
 ];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+/* PDFはviewer.html(もどるボタン付き)で開く。#リンクや外部URLはそのまま */
+function pdfHref(path,title){
+  return /\.pdf$/i.test(path) ? 'viewer.html?f='+encodeURIComponent(path)+'&t='+encodeURIComponent(title) : path;
+}
 function card(a){
   let links='<a class="lbtn app" href="'+esc(a.app)+'">▶ アプリをひらく</a>';
-  if(a.guide) links+='<a class="lbtn doc" href="'+esc(a.guide)+'">'+(a.guide.startsWith('#')?'インストールの手順':'インストールガイド（iPhone）')+'</a>';
-  if(a.guideAndroid) links+='<a class="lbtn doc" href="'+esc(a.guideAndroid)+'">インストールガイド（Android）</a>';
-  if(a.manual) links+='<a class="lbtn doc" href="'+esc(a.manual)+'">マニュアル</a>';
+  if(a.guide) links+='<a class="lbtn doc" href="'+esc(a.guide.startsWith('#')?a.guide:pdfHref(a.guide,a.name+'（iPhone）'))+'">'+(a.guide.startsWith('#')?'インストールの手順':'インストールガイド（iPhone）')+'</a>';
+  if(a.guideAndroid) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.guideAndroid,a.name+'（Android）'))+'">インストールガイド（Android）</a>';
+  if(a.manual) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.manual,a.name+' マニュアル'))+'">マニュアル</a>';
   return '<div class="appcard">'+
     '<div class="top"><span class="nm mincho">'+esc(a.name)+'</span><span class="tag '+esc(a.tagClass)+'">'+esc(a.tag)+'</span></div>'+
     '<p class="lead">'+esc(a.lead)+'</p>'+
