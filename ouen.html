@@ -131,6 +131,24 @@
 
   footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
   footer a{ color:#FFE7C9; }
+
+  /* 紹介ムービー：ボタン→モーダル再生（つくる手帖 本体と同じ方式） */
+  .movie-lead{ font-size:14.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .vbtn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:11px 20px; border-radius:999px; border:1px solid var(--green);
+    background:var(--green); color:#fff; text-decoration:none;
+    font-size:14px; font-weight:700; letter-spacing:.03em;
+  }
+  .vbtn:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .vbtn .play{ font-size:.85em; }
+
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,15,8,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:8px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
 </style>
 </head>
 <body>
@@ -155,11 +173,8 @@
 <!-- 紹介ムービー -->
 <section class="paper tilt-r">
   <h2 class="sec mincho"><small>MOVIE</small>8分でわかる紹介ムービー</h2>
-  <video controls playsinline preload="metadata"
-    style="width:100%; border:1px solid var(--line); border-radius:8px; background:#000; display:block;">
-    <source src="docs/houday-douga.mp4" type="video/mp4">
-    お使いのブラウザは動画に対応していません。
-  </video>
+  <p class="movie-lead">送迎ルート・記録・保護者連絡まで、実際の画面で流れをご紹介します。</p>
+  <a class="vbtn" href="docs/houday-douga.mp4" data-video="docs/houday-douga.mp4"><span class="play">▶</span>ムービーを再生する</a>
 </section>
 
 <!-- 公開の趣旨 -->
@@ -326,6 +341,29 @@ function card(a){
 }
 document.getElementById('appList').innerHTML=APPS.map(card).join('');
 document.getElementById('omakeList').innerHTML=OMAKE.map(card).join('');
+</script>
+
+<!-- 動画ポップアップ（自前video・つくる手帖 本体と同じ方式） -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var vid=document.getElementById('videoEl');
+  if(!modal||!vid) return;
+  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
+  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
 </script>
 </body>
 </html>
