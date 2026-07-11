@@ -26,3 +26,16 @@ blockquote{background:var(--surface);border:1px solid var(--line);border-left:4p
 .article-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:34px 0 8px;}.article-links a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--ink);font-family:-apple-system,"Hiragino Sans",sans-serif;font-weight:700;}.article-links a:hover{border-color:var(--accent);color:var(--accent);}
 .art-foot{border-top:1px solid var(--line);margin-top:34px;padding:30px 0 62px;}.backlink{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;color:var(--accent);text-decoration:none;font-weight:700;}.note-small{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;color:var(--muted);margin-top:16px;line-height:1.7;}
 @media(max-width:640px){.site-inner{height:56px}.brand .tag{display:none}.brand .mark{font-size:19px}.site-nav{gap:13px}.site-nav a{font-size:12.5px}.wrap{padding:0 20px}.art-head{padding:38px 0 26px}.art-head h1{font-size:28px}article.body p,article.body ul{font-size:16px}.pull{font-size:19px!important}.video-card{padding:10px}}
+
+
+/* 紹介ムービー：ボタン→モーダル再生（放課後デイ応援帖と同じ方式） */
+.video-card .movie-lead{font-size:14.5px;color:var(--ink-soft);margin:0 0 14px;line-height:1.8;}
+.vbtn{display:inline-flex;align-items:center;gap:.5em;padding:11px 20px;border-radius:999px;border:1px solid #3D6B52;background:#3D6B52;color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:.03em;cursor:pointer;}
+.vbtn:hover{background:var(--accent-deep);border-color:var(--accent-deep);}
+.vbtn .play{font-size:.85em;}
+.vmodal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
+.vmodal[hidden]{display:none;}
+.vmodal-backdrop{position:absolute;inset:0;background:rgba(20,15,8,.82);}
+.vmodal-box{position:relative;width:min(94vw,920px);display:flex;justify-content:center;}
+.vmodal-video{width:100%;max-height:82vh;background:#000;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.45);}
+.vmodal-close{position:absolute;top:-42px;right:-2px;background:transparent;border:0;color:#fff;font-size:30px;line-height:1;cursor:pointer;padding:6px 10px;z-index:2;}
