@@ -97,6 +97,19 @@
   footer.site .f-brand .han{color:var(--accent);}
   footer.site .f-note{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:11.5px;color:var(--muted);}
   @media(max-width:640px){.brand .tag{display:none;}nav.site-nav{gap:14px;}nav.site-nav a.hide-sp{display:none;}.site-inner{height:56px;}main.article{padding-top:30px;}p{font-size:16px;}h2{font-size:23px;}.video-card{margin-left:-6px;margin-right:-6px;}}
+.video-card .video-label{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--accent);margin:2px 0 10px;}
+
+/* 紹介ムービー：ボタン→モーダル再生（放課後デイ応援帖と同じ方式） */
+.video-card .movie-lead{font-size:14.5px;color:var(--ink-soft);margin:0 0 14px;line-height:1.8;}
+.vbtn{display:inline-flex;align-items:center;gap:.5em;padding:11px 20px;border-radius:999px;border:1px solid #3D6B52;background:#3D6B52;color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:.03em;cursor:pointer;}
+.vbtn:hover{background:var(--accent-deep);border-color:var(--accent-deep);}
+.vbtn .play{font-size:.85em;}
+.vmodal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
+.vmodal[hidden]{display:none;}
+.vmodal-backdrop{position:absolute;inset:0;background:rgba(20,15,8,.82);}
+.vmodal-box{position:relative;width:min(94vw,920px);display:flex;justify-content:center;}
+.vmodal-video{width:100%;max-height:82vh;background:#000;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.45);}
+.vmodal-close{position:absolute;top:-42px;right:-2px;background:transparent;border:0;color:#fff;font-size:30px;line-height:1;cursor:pointer;padding:6px 10px;z-index:2;}
 </style>
 </head>
 <body>
@@ -122,10 +135,11 @@
 
 <main class="article">
   <div class="wrap">
-    <figure class="video-card">
-      <video controls playsinline preload="metadata" src="../docs/tukuru-pinball.mp4"></video>
-      <figcaption>つくる手帖ピンボール紹介動画。アイデアが「思・作・届」をめぐり、完成へ向かう流れを表現しています。</figcaption>
-    </figure>
+    <div class="video-card">
+      <div class="video-label sans">MOVIE</div>
+      <p class="movie-lead sans">つくる手帖ピンボール紹介動画。アイデアが「思・作・届」をめぐり、完成へ向かう流れを表現しています。</p>
+      <a class="vbtn sans" href="../docs/tukuru-pinball.mp4" data-video="../docs/tukuru-pinball.mp4"><span class="play">▶</span>ムービーを再生する</a>
+    </div>
 
     <nav class="toc">
       <div class="toc-title">目次</div>
@@ -228,5 +242,28 @@
     <div class="f-note sans">© 2026 つくる手帖 / GitHub Pages で公開 / 各アプリのデータは利用者の端末内にのみ保存されます</div>
   </div>
 </footer>
+
+<!-- 動画ポップアップ（ボタン→モーダル再生・放課後デイ応援帖と同じ方式） -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var vid=document.getElementById('videoEl');
+  if(!modal||!vid) return;
+  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
+  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
+</script>
 </body>
 </html>

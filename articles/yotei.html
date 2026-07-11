@@ -38,11 +38,8 @@
   <div class="wrap">
     <div class="video-card">
       <div class="video-label sans">MOVIE</div>
-      <video controls playsinline preload="metadata">
-        <source src="../docs/yotei3-douga.mp4" type="video/mp4">
-        お使いのブラウザは動画の再生に対応していません。<a href="../docs/yotei3-douga.mp4">動画ファイルを直接ひらく</a>
-      </video>
-      <p class="video-cap sans">わが家の予定板 紹介動画 ／ 音が出ます</p>
+      <p class="movie-lead sans">わが家の予定板 紹介動画 ／ 音が出ます</p>
+      <a class="vbtn sans" href="../docs/yotei3-douga.mp4" data-video="../docs/yotei3-douga.mp4"><span class="play">▶</span>ムービーを再生する</a>
     </div>
     <h2>はじまりは、ひとことの注文</h2>
 <p>最初の注文は、とてもシンプルなものでした。</p>
@@ -132,5 +129,28 @@
     <p class="note-small sans">このページは「つくる手帖／記録」の一部です。動画と開発記を同じ形式で残し、作った道具の背景まで辿れるようにしています。</p>
   </div>
 </footer>
+
+<!-- 動画ポップアップ（ボタン→モーダル再生・放課後デイ応援帖と同じ方式） -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var vid=document.getElementById('videoEl');
+  if(!modal||!vid) return;
+  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
+  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
+</script>
 </body>
 </html>
