@@ -30,9 +30,10 @@ blockquote{background:var(--surface);border:1px solid var(--line);border-left:4p
 
 /* 紹介ムービー：ボタン→モーダル再生（放課後デイ応援帖と同じ方式） */
 .video-card .movie-lead{font-size:14.5px;color:var(--ink-soft);margin:0 0 14px;line-height:1.8;}
-.vbtn{display:inline-flex;align-items:center;gap:.5em;padding:11px 20px;border-radius:999px;border:1px solid #3D6B52;background:#3D6B52;color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:.03em;cursor:pointer;}
-.vbtn:hover{background:var(--accent-deep);border-color:var(--accent-deep);}
-.vbtn .play{font-size:.85em;}
+.vbtn{display:inline-flex;align-items:center;gap:.5em;padding:11px 20px;border-radius:999px;border:1px solid #3D6B52;background:#3D6B52;color:#fff !important;text-decoration:none;border-bottom:none !important;font-size:14px;font-weight:700;letter-spacing:.03em;cursor:pointer;}
+article.body .vbtn,article.body .vbtn:hover{color:#fff !important;border-bottom:none !important;}
+.vbtn:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff !important;}
+.vbtn .play{font-size:.85em;color:#fff !important;}
 .vmodal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
 .vmodal[hidden]{display:none;}
 .vmodal-backdrop{position:absolute;inset:0;background:rgba(20,15,8,.82);}
