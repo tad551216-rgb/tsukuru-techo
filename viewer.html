@@ -141,13 +141,55 @@
     return;
   }
 
-  // 保存ボタン: download属性でその場から画面遷移せず保存する。
-  // (window.print()はiOSのホーム画面アプリ内で不安定なため使わない。
-  //  画面が動かないので「もどる」が使えなくなることも無い。)
+  // 保存ボタン:
+  // iOS(Safari・ホーム画面アプリ)では <a download> が効かないため、
+  // ①PDFをblobで取得 → ②共有シート(navigator.share)で「ファイルに保存」
+  // → ③shareが無い環境ではblobのdownloadリンク → ④最後の手段で直接開く、の順で試す。
   var fileName = fileParam.split("/").pop();
-  saveBtn.href = fileParam;
+  saveBtn.href = fileParam;          // JSが動かない環境向けの素のリンク
   saveBtn.download = fileName;
   saveBtn.hidden = false;
+
+  var pdfBlob = null;
+  // 先に裏で取得しておく(タップ時の待ちを無くし、共有シートの制限にもかかりにくくする)
+  fetch(fileParam).then(function(r){ return r.ok ? r.blob() : null; })
+    .then(function(b){ pdfBlob = b; }).catch(function(){});
+
+  function saveBlob(blob){
+    var file;
+    try{ file = new File([blob], fileName, {type:"application/pdf"}); }catch(e){ file = null; }
+    if (file && navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+      // iOS: 共有シートから「"ファイル"に保存」やAirDropが選べる
+      return navigator.share({files:[file], title: ttlText}).catch(function(err){
+        if (err && err.name === "AbortError") return; // キャンセルは何もしない
+        fallbackDownload(blob);
+      });
+    }
+    fallbackDownload(blob);
+  }
+  function fallbackDownload(blob){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = fileName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  }
+  saveBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    if (pdfBlob){ saveBlob(pdfBlob); return; }
+    saveBtn.textContent = "準備中…";
+    fetch(fileParam).then(function(r){
+      if(!r.ok) throw new Error("fetch failed");
+      return r.blob();
+    }).then(function(b){
+      pdfBlob = b;
+      saveBtn.textContent = "保存";
+      saveBlob(b);
+    }).catch(function(){
+      saveBtn.textContent = "保存";
+      window.open(fileParam, "_blank"); // 取得できないときは直接開く
+    });
+  });
 
   if (typeof pdfjsLib === "undefined"){
     fail('<span class="em">表示用の部品を読み込めませんでした</span>通信環境をご確認のうえ開き直してください。<br>'+directLink());
