@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おはしマスターへの道 — 個別支援計画のたね</title>
+<meta name="description" content="放課後等デイサービス向け 療育プログラム。箸の持ち方を姿勢づくりから段階的に。アセスメント、スモールステップ、記録、個別支援計画の記載例、保護者への連絡文例まで。">
+<style>
+
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; white-space:nowrap; }
+  .site-nav{ display:flex; gap:16px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
+  .site-nav a:hover{ color:var(--accent-deep); }
+
+  .head{ padding:52px 0 20px; text-align:center; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:34px; letter-spacing:.10em; margin:10px 0 6px; color:var(--paper);
+    text-shadow:0 1px 0 rgba(0,0,0,.18); }
+  .head .lede{ color:#FBF7EE; font-size:14.5px; max-width:600px; margin:0 auto; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+
+  .paper{
+    background:var(--note); border:1px solid var(--line); border-radius:8px;
+    box-shadow:0 6px 16px rgba(60,40,15,.22), 0 1px 0 rgba(255,255,255,.5) inset;
+    padding:26px 24px; margin:26px 0; position:relative;
+  }
+  .paper::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E8875A, var(--accent-deep) 70%);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);
+  }
+  .paper.tilt-l{ transform:rotate(-.4deg); }
+  .paper.tilt-r{ transform:rotate(.35deg); }
+  h2.sec{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px;
+    letter-spacing:.08em; margin-bottom:14px; padding-left:12px;
+    border-left:4px solid var(--accent); color:var(--ink);
+  }
+  h2.sec small{ display:block; font-size:11px; letter-spacing:.22em; color:var(--accent-deep);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:700; margin-bottom:2px; border:none; }
+  p.body{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+  p.body b{ color:var(--ink); }
+
+  .promise{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  @media(max-width:640px){ .promise{ grid-template-columns:1fr; } }
+  .promise .p{
+    background:var(--paper); border:1px dashed var(--line-strong); border-radius:8px;
+    padding:14px 12px; text-align:center;
+  }
+  .promise .p .ic{ font-size:26px; }
+  .promise .p .t{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:4px 0 2px; }
+  .promise .p .d{ font-size:12px; color:var(--muted); line-height:1.7; }
+
+  .flow{ counter-reset:step; margin-top:8px; }
+  .flow .st{
+    display:flex; gap:12px; padding:11px 4px; border-bottom:1px dashed var(--line);
+    align-items:flex-start;
+  }
+  .flow .st:last-child{ border-bottom:none; }
+  .flow .st::before{
+    counter-increment:step; content:counter(step);
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink);
+    color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; margin-top:3px;
+  }
+  .flow .st .tt{ font-weight:700; font-size:14px; }
+  .flow .st .tt .app{ color:var(--accent-deep); font-size:12px; margin-left:6px; }
+  .flow .st .dd{ font-size:13px; color:var(--ink-soft); }
+
+  .appcard{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:18px 16px; margin:16px 0;
+  }
+  .appcard .top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .appcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; letter-spacing:.06em; }
+  .appcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--accent);
+    border-radius:999px; padding:1px 9px; letter-spacing:.04em; }
+  .appcard .tag.g{ background:var(--green); }
+  .appcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .appcard ul{ margin:0 0 12px 2px; list-style:none; }
+  .appcard li{ font-size:13px; color:var(--ink-soft); padding-left:16px; position:relative; margin:3px 0; }
+  .appcard li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .links{ display:flex; flex-wrap:wrap; gap:8px; }
+  .lbtn{
+    display:inline-block; text-decoration:none; font-size:13px; font-weight:700;
+    border-radius:8px; padding:8px 14px; letter-spacing:.03em;
+  }
+  .lbtn.app{ background:var(--accent); color:#fff; box-shadow:0 2px 0 var(--accent-deep); }
+  .lbtn.app:hover{ background:var(--accent-deep); }
+  .lbtn.doc{ background:#fff; color:var(--ink); border:1.5px solid var(--line-strong); }
+  .lbtn.doc:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .soon{ font-size:11px; color:var(--muted); }
+
+  .install ol{ margin:6px 0 4px 4px; list-style:none; counter-reset:ins; }
+  .install ol li{ font-size:13.5px; color:var(--ink-soft); padding:6px 0 6px 30px; position:relative; }
+  .install ol li::before{ counter-increment:ins; content:counter(ins);
+    position:absolute; left:0; top:6px; width:22px; height:22px; border-radius:50%;
+    background:var(--paper-2); border:1px solid var(--line-strong); color:var(--ink);
+    font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .os{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:12px 0 2px; color:var(--ink); }
+
+  .caution li{ font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative; margin:6px 0; list-style:none; }
+  .caution li::before{ content:"※"; position:absolute; left:0; color:var(--accent-deep); }
+
+  footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+  footer a{ color:#FFE7C9; }
+
+  /* 紹介ムービー：ボタン→モーダル再生（つくる手帖 本体と同じ方式） */
+  .movie-lead{ font-size:14.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .vbtn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:11px 20px; border-radius:999px; border:1px solid var(--green);
+    background:var(--green); color:#fff; text-decoration:none;
+    font-size:14px; font-weight:700; letter-spacing:.03em;
+  }
+  .vbtn:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .vbtn .play{ font-size:.85em; }
+
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,15,8,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:8px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
+
+
+  /* ── 療育プログラム集 追加スタイル ── */
+  .filter{ display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 4px; }
+  .chip{ font-size:12px; font-weight:700; border-radius:999px; padding:5px 12px;
+    border:1.5px solid var(--line-strong); background:#fff; color:var(--ink-soft);
+    cursor:pointer; letter-spacing:.03em; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pcard{ background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:16px 16px 14px; margin:14px 0; }
+  .pcard.soon{ opacity:.72; border-style:dashed; }
+  .pcard .top{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .pcard .no{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:12px;
+    color:var(--muted); letter-spacing:.14em; }
+  .pcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:18px; letter-spacing:.05em; }
+  .pcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--green);
+    border-radius:999px; padding:1px 9px; letter-spacing:.03em; }
+  .pcard .tag.wip{ background:var(--muted); }
+  .pcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .meta{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .meta span{ font-size:11.5px; color:var(--ink-soft); background:var(--note);
+    border:1px solid var(--line); border-radius:5px; padding:2px 8px; }
+  .meta span b{ color:var(--accent-deep); font-weight:700; margin-right:4px; }
+
+  /* 詳細ページ */
+  table.t{ width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+  table.t th, table.t td{ border:1px solid var(--line); padding:7px 9px;
+    text-align:left; vertical-align:top; color:var(--ink-soft); }
+  table.t th{ background:var(--paper-2); color:var(--ink); font-weight:700; white-space:nowrap; }
+  table.t td b{ color:var(--ink); }
+  .wraptbl{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  h3.sub{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:16px; margin:20px 0 6px; color:var(--ink);
+    border-bottom:1px dashed var(--line-strong); padding-bottom:4px; }
+  ul.dot{ list-style:none; margin:6px 0 6px 2px; }
+  ul.dot li{ font-size:13.5px; color:var(--ink-soft); padding-left:16px;
+    position:relative; margin:4px 0; }
+  ul.dot li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  ul.check{ list-style:none; margin:6px 0; }
+  ul.check li{ font-size:13.5px; color:var(--ink-soft); padding-left:22px;
+    position:relative; margin:5px 0; }
+  ul.check li::before{ content:"☐"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .callout{ background:#FFF6EF; border:1px solid #E8C6AE; border-left:4px solid var(--accent);
+    border-radius:6px; padding:12px 14px; margin:14px 0; font-size:13.5px; color:var(--ink-soft); }
+  .callout b{ color:var(--accent-deep); }
+  .copybox{ background:var(--note); border:1px solid var(--line); border-radius:6px;
+    padding:12px 14px; margin:10px 0; font-size:13.5px; color:var(--ink-soft); white-space:pre-wrap; }
+  .cbtn{ display:inline-block; font-size:12.5px; font-weight:700; border-radius:8px;
+    padding:7px 14px; border:1.5px solid var(--line-strong); background:#fff;
+    color:var(--ink); cursor:pointer; letter-spacing:.03em; }
+  .cbtn:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .cbtn.done{ background:var(--green); color:#fff; border-color:var(--green); }
+  .toc{ display:flex; flex-wrap:wrap; gap:6px; }
+  .toc a{ font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:5px 11px; }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  figure.info{ margin:14px 0 4px; text-align:center; }
+  figure.info img{ width:100%; max-width:560px; height:auto; border:1px solid var(--line);
+    border-radius:8px; box-shadow:0 4px 12px rgba(60,40,15,.18); background:#fff; }
+  figure.info figcaption{ font-size:12px; color:var(--muted); margin-top:8px; }
+  .backlink{ display:inline-block; margin-top:6px; font-size:13px; color:var(--accent-deep);
+    text-decoration:none; font-weight:700; }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="ryoiku.html">個別支援計画のたね</a>
+    <nav class="site-nav">
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="index.html">つくる手帖</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head" id="top">
+  <div class="eyebrow">PROGRAM No.01</div>
+  <h1 class="mincho">おはしマスターへの道</h1>
+  <p class="lede">箸の持ち方を、姿勢づくりから段階的に。<br>「食べられること」を、いつでも「正しく持てること」より上に置きます。</p>
+</div>
+
+<main class="wrap">
+
+<!-- 目次 -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>CONTENTS</small>もくじ</h2>
+  <div class="toc">
+    <a href="#overview">0 ひと目でわかる5つの極意</a>
+    <a href="#outline">1 プログラムの位置づけ</a>
+    <a href="#assess">2 アセスメント</a>
+    <a href="#steps">3 ステップ構成</a>
+    <a href="#group">4 小集団プログラム</a>
+    <a href="#care">5 個別の配慮</a>
+    <a href="#record">6 記録</a>
+    <a href="#plan">7 個別支援計画 記載例</a>
+    <a href="#parent">8 保護者への連絡文例</a>
+    <a href="#items">9 準備物</a>
+  </div>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+<!-- 全体像 -->
+<section class="paper tilt-l" id="overview">
+  <h2 class="sec mincho"><small>OVERVIEW</small>ひと目でわかる5つの極意</h2>
+  <p class="body">箸の練習は<b>「年齢」ではなく「発達」に合わせて</b>進めます。無理な矯正を避け、身体の準備が整ってから段階的に。詳しい進め方は、この下の各節にあります。</p>
+  <figure class="info">
+    <img src="docs/ohashi-step.png" alt="お箸トレーニングの極意：STEP1 チョキと鉛筆持ちで準備確認／STEP2 まずは1本だけで動かす練習／STEP3 発達に合った補助箸を選ぶ／STEP4 利き手や個性を尊重する／STEP5 完璧より「できた」を褒める" loading="lazy">
+    <figcaption>印刷して、職員の休憩室や保護者向けの掲示にもどうぞ。</figcaption>
+  </figure>
+  <div class="links" style="margin-top:12px;">
+    <a class="lbtn doc" href="viewer.html?f=docs%2Fryoiku-blueprint.pdf&amp;t=%E5%80%8B%E6%80%A7%E3%82%92%E4%BC%B8%E3%81%B0%E3%81%99%E7%99%BA%E9%81%94%E6%94%AF%E6%8F%B4%E3%81%AE%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3">📄 背景の考え方（スライドPDF・全16ページ）</a>
+  </div>
+</section>
+
+<!-- 1 位置づけ -->
+<section class="paper tilt-l" id="outline">
+  <h2 class="sec mincho"><small>OUTLINE</small>1 プログラムの位置づけ</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>五領域</th><td><b>健康・生活</b>（食事のADL自立）／<b>運動・感覚</b>（手指の巧緻性・分離運動）／<b>人間関係・社会性</b>（食事場面での自信）</td></tr>
+    <tr><th>ねらい</th><td>箸を用いた食事動作の自立度を高め、給食・外食の場面での自己肯定感を育てる</td></tr>
+    <tr><th>対象</th><td>小学校低学年〜中学年（未就学児・高学年にも段階調整で対応可）</td></tr>
+    <tr><th>形態</th><td>個別（10〜15分）＋小集団（ゲーム形式15分）</td></tr>
+    <tr><th>頻度</th><td>週1〜2回 × 12週で1クール</td></tr>
+    <tr><th>場面</th><td>おやつ前の課題タイム／給食前のウォーミングアップ</td></tr>
+  </table>
+  </div>
+  <div class="callout"><b>このプログラムのいちばん大事な原則。</b><br>食事は「毎日・人前で・失敗が目立つ」動作です。全体を通して <b>「食べられること ＞ 正しく持てること」</b> を優先し、<b>食事中の直接指導は行いません。</b>練習は必ず食事場面から切り離した「遊びの時間」として設定します。</div>
+</section>
+
+<!-- 2 アセスメント -->
+<section class="paper tilt-r" id="assess">
+  <h2 class="sec mincho"><small>ASSESSMENT</small>2 アセスメント（初回・4週ごと）</h2>
+
+  <h3 class="sub">2-1 いまの持ち方の段階</h3>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>段階</th><th>状態</th><th>見立て</th></tr>
+    <tr><td><b>L0</b></td><td>手のひら全体で握る（握り込み持ち）</td><td>手指の分離が未成熟</td></tr>
+    <tr><td><b>L1</b></td><td>4本指で上から握る（グー持ち・上握り）</td><td>前腕が回内位のまま</td></tr>
+    <tr><td><b>L2</b></td><td>2本の箸を同時に動かす（ピンセット持ち・クロス持ち）</td><td>下の箸が固定できない</td></tr>
+    <tr><td><b>L3</b></td><td>下の箸は固定できるが、指の位置が崩れる</td><td>あと一歩</td></tr>
+    <tr><td><b>L4</b></td><td>下は固定・上だけ可動（標準的な持ち方）</td><td>目標段階</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">2-2 前提スキルのチェック</h3>
+  <p class="body">ひとつでも欠けていれば、箸を持たせる前に<b>「準備期」</b>から始めます。</p>
+  <ul class="check">
+    <li>スプーンを鉛筆持ち（3指持ち）で使える</li>
+    <li>親指・人差し指・中指の3本でつまめる（小さいシールをはがせる）</li>
+    <li>薬指・小指を曲げたまま、他の指を動かせる（<b>手指の分離</b>）</li>
+    <li>鉛筆・クレヨンを3指で持てる</li>
+    <li>手首を返さずに前腕を安定させられる（机上に肘が置ける）</li>
+    <li>座位が安定している（足の裏が床または足台に着いている）</li>
+  </ul>
+  <div class="callout"><b>姿勢が最優先です。</b>足がぶらついていると、手指の細かな動きは育ちません。<b>足台の設置</b>と、椅子・机の高さ調整を、アセスメントの段階で必ず行ってください。ここを飛ばすと、あとの練習がすべて空回りします。</div>
+</section>
+
+<!-- 3 ステップ -->
+<section class="paper tilt-l" id="steps">
+  <h2 class="sec mincho"><small>STEPS</small>3 ステップ構成</h2>
+
+  <h3 class="sub">準備期（2〜4週）— 手指の分離と3指つまみ</h3>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>活動</th><th>内容</th><th>ねらい</th></tr>
+    <tr><td>おはじきポケット</td><td>薬指・小指で小さなスポンジを握ったまま、3指でおはじきをつまむ</td><td>手指の分離</td></tr>
+    <tr><td>シールはがし</td><td>台紙から小さなシールをはがして貼る</td><td>3指つまみ・指腹つまみ</td></tr>
+    <tr><td>洗濯ばさみ遊び</td><td>洗濯ばさみを画用紙のふちに留める</td><td>母指対立・力加減</td></tr>
+    <tr><td>ちぎり絵</td><td>折り紙を細かくちぎる</td><td>両手の協調</td></tr>
+    <tr><td>スポイト移し</td><td>スポイトで色水を移す</td><td>母指球の使用</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">Step 1（2週）— 下の箸だけ</h3>
+  <ul class="dot">
+    <li>箸を<b>1本だけ</b>持つ。親指の付け根に差し込み、薬指の第一関節で支える</li>
+    <li>「この箸は<b>動かない箸</b>」と名前をつける（例：ねぼすけ箸）</li>
+    <li>支援者が箸先を軽く押し、ぐらつかないか確認する</li>
+    <li>課題：下の箸を保持したまま、空いた指でグーパー</li>
+  </ul>
+
+  <h3 class="sub">Step 2（2週）— 上の箸だけ</h3>
+  <ul class="dot">
+    <li>箸1本を<b>鉛筆と同じ持ち方</b>（親指・人差し指・中指）で持つ</li>
+    <li>上下にカチカチ動かす（＝はたらき箸）</li>
+    <li>課題：箸先で、机の上の的（シール）をトントンとつつく</li>
+  </ul>
+
+  <h3 class="sub">Step 3（3週）— 2本を合わせる</h3>
+  <ul class="dot">
+    <li><b>下の箸を先にセット → 上から上の箸を差し込む</b>、この順番を徹底する</li>
+    <li>まだ物はつままない。<b>開閉だけ</b>を10回</li>
+    <li>支援者が上の箸の先を指で押さえ、開閉に軽い抵抗をつくる</li>
+  </ul>
+
+  <h3 class="sub">Step 4（3週）— つまむ</h3>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>難易度</th><th>教材</th><th>ポイント</th></tr>
+    <tr><td>★</td><td>スポンジキューブ（2cm角）</td><td>軽い・つぶれる・滑らない</td></tr>
+    <tr><td>★★</td><td>綿ボール・フェルトボール</td><td>軽いが丸い</td></tr>
+    <tr><td>★★★</td><td>大豆・マカロニ</td><td>小さい・硬い</td></tr>
+    <tr><td>★★★★</td><td>おはじき・ビー玉</td><td>滑る</td></tr>
+    <tr><td>★★★★★</td><td>濡らしたこんにゃく・ゼリー</td><td>実際の食事に近い</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">Step 5（2週〜）— 食事場面への般化</h3>
+  <ul class="dot">
+    <li>おやつ（一口大の果物、蒸しパンなど）を箸で食べてみる</li>
+    <li><b>1日1品だけ</b>箸で。ほかはスプーンでよい。品数は少しずつ増やす</li>
+    <li>給食場面では<b>指導しない。できたときだけ認める</b></li>
+  </ul>
+</section>
+
+<!-- 4 小集団 -->
+<section class="paper tilt-r" id="group">
+  <h2 class="sec mincho"><small>GROUP</small>4 小集団プログラム（15分）</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>ゲーム</th><th>内容</th><th>配慮</th></tr>
+    <tr><td>おはしリレー</td><td>チームでスポンジを箸で運ぶ</td><td>落としても減点しない。運んだ数だけ数える</td></tr>
+    <tr><td>おはし釣り</td><td>フェルトや輪ゴムを箸で釣り上げる</td><td>大きさで難易度を調整</td></tr>
+    <tr><td>30秒チャレンジ</td><td>自己ベスト更新方式</td><td><b>他児と比べず、自分の記録と比べる</b></td></tr>
+    <tr><td>おはしでお店やさん</td><td>ままごと食材を箸で取り、皿に盛る</td><td>遊びの文脈での自然な使用</td></tr>
+  </table>
+  </div>
+  <div class="callout">競争形式は、うまくできない子にとって<b>失敗の可視化</b>になります。必ず<b>自己ベスト更新型</b>にしてください。勝敗を扱う場合は、難易度で個別のハンデ（大きい教材を使う等）を先に設定しておきます。</div>
+</section>
+
+<!-- 5 配慮 -->
+<section class="paper tilt-l" id="care">
+  <h2 class="sec mincho"><small>CARE</small>5 個別の配慮</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>状態像</th><th>配慮</th></tr>
+    <tr><td><b>筋緊張が低い／握力が弱い</b></td><td>軽い箸（プラスチック・短め）や補助具（シリコンリング付き矯正箸）を長期使用可とする。<b>「補助具の卒業」を目標にしない</b></td></tr>
+    <tr><td><b>感覚過敏</b></td><td>木の質感、塗り箸の匂い、食材の感触に注意。素材を数種類そろえ、本人に選ばせる</td></tr>
+    <tr><td><b>不器用さが顕著（DCD傾向）</b></td><td>準備期を十分にとる。目標を「正しい持ち方」から<b>「自分なりの安定した持ち方で食べきる」</b>に切り替える判断も行う</td></tr>
+    <tr><td><b>左利き</b></td><td>左右を反転させて、まったく同じ手順で。<b>右利きへの矯正はしない</b></td></tr>
+    <tr><td><b>失敗への過敏さ・回避</b></td><td>練習は必ず遊びの文脈で。<b>「今日はやらない」を選べる権利</b>を保障する</td></tr>
+    <tr><td><b>こだわり・変化への抵抗</b></td><td>いまの持ち方を否定しない。「新しい持ち方も試してみる」と併存させる</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- 6 記録 -->
+<section class="paper tilt-r" id="record">
+  <h2 class="sec mincho"><small>RECORD</small>6 記録</h2>
+  <p class="body">支援きろく帖の「活動・様子」欄に貼り付けて使えます。</p>
+  <div class="copybox" id="txtRecord">【箸プログラム記録】
+実施日：　　年　　月　　日／担当：
+姿勢　：足底接地 有・無　／　肘の位置 適・不適
+段階　：L0・L1・L2・L3・L4
+本日のStep：1・2・3・4・5
+つまみ課題：教材　　　　　　　成功　　／10回
+30秒で運べた数：　　個（前回：　　個）
+意欲：高・普通・低　／　疲労：有・無
+様子・特記：
+次回の目標：</div>
+  <button class="cbtn" data-copy="txtRecord">📋 記録テンプレートをコピー</button>
+</section>
+
+<!-- 7 計画記載例 -->
+<section class="paper tilt-l" id="plan">
+  <h2 class="sec mincho"><small>PLAN</small>7 個別支援計画 記載例</h2>
+  <p class="body">そのままではなく、<b>お子さんの実際の姿と、本人・保護者の意向</b>に合わせて書き直してからお使いください。</p>
+  <div class="copybox" id="txtPlan">【長期目標（6か月）】
+給食・おやつの場面で、箸を用いて主菜・副菜を自分で食べることができる。
+
+【短期目標（3か月）】
+下の箸を固定した状態で上の箸だけを動かし、2cm角のスポンジを5回中3回以上つまむことができる。
+
+【支援内容】
+週2回、おやつ前の10分間、個別課題として段階的な箸操作練習を実施する。姿勢保持のため足台を使用し、手指の分離運動を準備課題として組み込む。食事場面では直接的な持ち方の指導は行わず、成功体験の積み重ねを優先する。小集団活動では自己ベスト更新型のゲームを用い、他児との比較が生じないよう配慮する。
+
+【本人・家族の意向】
+（　本人：　　　　　　　　　　　　　　　　　）
+（　保護者：　　　　　　　　　　　　　　　　）</div>
+  <button class="cbtn" data-copy="txtPlan">📋 計画の文例をコピー</button>
+</section>
+
+<!-- 8 保護者 -->
+<section class="paper tilt-r" id="parent">
+  <h2 class="sec mincho"><small>FOR PARENTS</small>8 保護者への連絡文例</h2>
+  <p class="body">おうち連絡帖の連絡文や、連絡帳への記入に。</p>
+  <div class="copybox" id="txtParent">いつもお世話になっております。
+
+〇〇さんの箸の練習について、事業所での取り組みをお知らせします。
+
+今日は「動かないおはし（下の箸）」を持ったまま、じゃんけんのグーパーができました。ぐらつかずに支えられていて、とても上手です。
+
+ひとつお願いがございます。ご家庭では、食事中に持ち方を直すことはお控えいただけますと幸いです。食事は楽しい時間であることが第一で、練習は遊びの時間として事業所で進めてまいります。
+
+もしご家庭で何かされる場合は、シールはがし、お菓子の袋開け、洗濯ばさみ遊びなど「指先を使う遊び」が、そのまま箸を使う力につながります。ぜひ一緒に楽しんでみてください。</div>
+  <button class="cbtn" data-copy="txtParent">📋 連絡文例をコピー</button>
+  <div class="callout"><b>ご家庭にお願いすることは、ひとつだけで十分です。</b>「食事中に直さない」。あれもこれもお願いすると、保護者が食卓で監視役になってしまいます。</div>
+</section>
+
+<!-- 9 準備物 -->
+<section class="paper tilt-l" id="items">
+  <h2 class="sec mincho"><small>ITEMS</small>9 準備物</h2>
+  <ul class="dot">
+    <li>練習用の箸（子ども用・長さ違いで数種／木製・プラスチック）</li>
+    <li>補助具付きの箸（リングタイプ、コネクタタイプ）</li>
+    <li>小皿・トレー（すべり止めマット付き）</li>
+    <li>教材：スポンジキューブ、フェルトボール、大豆、マカロニ、おはじき</li>
+    <li>足台（高さの調整ができるもの）</li>
+    <li>記録シート、タイマー、達成シール台紙</li>
+  </ul>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+</main>
+
+
+<script>
+'use strict';
+document.querySelectorAll('.cbtn[data-copy]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var el = document.getElementById(b.getAttribute('data-copy'));
+    if(!el) return;
+    var t = el.innerText;
+    var done = function(){
+      var o = b.textContent;
+      b.textContent = '✓ コピーしました';
+      b.classList.add('done');
+      setTimeout(function(){ b.textContent = o; b.classList.remove('done'); }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done, function(){ fallback(t, done); });
+    } else { fallback(t, done); }
+  });
+});
+function fallback(t, done){
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ alert('コピーできませんでした。長押しで選択してください。'); }
+  document.body.removeChild(ta);
+}
+</script>
+
+<footer>
+  <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
+  <div style="margin-top:6px;"><a href="ryoiku.html">個別支援計画のたね へ</a>　<a href="ouen.html">放課後デイ応援帖へ</a></div>
+</footer>
+</body>
+</html>

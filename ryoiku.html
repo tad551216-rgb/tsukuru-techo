@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個別支援計画のたね — 放課後デイ応援帖</title>
+<meta name="description" content="放課後等デイサービスの個別支援計画づくりに。五領域にひもづく療育プログラムの素案集。アセスメント・スモールステップ・記録・計画記載例・保護者への伝え方まで。">
+<style>
+
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; white-space:nowrap; }
+  .site-nav{ display:flex; gap:16px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
+  .site-nav a:hover{ color:var(--accent-deep); }
+
+  .head{ padding:52px 0 20px; text-align:center; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:34px; letter-spacing:.10em; margin:10px 0 6px; color:var(--paper);
+    text-shadow:0 1px 0 rgba(0,0,0,.18); }
+  .head .lede{ color:#FBF7EE; font-size:14.5px; max-width:600px; margin:0 auto; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+
+  .paper{
+    background:var(--note); border:1px solid var(--line); border-radius:8px;
+    box-shadow:0 6px 16px rgba(60,40,15,.22), 0 1px 0 rgba(255,255,255,.5) inset;
+    padding:26px 24px; margin:26px 0; position:relative;
+  }
+  .paper::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E8875A, var(--accent-deep) 70%);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);
+  }
+  .paper.tilt-l{ transform:rotate(-.4deg); }
+  .paper.tilt-r{ transform:rotate(.35deg); }
+  h2.sec{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px;
+    letter-spacing:.08em; margin-bottom:14px; padding-left:12px;
+    border-left:4px solid var(--accent); color:var(--ink);
+  }
+  h2.sec small{ display:block; font-size:11px; letter-spacing:.22em; color:var(--accent-deep);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:700; margin-bottom:2px; border:none; }
+  p.body{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+  p.body b{ color:var(--ink); }
+
+  .promise{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  @media(max-width:640px){ .promise{ grid-template-columns:1fr; } }
+  .promise .p{
+    background:var(--paper); border:1px dashed var(--line-strong); border-radius:8px;
+    padding:14px 12px; text-align:center;
+  }
+  .promise .p .ic{ font-size:26px; }
+  .promise .p .t{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:4px 0 2px; }
+  .promise .p .d{ font-size:12px; color:var(--muted); line-height:1.7; }
+
+  .flow{ counter-reset:step; margin-top:8px; }
+  .flow .st{
+    display:flex; gap:12px; padding:11px 4px; border-bottom:1px dashed var(--line);
+    align-items:flex-start;
+  }
+  .flow .st:last-child{ border-bottom:none; }
+  .flow .st::before{
+    counter-increment:step; content:counter(step);
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink);
+    color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; margin-top:3px;
+  }
+  .flow .st .tt{ font-weight:700; font-size:14px; }
+  .flow .st .tt .app{ color:var(--accent-deep); font-size:12px; margin-left:6px; }
+  .flow .st .dd{ font-size:13px; color:var(--ink-soft); }
+
+  .appcard{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:18px 16px; margin:16px 0;
+  }
+  .appcard .top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .appcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; letter-spacing:.06em; }
+  .appcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--accent);
+    border-radius:999px; padding:1px 9px; letter-spacing:.04em; }
+  .appcard .tag.g{ background:var(--green); }
+  .appcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .appcard ul{ margin:0 0 12px 2px; list-style:none; }
+  .appcard li{ font-size:13px; color:var(--ink-soft); padding-left:16px; position:relative; margin:3px 0; }
+  .appcard li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .links{ display:flex; flex-wrap:wrap; gap:8px; }
+  .lbtn{
+    display:inline-block; text-decoration:none; font-size:13px; font-weight:700;
+    border-radius:8px; padding:8px 14px; letter-spacing:.03em;
+  }
+  .lbtn.app{ background:var(--accent); color:#fff; box-shadow:0 2px 0 var(--accent-deep); }
+  .lbtn.app:hover{ background:var(--accent-deep); }
+  .lbtn.doc{ background:#fff; color:var(--ink); border:1.5px solid var(--line-strong); }
+  .lbtn.doc:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .soon{ font-size:11px; color:var(--muted); }
+
+  .install ol{ margin:6px 0 4px 4px; list-style:none; counter-reset:ins; }
+  .install ol li{ font-size:13.5px; color:var(--ink-soft); padding:6px 0 6px 30px; position:relative; }
+  .install ol li::before{ counter-increment:ins; content:counter(ins);
+    position:absolute; left:0; top:6px; width:22px; height:22px; border-radius:50%;
+    background:var(--paper-2); border:1px solid var(--line-strong); color:var(--ink);
+    font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .os{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:12px 0 2px; color:var(--ink); }
+
+  .caution li{ font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative; margin:6px 0; list-style:none; }
+  .caution li::before{ content:"※"; position:absolute; left:0; color:var(--accent-deep); }
+
+  footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+  footer a{ color:#FFE7C9; }
+
+  /* 紹介ムービー：ボタン→モーダル再生（つくる手帖 本体と同じ方式） */
+  .movie-lead{ font-size:14.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .vbtn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:11px 20px; border-radius:999px; border:1px solid var(--green);
+    background:var(--green); color:#fff; text-decoration:none;
+    font-size:14px; font-weight:700; letter-spacing:.03em;
+  }
+  .vbtn:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .vbtn .play{ font-size:.85em; }
+
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,15,8,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:8px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
+
+
+  /* ── 療育プログラム集 追加スタイル ── */
+  .filter{ display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 4px; }
+  .chip{ font-size:12px; font-weight:700; border-radius:999px; padding:5px 12px;
+    border:1.5px solid var(--line-strong); background:#fff; color:var(--ink-soft);
+    cursor:pointer; letter-spacing:.03em; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pcard{ background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:16px 16px 14px; margin:14px 0; }
+  .pcard.soon{ opacity:.72; border-style:dashed; }
+  .pcard .top{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .pcard .no{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:12px;
+    color:var(--muted); letter-spacing:.14em; }
+  .pcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:18px; letter-spacing:.05em; }
+  .pcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--green);
+    border-radius:999px; padding:1px 9px; letter-spacing:.03em; }
+  .pcard .tag.wip{ background:var(--muted); }
+  .pcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .meta{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .meta span{ font-size:11.5px; color:var(--ink-soft); background:var(--note);
+    border:1px solid var(--line); border-radius:5px; padding:2px 8px; }
+  .meta span b{ color:var(--accent-deep); font-weight:700; margin-right:4px; }
+
+  /* 詳細ページ */
+  table.t{ width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+  table.t th, table.t td{ border:1px solid var(--line); padding:7px 9px;
+    text-align:left; vertical-align:top; color:var(--ink-soft); }
+  table.t th{ background:var(--paper-2); color:var(--ink); font-weight:700; white-space:nowrap; }
+  table.t td b{ color:var(--ink); }
+  .wraptbl{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  h3.sub{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:16px; margin:20px 0 6px; color:var(--ink);
+    border-bottom:1px dashed var(--line-strong); padding-bottom:4px; }
+  ul.dot{ list-style:none; margin:6px 0 6px 2px; }
+  ul.dot li{ font-size:13.5px; color:var(--ink-soft); padding-left:16px;
+    position:relative; margin:4px 0; }
+  ul.dot li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  ul.check{ list-style:none; margin:6px 0; }
+  ul.check li{ font-size:13.5px; color:var(--ink-soft); padding-left:22px;
+    position:relative; margin:5px 0; }
+  ul.check li::before{ content:"☐"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .callout{ background:#FFF6EF; border:1px solid #E8C6AE; border-left:4px solid var(--accent);
+    border-radius:6px; padding:12px 14px; margin:14px 0; font-size:13.5px; color:var(--ink-soft); }
+  .callout b{ color:var(--accent-deep); }
+  .copybox{ background:var(--note); border:1px solid var(--line); border-radius:6px;
+    padding:12px 14px; margin:10px 0; font-size:13.5px; color:var(--ink-soft); white-space:pre-wrap; }
+  .cbtn{ display:inline-block; font-size:12.5px; font-weight:700; border-radius:8px;
+    padding:7px 14px; border:1.5px solid var(--line-strong); background:#fff;
+    color:var(--ink); cursor:pointer; letter-spacing:.03em; }
+  .cbtn:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .cbtn.done{ background:var(--green); color:#fff; border-color:var(--green); }
+  .toc{ display:flex; flex-wrap:wrap; gap:6px; }
+  .toc a{ font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:5px 11px; }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .backlink{ display:inline-block; margin-top:6px; font-size:13px; color:var(--accent-deep);
+    text-decoration:none; font-weight:700; }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="#top">個別支援計画のたね</a>
+    <nav class="site-nav">
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="index.html">つくる手帖</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head" id="top">
+  <div class="eyebrow">INDIVIDUAL SUPPORT PLAN</div>
+  <h1 class="mincho">個別支援計画のたね</h1>
+  <p class="lede">五領域にひもづく療育プログラムの素案集。<br>そのまま個別支援計画に書き写せる形で、ひとつずつ増やしていきます。</p>
+</div>
+
+<main class="wrap">
+
+<!-- 紹介ムービー -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>MOVIE</small>プログラム作成の考え方（動画）</h2>
+  <p class="movie-lead">お箸の練習を題材に、「無理な矯正をしない」という支援の出発点から、五領域への展開、個別支援計画の書き方、効果測定までを通しで解説しています。プログラムを作る前に、まずこちらをどうぞ。</p>
+  <a class="vbtn" href="docs/ryoiku-douga.mp4" data-video="docs/ryoiku-douga.mp4"><span class="play">▶</span>ムービーを再生する</a>
+</section>
+
+<!-- 資料 -->
+<section class="paper tilt-l">
+  <h2 class="sec mincho"><small>SLIDES</small>個性を伸ばす発達支援のデザイン</h2>
+  <p class="movie-lead">動画のスライド資料です（全16ページ）。「矯正」のリスク、手の発達の見極め方、補助具の比較、食事環境のデザイン、5領域への展開、計画書のNG→OK変換、効果測定のフレームワークまで。</p>
+  <div class="links">
+    <a class="lbtn doc" href="viewer.html?f=docs%2Fryoiku-blueprint.pdf&amp;t=%E5%80%8B%E6%80%A7%E3%82%92%E4%BC%B8%E3%81%B0%E3%81%99%E7%99%BA%E9%81%94%E6%94%AF%E6%8F%B4%E3%81%AE%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3">📄 スライドPDF（全16ページ）</a>
+  </div>
+</section>
+
+<!-- 趣旨 -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>ABOUT</small>このページについて</h2>
+  <p class="body">個別支援計画は、書式は配られても<b>「中身をどう書くか」は現場まかせ</b>になりがちです。ここでは、日々の療育でよくあるテーマをひとつずつ取り上げ、<b>アセスメント → スモールステップ → 記録 → 計画への記載例 → 保護者への伝え方</b>までを一続きの資料にまとめました。</p>
+  <p class="body">長期目標・短期目標・支援内容の文例は<b>コピーボタン</b>で写せます。支援きろく帖の支援記録欄や、おうち連絡帖の連絡文にそのまま貼って、事業所の言葉に直してお使いください。</p>
+  <div class="promise">
+    <div class="p"><div class="ic">🌱</div><div class="t">素案です</div><div class="d">たたき台としてお使いください。最終判断は事業所・専門職・保護者と。</div></div>
+    <div class="p"><div class="ic">📋</div><div class="t">計画に直結</div><div class="d">五領域と記載例つき。計画作成の手間を減らします。</div></div>
+    <div class="p"><div class="ic">➕</div><div class="t">少しずつ増えます</div><div class="d">現場で使えたものから、順に追加していきます。</div></div>
+  </div>
+</section>
+
+<!-- 使い方 -->
+<section class="paper tilt-l">
+  <h2 class="sec mincho"><small>HOW TO USE</small>3つのステップ</h2>
+  <div class="flow">
+    <div class="st"><div><div class="tt">えらぶ</div><div class="dd">五領域や課題からプログラムを選び、アセスメント表でお子さんの現在地を確かめます。</div></div></div>
+    <div class="st"><div><div class="tt">写す<span class="app">個別支援計画へ</span></div><div class="dd">長期目標・短期目標・支援内容の文例をコピーして、名前や期間を差し替えます。</div></div></div>
+    <div class="st"><div><div class="tt">記録する<span class="app">支援きろく帖</span></div><div class="dd">各プログラムの記録欄をもとに、日々の支援記録へ。モニタリング時に段階を見直します。</div></div></div>
+  </div>
+</section>
+
+<!-- プログラム一覧 -->
+<section class="paper tilt-r" id="list">
+  <h2 class="sec mincho"><small>PROGRAMS</small>プログラム一覧</h2>
+  <p class="body">領域でしぼりこめます。<b>準備中</b>のものは、現場で試しながら順次公開していきます。</p>
+  <div class="filter" id="filter"></div>
+  <div id="progList"></div>
+</section>
+
+<!-- 五領域について -->
+<section class="paper tilt-l">
+  <h2 class="sec mincho"><small>FIVE AREAS</small>五領域との対応</h2>
+  <p class="body">令和6年度の報酬改定以降、個別支援計画には<b>五領域すべてを踏まえた記載</b>が求められます。各プログラムには対応領域を明記していますので、計画全体で領域の抜け落ちがないか確かめる目安にもお使いください。</p>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>領域</th><th>このページのプログラム例</th></tr>
+    <tr><td><b>健康・生活</b></td><td>食事・着替え・身支度などの生活動作（例：おはしマスターへの道）</td></tr>
+    <tr><td><b>運動・感覚</b></td><td>手指の巧緻性、姿勢保持、感覚の受け止め方（例：おはし／クレヨン）</td></tr>
+    <tr><td><b>認知・行動</b></td><td>見通し、切り替え、注意の向け方</td></tr>
+    <tr><td><b>言語・コミュニケーション</b></td><td>要求・報告・やりとりの手段</td></tr>
+    <tr><td><b>人間関係・社会性</b></td><td>順番、協力、自己肯定感（小集団プログラム全般）</td></tr>
+    <tr><td><b>（地域交流）</b></td><td>本人支援以外の観点。地域資源を使ったおでかけプログラム</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- 注意 -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>NOTES</small>お使いいただく前に、大事なこと</h2>
+  <ul class="caution">
+    <li>掲載しているプログラムは<b>素案（たたき台）</b>です。お子さん一人ひとりの発達段階・診断・感覚特性により適否が変わります。作業療法士（OT）・言語聴覚士（ST）等の専門職や、児童発達支援管理責任者の判断のもとで調整してください。</li>
+    <li>個別支援計画の文例は、そのまま使うことを想定していません。お子さんの実際の姿にもとづき、<b>本人・保護者の意向を反映した言葉</b>に必ず書き直してください。</li>
+    <li>身体に触れる介助（手を添えるなど）を含むプログラムでは、事前に本人と保護者の同意を得てください。</li>
+    <li>「できないこと」を並べる資料ではありません。<b>できていることから始める</b>ことを、どのプログラムでも前提にしています。</li>
+  </ul>
+</section>
+
+<!-- 免責 -->
+<section class="paper tilt-l">
+  <h2 class="sec mincho"><small>DISCLAIMER</small>免責事項</h2>
+  <p class="body">本ページの資料は、個人が無償で公開しているものです。内容の正確性・適合性を保証するものではなく、ご利用によって生じたいかなる結果についても、作成者は責任を負いかねます。実施の可否と方法は、各事業所のご判断と責任においてお願いいたします。</p>
+</section>
+
+</main>
+
+<script>
+'use strict';
+/* ===============================================================
+   プログラムの追加は、この PROGRAMS 配列に1つ足すだけです。
+     no    : 通し番号（表示用）
+     name  : プログラム名
+     lead  : 1〜2文の紹介
+     areas : 五領域（filterに使うので下の AREAS 表記に合わせる）
+     target: 対象
+     time  : 実施の目安
+     href  : 詳細ページ。'' なら「準備中」になります
+   =============================================================== */
+const AREAS = ['健康・生活','運動・感覚','認知・行動','言語・コミュニケーション','人間関係・社会性','地域交流'];
+
+const PROGRAMS = [
+  {
+    no:'01',
+    name:'おはしマスターへの道',
+    lead:'箸の持ち方を、姿勢づくりから段階的に。食事場面では指導しないことを原則にした、失敗体験を積ませない構成です。',
+    areas:['健康・生活','運動・感覚','人間関係・社会性'],
+    target:'小学校低学年〜中学年（未就学・高学年も調整可）',
+    time:'週1〜2回 × 12週',
+    href:'ryoiku-hashi.html'
+  },
+  {
+    no:'02',
+    name:'クレヨンとなかよし（仮）',
+    lead:'握り込みから3指持ちへ。なぐり描きを止めずに、描く楽しさを保ったまま持ち方と筆圧を育てるプログラム。書字の前段階として。',
+    areas:['運動・感覚','認知・行動'],
+    target:'未就学〜小学校低学年',
+    time:'準備中',
+    href:''
+  },
+  {
+    no:'03',
+    name:'和泉市まわり おでかけ療育（仮）',
+    lead:'公園・図書館・スーパー・公共交通など、身近な地域資源を使った活動プログラム。地域交流と、買い物・移動といった生活スキルを兼ねます。',
+    areas:['健康・生活','人間関係・社会性','地域交流'],
+    target:'小学生全般',
+    time:'準備中',
+    href:''
+  }
+];
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function card(p){
+  const ready = !!p.href;
+  const tag = ready
+    ? '<span class="tag">公開中</span>'
+    : '<span class="tag wip">準備中</span>';
+  const meta = '<div class="meta">'
+    + '<span><b>領域</b>'+p.areas.map(esc).join('／')+'</span>'
+    + '<span><b>対象</b>'+esc(p.target)+'</span>'
+    + '<span><b>目安</b>'+esc(p.time)+'</span>'
+    + '</div>';
+  const link = ready
+    ? '<div class="links"><a class="lbtn app" href="'+esc(p.href)+'">📄 プログラムを開く</a></div>'
+    : '<div class="soon">現場での試行後に公開します。</div>';
+  return '<div class="pcard'+(ready?'':' soon')+'" data-areas="'+esc(p.areas.join('|'))+'">'
+    + '<div class="top"><span class="no">No.'+esc(p.no)+'</span>'
+    + '<span class="nm mincho">'+esc(p.name)+'</span>'+tag+'</div>'
+    + '<p class="lead">'+esc(p.lead)+'</p>'
+    + meta + link + '</div>';
+}
+
+document.getElementById('progList').innerHTML = PROGRAMS.map(card).join('');
+
+/* 領域フィルタ */
+const fw = document.getElementById('filter');
+fw.innerHTML = '<button class="chip on" data-a="">すべて</button>'
+  + AREAS.map(a=>'<button class="chip" data-a="'+esc(a)+'">'+esc(a)+'</button>').join('');
+fw.addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  fw.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  b.classList.add('on');
+  const a = b.getAttribute('data-a');
+  document.querySelectorAll('#progList .pcard').forEach(c=>{
+    const list = (c.getAttribute('data-areas')||'').split('|');
+    c.style.display = (!a || list.includes(a)) ? '' : 'none';
+  });
+});
+</script>
+
+<!-- 動画ポップアップ（ouen.html と同じ方式） -->
+<div id="videoModal" class="vmodal" hidden>
+  <div class="vmodal-backdrop" data-close></div>
+  <div class="vmodal-box">
+    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
+    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('videoModal');
+  var vid=document.getElementById('videoEl');
+  if(!modal||!vid) return;
+  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
+  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
+  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
+})();
+</script>
+
+<footer>
+  <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
+  <div style="margin-top:6px;"><a href="ouen.html">放課後デイ応援帖へ</a>　<a href="index.html">つくる手帖 ポータルへ</a></div>
+</footer>
+</body>
+</html>
