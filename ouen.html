@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>放課後デイ応援帖 — つくる手帖</title>
-<meta name="description" content="放課後等デイサービスの小さな事業所向け、無料・広告なし・データは端末の中だけのお役立ちアプリ集。お迎えルート、実績記録と保護者サイン、保護者連携、作業日報まで。">
+<meta name="description" content="放課後等デイサービスの小さな事業所向け。送迎・記録・保護者連絡をこなす業務応援アプリと、個別支援計画づくりの療育プログラム集。無料・広告なし・データは端末の中だけ。">
 <style>
   :root{
     --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
@@ -149,6 +149,31 @@
   .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
   .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:8px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
   .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
+
+  /* ── 入口カード（2つの入口） ── */
+  .gates{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px; }
+  @media(max-width:640px){ .gates{ grid-template-columns:1fr; } }
+  .gate{
+    display:block; text-decoration:none; color:var(--ink);
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:22px 20px 18px; transition:border-color .15s, transform .15s, box-shadow .15s;
+  }
+  .gate:hover{ border-color:var(--accent); transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(60,40,15,.16); }
+  .gate .ic{ font-size:30px; line-height:1; }
+  .gate .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:21px; letter-spacing:.06em; margin:8px 0 2px; }
+  .gate .en{ font-size:10.5px; letter-spacing:.2em; color:var(--accent-deep); font-weight:700; }
+  .gate .dd{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 12px; }
+  .gate ul{ list-style:none; margin:0 0 14px; }
+  .gate li{ font-size:12.5px; color:var(--muted); padding-left:14px; position:relative; margin:2px 0; }
+  .gate li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); }
+  .gate .go{ display:inline-block; font-size:13px; font-weight:700; color:#fff;
+    background:var(--accent); border-radius:8px; padding:8px 16px; box-shadow:0 2px 0 var(--accent-deep); }
+  .gate:hover .go{ background:var(--accent-deep); box-shadow:0 2px 0 var(--accent-deep); }
+  .gate.g2 .go{ background:var(--green); box-shadow:0 2px 0 #2C5240; }
+  .gate.g2:hover{ border-color:var(--green); }
+  .gate.g2:hover .go{ background:#2C5240; }
 </style>
 </head>
 <body>
@@ -165,35 +190,45 @@
 <div class="head" id="top">
   <div class="eyebrow">FOR SMALL AFTER-SCHOOL DAY SERVICES</div>
   <h1 class="mincho">放課後デイ応援帖</h1>
-  <p class="lede">送迎の段取りから、記録とサイン、保護者とのやり取りまで。<br>小さな事業所の一日を、すこし軽くする道具箱です。</p>
+  <p class="lede">送迎の段取りから、記録とサイン、保護者とのやり取りまで。<br>そして、支援そのものの中身を考えるために。</p>
 </div>
 
 <main class="wrap">
 
-<!-- 紹介ムービー -->
-<section class="paper tilt-r">
-  <h2 class="sec mincho"><small>MOVIE</small>8分でわかる紹介ムービー</h2>
-  <p class="movie-lead">送迎ルート・記録・保護者連絡まで、実際の画面で流れをご紹介します。</p>
-  <a class="vbtn" href="docs/houday-douga.mp4" data-video="docs/houday-douga.mp4"><span class="play">▶</span>ムービーを再生する</a>
-</section>
+<!-- 2つの入口 -->
+<section class="paper tilt-r" id="gates">
+  <h2 class="sec mincho"><small>ENTRANCE</small>ふたつの入口</h2>
+  <p class="body">事務を軽くする<b>道具</b>と、支援の中身を考える<b>たたき台</b>。どちらからでもどうぞ。</p>
+  <div class="gates">
 
-<!-- マスター連携スライド -->
-<section class="paper tilt-l">
-  <h2 class="sec mincho"><small>SLIDES</small>しくみがわかるスライド</h2>
-  <p class="movie-lead">3つのアプリはどうつながっているのか。マスター連携の考え方と、運用開始の5ステップを15枚のスライドにまとめました。導入前の全体理解にどうぞ。設定を進めるときは手順書PDFを、まず触ってみたいときは架空データのサンプルページをお使いください。</p>
-  <div class="links">
-    <a class="lbtn app" href="viewer.html?f=docs%2Fmaster-slides.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%20%E5%AE%8C%E5%85%A8%E8%A8%AD%E8%A8%88%E5%9B%B3">📄 スライドPDF（全15ページ）</a>
-    <a class="lbtn doc" href="viewer.html?f=docs%2Fmaster-renkei-guide.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%E3%82%AC%E3%82%A4%E3%83%89">📄 手順書PDF（全9ページ）</a>
-    <a class="lbtn doc" href="sample-renkei.html">🧪 サンプルデータで体験する</a>
-  </div>
-</section>
+    <a class="gate" href="ouen-apps.html">
+      <div class="ic">🚐</div>
+      <div class="en">TOOLS</div>
+      <div class="nm mincho">業務応援アプリ</div>
+      <div class="dd">送迎ルート、実績記録と保護者サイン、保護者との連絡帳。一日の事務をスマホひとつで。</div>
+      <ul>
+        <li>おむかえルート帖（送迎）</li>
+        <li>支援きろく帖（記録・請求）</li>
+        <li>おうち連絡帖（保護者向け）</li>
+        <li>おまけ：作業日報のセット</li>
+      </ul>
+      <span class="go">アプリを見る ›</span>
+    </a>
 
-<!-- 個別支援計画のたね -->
-<section class="paper tilt-r">
-  <h2 class="sec mincho"><small>PROGRAMS</small>個別支援計画のたね（療育プログラム集）</h2>
-  <p class="movie-lead">個別支援計画は、書式は配られても「中身をどう書くか」は現場まかせになりがちです。よくあるテーマごとに、アセスメント・スモールステップ・記録・<b>計画への記載例</b>・保護者への伝え方までを一続きにまとめました。文例はコピーボタンで写せます。少しずつ増やしていきます。</p>
-  <div class="links">
-    <a class="lbtn app" href="ryoiku.html">🌱 プログラム集をひらく</a>
+    <a class="gate g2" href="ryoiku.html">
+      <div class="ic">🌱</div>
+      <div class="en">PROGRAMS</div>
+      <div class="nm mincho">個別支援計画のたね</div>
+      <div class="dd">五領域にひもづく療育プログラムの素案集。アセスメントから計画の記載例、保護者への伝え方まで。</div>
+      <ul>
+        <li>プログラム作成の考え方（動画）</li>
+        <li>No.01 おはしマスターへの道</li>
+        <li>計画の文例はコピーして使えます</li>
+        <li>プログラムは順次追加します</li>
+      </ul>
+      <span class="go">プログラム集を見る ›</span>
+    </a>
+
   </div>
 </section>
 
@@ -208,61 +243,6 @@
   </div>
 </section>
 
-<!-- 一日の流れ -->
-<section class="paper tilt-r">
-  <h2 class="sec mincho"><small>ONE DAY</small>アプリでつながる一日</h2>
-  <div class="flow">
-    <div class="st"><div><div class="tt">朝、お迎えの段取り<span class="app">おむかえルート帖</span></div><div class="dd">学校ごとの下校時刻を確認し、車両とルートを組んで、担当者へLINEで指示。</div></div></div>
-    <div class="st"><div><div class="tt">下校時、送迎<span class="app">おむかえルート帖 → 支援きろく帖</span></div><div class="dd">確定したお迎え時刻は、記録アプリの送迎欄に自動で反映されます。</div></div></div>
-    <div class="st"><div><div class="tt">施設で、記録<span class="app">支援きろく帖</span></div><div class="dd">入退室の時刻から算定時間数を自動計算。活動や様子などの支援記録もその場で。</div></div></div>
-    <div class="st"><div><div class="tt">お送り時、保護者のサイン<span class="app">支援きろく帖／おむかえルート帖</span></div><div class="dd">スマホの画面に指でサイン。「提供の都度の確認」がその場で完了します。</div></div></div>
-    <div class="st"><div><div class="tt">夜、保護者へ連絡帳<span class="app">支援きろく帖 → おうち連絡帖</span></div><div class="dd">確定した記録を暗号化して送信。保護者は内容を確認してデジタル署名を返せます。</div></div></div>
-    <div class="st"><div><div class="tt">月末、締めと請求<span class="app">支援きろく帖</span></div><div class="dd">サイン漏れ・記録漏れを点検して、算定時間数つきCSVと実績記録票を出力。</div></div></div>
-  </div>
-</section>
-
-<!-- アプリ本体（データ駆動） -->
-<section class="paper tilt-l" id="apps">
-  <h2 class="sec mincho"><small>APPS</small>3つの柱アプリ</h2>
-  <p class="body">3つで一組ですが、1つだけでも使えます。まずはおむかえルート帖からがおすすめです。</p>
-  <div id="appList"></div>
-</section>
-
-<!-- おまけ -->
-<section class="paper tilt-r" id="omake">
-  <h2 class="sec mincho"><small>BONUS</small>おまけ：作業日報のセット</h2>
-  <p class="body">パート従業員の勤怠・作業記録に。LINEで日報を送る運用をそのまま活かして、入力と集計をアプリ化したものです。介護・福祉の現場で実際に使われています。</p>
-  <div id="omakeList"></div>
-</section>
-
-<!-- インストールガイド -->
-<section class="paper tilt-l install" id="install">
-  <h2 class="sec mincho"><small>INSTALL</small>ホーム画面に追加する（共通）</h2>
-  <p class="body">アプリストアは使いません。ブラウザで開いて「ホーム画面に追加」するだけで、アプリとして使えます。</p>
-  <div class="os">iPhone・iPad（Safari）</div>
-  <ol>
-    <li>上のボタンからアプリを開く</li>
-    <li>画面下の「共有」ボタン（□に↑）をタップ</li>
-    <li>「ホーム画面に追加」を選んで「追加」</li>
-  </ol>
-  <div class="os">Android（Chrome）</div>
-  <ol>
-    <li>上のボタンからアプリを開く</li>
-    <li>右上の「︙」メニューをタップ</li>
-    <li>「ホーム画面に追加」（または「アプリをインストール」）を選ぶ</li>
-  </ol>
-  <p class="body" style="font-size:12.5px;color:var(--muted);">ホーム画面のアイコンから開くと全画面で動き、電波のない場所でも使えます。データは端末内に保存されるため、機種変更の前には各アプリの「バックアップ」で控えを取ってください。</p>
-</section>
-
-<!-- 大事なこと -->
-<section class="paper tilt-r">
-  <h2 class="sec mincho"><small>NOTES</small>お使いいただく前に、大事なこと</h2>
-  <ul class="caution">
-    <li>支援きろく帖が表示する算定時間の「区分」は参考表示です。実際の請求区分・加算の可否は、最新の告示・自治体の取り扱い・お使いの請求ソフトの判定に従ってください。</li>
-    <li>電子サイン・デジタル署名の取り扱いは自治体（指定権者）により運用が異なる場合があります。導入前の確認をおすすめします。</li>
-    <li>記録は法令により5年間の保管が必要です。データは端末内に保存されるため、月に一度はバックアップを取り、端末以外の場所にも控えを置いてください。</li>
-  </ul>
-</section>
 
 <!-- 免責事項 -->
 <section class="paper tilt-l">
@@ -271,119 +251,12 @@
   <p class="body">各アプリのソースコードは <a href="https://github.com/tad551216-rgb" style="color:var(--accent-deep);">GitHub</a> で公開しています。サーバーへの送信がないことを含め、どなたでも中身を確認できます。</p>
 </section>
 
+
 </main>
 
 <footer>
   <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
-  <div style="margin-top:6px;"><a href="index.html">つくる手帖 ポータルへ</a></div>
+  <div style="margin-top:6px;"><a href="ouen.html">放課後デイ応援帖へ</a>　<a href="index.html">つくる手帖 ポータルへ</a></div>
 </footer>
-
-<script>
-'use strict';
-/* ===============================================================
-   リンクの管理はここだけ。リポジトトリ名を変えたらURLを直してください。
-   guide / manual が空("")のボタンは表示されません。
-   =============================================================== */
-const DOCS = 'docs/';
-const APPS = [
-  {
-    name:'おむかえルート帖', tag:'送迎', tagClass:'',
-    lead:'学校ごとの下校時刻から、車両の割り振りとお迎えルートをつくる段取りアプリ。地図・所要時間の目安・車両別のLINE指示文まで。',
-    items:[
-      '地域から学校を検索して一括登録（名前と住所はあとから正式表記に直せます）',
-      '当日の学校をタップで選び、時刻・人数・児童のニックネームをメモ',
-      '車両ごとのルートと到着目安、Googleマップへの引き継ぎ',
-      'お送り時の保護者サイン取得（記録アプリと連携）'
-    ],
-    app:'https://tad551216-rgb.github.io/omukae-route/',
-    guide:'#install', manual:DOCS+'omukae-route-manual.pdf'
-  },
-  {
-    name:'支援きろく帖', tag:'記録・請求', tagClass:'',
-    lead:'サービス提供実績記録と支援記録（療育日誌）を1枚のカードで。算定時間数の自動計算と、その場での保護者サインに対応。',
-    items:[
-      '入室〜退室から算定時間数を自動計算（送迎時間は含めない設計）',
-      '保護者の電子サイン（提供の都度・時刻つき）',
-      '体調・活動・様子・ヒヤリハット・身体拘束・記録者の支援記録',
-      '月次の点検（サイン漏れ・記録漏れ・契約支給量オーバー）',
-      '算定時間数つきCSV・サイン画像つき実績記録票の印刷・5年保管用バックアップ'
-    ],
-    app:'https://tad551216-rgb.github.io/shien-kiroku/',
-    guide:'#install', manual:DOCS+'shien-kiroku-manual.pdf'
-  },
-  {
-    name:'おうち連絡帖', tag:'保護者向け', tagClass:'g',
-    lead:'保護者のスマホで使う連絡帳アプリ。施設からの連絡を合言葉でひらいて、内容を確認したらデジタル署名。利用の予約やおやすみの連絡も送れます。',
-    items:[
-      '施設からの連絡帳・お知らせを暗号化テキストで受信（LINEには暗号文しか残りません）',
-      '内容を確認して、改ざん検知つきのデジタル署名を返信',
-      '利用したい日の予約・変更・おやすみの連絡を送信',
-      '受け取った記録は端末に残り、家庭側の連絡帳控えに'
-    ],
-    app:'https://tad551216-rgb.github.io/ouchi-renraku/',
-    guide:'#install', manual:DOCS+'ouchi-renraku-manual.pdf'
-  }
-];
-const OMAKE = [
-  {
-    name:'作業日報', tag:'従業員向け', tagClass:'g',
-    lead:'その日の作業をスマホで手早く記録して、LINEで報告。個人情報を載せず、端末内で完結します。',
-    items:['作業内容・時間の入力とLINE報告文の自動作成','氏名の埋め込み・よく使う項目の登録'],
-    app:'https://tad551216-rgb.github.io/nippo/',
-    guide:DOCS+'nippo-install.pdf',
-    guideAndroid:DOCS+'android-nippo-install.pdf',
-    manual:DOCS+'nippo-features.pdf'
-  },
-  {
-    name:'作業日報集計', tag:'管理者向け', tagClass:'',
-    lead:'LINEに流れてきた日報を貼り付けるだけで、従業員別・期間別に自動集計。月締めや漏れ確認カレンダーも。',
-    items:['日報テキストの貼り付け集計（従業員別・期間別）','月締め・記入漏れカレンダー・日報/週報/月報の出力'],
-    app:'https://tad551216-rgb.github.io/nippo-syuukei/',
-    guide:'#install',
-    manual:DOCS+'nippo-shukei-manual.pdf'
-  }
-];
-function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-/* PDFはviewer.html(もどるボタン付き)で開く。#リンクや外部URLはそのまま */
-function pdfHref(path,title){
-  return /\.pdf$/i.test(path) ? 'viewer.html?f='+encodeURIComponent(path)+'&t='+encodeURIComponent(title) : path;
-}
-function card(a){
-  let links='<a class="lbtn app" href="'+esc(a.app)+'">▶ アプリをひらく</a>';
-  if(a.guide) links+='<a class="lbtn doc" href="'+esc(a.guide.startsWith('#')?a.guide:pdfHref(a.guide,a.name+'（iPhone）'))+'">'+(a.guide.startsWith('#')?'インストールの手順':'インストールガイド（iPhone）')+'</a>';
-  if(a.guideAndroid) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.guideAndroid,a.name+'（Android）'))+'">インストールガイド（Android）</a>';
-  if(a.manual) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.manual,a.name+' マニュアル'))+'">マニュアル</a>';
-  return '<div class="appcard">'+
-    '<div class="top"><span class="nm mincho">'+esc(a.name)+'</span><span class="tag '+esc(a.tagClass)+'">'+esc(a.tag)+'</span></div>'+
-    '<p class="lead">'+esc(a.lead)+'</p>'+
-    '<ul>'+a.items.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul>'+
-    '<div class="links">'+links+'</div></div>';
-}
-document.getElementById('appList').innerHTML=APPS.map(card).join('');
-document.getElementById('omakeList').innerHTML=OMAKE.map(card).join('');
-</script>
-
-<!-- 動画ポップアップ（自前video・つくる手帖 本体と同じ方式） -->
-<div id="videoModal" class="vmodal" hidden>
-  <div class="vmodal-backdrop" data-close></div>
-  <div class="vmodal-box">
-    <button class="vmodal-close" type="button" data-close aria-label="閉じる">×</button>
-    <video id="videoEl" class="vmodal-video" controls playsinline preload="metadata"></video>
-  </div>
-</div>
-<script>
-(function(){
-  var modal=document.getElementById('videoModal');
-  var vid=document.getElementById('videoEl');
-  if(!modal||!vid) return;
-  function openVid(src){ vid.src=src; modal.hidden=false; document.body.style.overflow='hidden'; var p=vid.play(); if(p&&p.catch){ p.catch(function(){}); } }
-  function closeVid(){ try{ vid.pause(); }catch(e){} modal.hidden=true; vid.removeAttribute('src'); vid.load(); document.body.style.overflow=''; }
-  document.querySelectorAll('.vbtn[data-video]').forEach(function(b){
-    b.addEventListener('click', function(e){ e.preventDefault(); openVid(b.getAttribute('data-video')); });
-  });
-  modal.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeVid); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
-})();
-</script>
 </body>
 </html>
