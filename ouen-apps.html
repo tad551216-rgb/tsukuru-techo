@@ -116,6 +116,8 @@
   .lbtn.app:hover{ background:var(--accent-deep); }
   .lbtn.doc{ background:#fff; color:var(--ink); border:1.5px solid var(--line-strong); }
   .lbtn.doc:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .lbtn.dl{ background:var(--paper-2); color:var(--ink-soft); border:1.5px dashed var(--line-strong); font-weight:600; }
+  .lbtn.dl:hover{ border-color:var(--accent); color:var(--accent-deep); }
   .soon{ font-size:11px; color:var(--muted); }
 
   .install ol{ margin:6px 0 4px 4px; list-style:none; counter-reset:ins; }
@@ -189,6 +191,12 @@
     <a class="lbtn doc" href="viewer.html?f=docs%2Fmaster-renkei-guide.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%E3%82%AC%E3%82%A4%E3%83%89">📄 手順書PDF（全9ページ）</a>
     <a class="lbtn doc" href="sample-renkei.html">🧪 サンプルデータで体験する</a>
   </div>
+  <p class="movie-lead" style="margin-top:18px;">はじめての方への説明用に、アプリの目的・全体構成・段階的な始め方をまとめたスライドもあります（全14ページ）。事業所内の勉強会や、他の施設へのご紹介にどうぞ。PowerPoint版は自由に書きかえていただけます。</p>
+  <div class="links">
+    <a class="lbtn app" href="viewer.html?f=docs%2Fhoukago-day-apps.pdf&amp;t=%E6%94%BE%E8%AA%B2%E5%BE%8C%E3%83%87%E3%82%A4%E5%BF%9C%E6%8F%B4%E5%B8%96%20%E3%81%94%E6%A1%88%E5%86%85%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89">📄 ご案内スライド（全14ページ）</a>
+    <a class="lbtn dl" href="docs/houkago-day-apps.pdf" download>⬇︎ PDFを保存</a>
+    <a class="lbtn dl" href="docs/houkago-day-apps.pptx" download>⬇︎ PowerPointを保存</a>
+  </div>
 </section>
 
 
@@ -208,8 +216,8 @@
 
 <!-- アプリ本体（データ駆動） -->
 <section class="paper tilt-l" id="apps">
-  <h2 class="sec mincho"><small>APPS</small>3つの柱アプリ</h2>
-  <p class="body">3つで一組ですが、1つだけでも使えます。まずはおむかえルート帖からがおすすめです。</p>
+  <h2 class="sec mincho"><small>APPS</small>柱になるアプリ</h2>
+  <p class="body">3つで一組ですが、1つだけでも使えます。まずはおむかえルート帖からがおすすめです。送迎を1ヶ月先まで計画したい事業所には、月間版もご用意しました。</p>
   <div id="appList"></div>
 </section>
 
@@ -281,6 +289,22 @@ const APPS = [
     guide:'#install', manual:DOCS+'omukae-route-manual.pdf'
   },
   {
+    name:'おむかえルート帖・月間版', tag:'送迎・月間計画', tagClass:'',
+    lead:'当日版の考え方はそのままに、1ヶ月先までの送迎を計画するアプリ。カレンダーに利用曜日から予定が並び、お迎え（学校）とお送り（自宅）をそれぞれ配車します。',
+    items:[
+      '月カレンダーで先の予定を管理（お休み・振替・時刻変更はその日だけ上書き）',
+      'お迎えは学校ごと・お送りはご自宅ごとに、別々の自動配車',
+      '「確定」した分だけを配車。予定が変わると再配車を知らせます',
+      'お送りサイン・支援きろく帖とのマスター連携・全国学校データベースにも対応'
+    ],
+    app:'https://tad551216-rgb.github.io/omukae-monthly/',
+    guide:'#install', manual:DOCS+'omukae-monthly-manual.pdf',
+    dl:[
+      {label:'マニュアルPDFを保存', path:DOCS+'omukae-monthly-manual.pdf'},
+      {label:'マニュアルWordを保存', path:DOCS+'omukae-monthly-manual.docx'}
+    ]
+  },
+  {
     name:'支援きろく帖', tag:'記録・請求', tagClass:'',
     lead:'サービス提供実績記録と支援記録（療育日誌）を1枚のカードで。算定時間数の自動計算と、その場での保護者サインに対応。',
     items:[
@@ -335,6 +359,9 @@ function card(a){
   if(a.guide) links+='<a class="lbtn doc" href="'+esc(a.guide.startsWith('#')?a.guide:pdfHref(a.guide,a.name+'（iPhone）'))+'">'+(a.guide.startsWith('#')?'インストールの手順':'インストールガイド（iPhone）')+'</a>';
   if(a.guideAndroid) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.guideAndroid,a.name+'（Android）'))+'">インストールガイド（Android）</a>';
   if(a.manual) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.manual,a.name+' マニュアル'))+'">マニュアル</a>';
+  if(Array.isArray(a.dl)) a.dl.forEach(function(d){
+    links+='<a class="lbtn dl" href="'+esc(d.path)+'" download>⬇︎ '+esc(d.label)+'</a>';
+  });
   return '<div class="appcard">'+
     '<div class="top"><span class="nm mincho">'+esc(a.name)+'</span><span class="tag '+esc(a.tagClass)+'">'+esc(a.tag)+'</span></div>'+
     '<p class="lead">'+esc(a.lead)+'</p>'+
