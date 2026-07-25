@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>しごとの手帖 — つくる手帖</title>
+<meta name="description" content="バーコードスキャン、CRUD一覧ジェネレーター。40年の開発現場から生まれた、Forguncy対応の業務ツールを集めた一冊。処理はすべてブラウザ内で完結します。">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="つくる手帖">
+<meta property="og:title" content="しごとの手帖 — つくる手帖">
+<meta property="og:description" content="バーコードスキャン、CRUD一覧ジェネレーター。開発現場で使う業務ツールを集めた一冊。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/shigoto.html">
+<meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66;
+    --paper:#F3F1EA; --paper-2:#ECE9DF; --surface:#FFFFFF;
+    --line:#D8D3C4; --line-strong:#B9B2A0;
+    --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cover:#3A4A66; /* この帖の表紙色(灰藍) */
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);background:var(--paper);line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
+  .wrap{max-width:840px;margin:0 auto;padding:0 22px;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  /* ===== 共通ヘッダー ===== */
+  header.site{
+    border-bottom:1px solid var(--line);
+    background:rgba(243,241,234,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    position:sticky;top:0;z-index:20;
+  }
+  .site-inner{display:flex;align-items:center;justify-content:space-between;height:60px;
+    max-width:960px;margin:0 auto;padding:0 22px;}
+  .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand .mark{font-size:21px;font-weight:700;letter-spacing:.04em;}
+  .brand .mark .han{color:var(--accent);}
+  nav.site-nav{display:flex;gap:18px;}
+  nav.site-nav a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;white-space:nowrap;
+  }
+  nav.site-nav a:hover,nav.site-nav a[aria-current]{color:var(--accent);}
+  @media(max-width:620px){ nav.site-nav{display:none;} }
+
+  /* ===== 帖の扉 ===== */
+  .tobira{padding:44px 0 30px;position:relative;overflow:hidden;}
+  .tobira::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 80%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 80%);
+    opacity:.6;
+  }
+  .tobira-inner{position:relative;z-index:1;display:flex;align-items:center;gap:18px;}
+  .mini-book{
+    flex:none;width:56px;height:84px;border-radius:3px 7px 7px 3px;
+    background:var(--cover);display:flex;box-shadow:2px 3px 0 rgba(27,42,74,.16);
+  }
+  .mini-book .spine{width:8px;background:rgba(0,0,0,.18);border-radius:3px 0 0 3px;}
+  .mini-book .t{
+    writing-mode:vertical-rl;color:#FDFBF5;font-size:11px;font-weight:700;
+    letter-spacing:.1em;margin:auto;
+  }
+  .tobira h1{font-size:clamp(26px,4.6vw,38px);font-weight:700;letter-spacing:.02em;}
+  .tobira .lede{margin-top:14px;font-size:clamp(15px,2vw,17px);max-width:660px;position:relative;z-index:1;}
+  .crumb{
+    position:relative;z-index:1;margin-bottom:18px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13.5px;
+  }
+  .crumb a{color:var(--ink-soft);text-decoration:none;}
+  .crumb a:hover{color:var(--accent);}
+  .crumb .sep{color:var(--line-strong);margin:0 .5em;}
+
+  /* ===== おことわり ===== */
+  .pwa-note{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;margin:8px 0 34px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14.5px;color:var(--ink-soft);
+    line-height:1.9;
+  }
+  .pwa-note b{color:var(--ink);}
+
+  /* ===== 道具カード ===== */
+  .tools{padding-bottom:52px;}
+  .tool{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:24px 22px 20px;margin-bottom:22px;position:relative;
+  }
+  .tool::before{
+    content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;
+    background:var(--cover);border-radius:0 3px 3px 0;
+  }
+  .tool-head{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .tool-head .glyph{font-size:28px;flex:none;}
+  .tool-head h2{font-size:clamp(19px,3vw,23px);font-weight:700;}
+  .tool p.desc{font-size:15px;margin-bottom:14px;max-width:660px;}
+  .tool .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .tool .tags span{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:11.5px;color:var(--ink-soft);background:var(--paper);
+    border:1px solid var(--line);border-radius:999px;padding:2px 10px;letter-spacing:.03em;
+  }
+  .btns{display:flex;flex-wrap:wrap;gap:10px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:14px;font-weight:700;letter-spacing:.03em;text-decoration:none;
+    padding:10px 18px;border-radius:8px;border:1.5px solid transparent;cursor:pointer;
+  }
+  .btn-use{background:var(--green);color:#fff;}
+  .btn-use:hover{background:#325A45;}
+  .btn-read{background:transparent;color:var(--ink);border-color:var(--line-strong);}
+  .btn-read:hover{border-color:var(--accent);color:var(--accent);}
+  .docs-line{
+    margin-top:14px;font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13.5px;color:var(--ink-soft);line-height:2;
+  }
+  .docs-line a{color:var(--ink-soft);text-decoration:none;border-bottom:1px dashed var(--line-strong);}
+  .docs-line a:hover{color:var(--accent);border-color:currentColor;}
+
+  /* ===== 次の一冊 ===== */
+  .next-sec{border-top:1px solid var(--line);background:var(--paper-2);padding:30px 0 36px;}
+  .next-sec .label{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:11.5px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:12px;
+  }
+  .next-links{display:flex;flex-wrap:wrap;gap:12px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .next-links a{
+    font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;
+    background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 18px;
+  }
+  .next-links a:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* ===== フッター ===== */
+  footer.site{border-top:1px solid var(--line);padding:24px 0 44px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .foot-links{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;}
+  .foot-links a{font-size:13px;color:var(--ink-soft);text-decoration:none;}
+  .foot-links a:hover{color:var(--accent);}
+  .foot-note{font-size:11.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="index.html">
+      <span class="mark">つくる<span class="han">手帖</span></span>
+    </a>
+    <nav class="site-nav" aria-label="サイト内">
+      <a href="kurashi.html">くらしの手帖</a>
+      <a href="yohaku.html">手帖の余白</a>
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="shigoto.html" aria-current="page">しごとの手帖</a>
+      <a href="kiroku.html">記録の手帖</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- 扉 -->
+  <section class="tobira">
+    <div class="wrap">
+      <p class="crumb"><a href="index.html">表紙</a><span class="sep">›</span>しごとの手帖</p>
+      <div class="tobira-inner">
+        <div class="mini-book" aria-hidden="true">
+          <span class="spine"></span><span class="t">しごと</span>
+        </div>
+        <h1>しごとの手帖</h1>
+      </div>
+      <p class="lede">40年、製造業のシステムをつくってきました。その現場でいま実際に使っている道具を、この一冊に集めています。</p>
+    </div>
+  </section>
+
+  <!-- 道具一覧 -->
+  <section class="tools">
+    <div class="wrap">
+
+      <div class="pwa-note">
+        どのツールも処理はすべて<b>ブラウザの中だけ</b>で完結します。読み取った映像も、解析したファイルも、<b>端末の外には送信されません</b>。
+      </div>
+
+      <!-- バーコードスキャン -->
+      <article class="tool" id="barcode">
+        <div class="tool-head">
+          <span class="glyph" aria-hidden="true">📷</span>
+          <h2>バーコードスキャン</h2>
+        </div>
+        <p class="desc">Forguncyアプリをブラウザで実行する際、標準機能では使えないカメラでのバーコード/QRコード読み取りを行うカスタム部品。ZXingで端末内完結、映像・読み取り結果はどこにも送信されません。</p>
+        <div class="tags">
+          <span>Forguncy対応</span><span>ZXing</span><span>1D/QR</span><span>HTTPS必須</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/barcode-scanner/" target="_blank" rel="noopener">ひらく ↗</a>
+        </div>
+        <p class="docs-line">
+          資料:
+          <a href="viewer.html?f=docs%2Fforguncy-barcode-manual.pdf&t=%E3%83%90%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%B3%20%E6%89%8B%E9%A0%86%E6%9B%B8">手順書(PDF)</a> /
+          <a href="docs/forguncy-barcode-page-script.js" download>組み込み用JS(ダウンロード)</a>
+        </p>
+      </article>
+
+      <!-- CRUD一覧ジェネレーター -->
+      <article class="tool" id="crud">
+        <div class="tool-head">
+          <span class="glyph" aria-hidden="true">📑</span>
+          <h2>CRUD一覧ジェネレーター</h2>
+        </div>
+        <p class="desc">Forguncyのプロジェクトファイル(.fgcp)から、ページ別のCRUD(作成・参照・更新・削除)一覧Excelを作る保守ツール。解凍・解析・Excel生成はすべてブラウザ内で完結し、ファイルは端末から外に出ません。</p>
+        <div class="tags">
+          <span>Forguncy対応</span><span>.fgcp解析</span><span>Excel出力</span><span>保守・引き継ぎ</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">ひらく ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 次の一冊 -->
+  <section class="next-sec">
+    <div class="wrap">
+      <p class="label">NEXT</p>
+      <div class="next-links">
+        <a href="index.html">← 表紙にもどる</a>
+        <a href="ouen.html">放課後デイ応援帖へ →</a>
+        <a href="kiroku.html">記録の手帖(作り方)へ →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">表紙</a>
+      <a href="kurashi.html">くらしの手帖</a>
+      <a href="yohaku.html">手帖の余白</a>
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="shigoto.html">しごとの手帖</a>
+      <a href="kiroku.html">記録の手帖</a>
+      <a href="sitemap.html">サイトマップ</a>
+    </div>
+    <p class="foot-note">© 2026 つくる手帖 / GitHub Pages で公開 / 各アプリのデータは利用者の端末内にのみ保存されます</p>
+  </div>
+</footer>
+
+</body>
+</html>
