@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>くらしの手帖 — つくる手帖</title>
+<meta name="description" content="家計簿・予定板・ひみつ文書。毎日のくらしで使う道具を集めた一冊。どれもブラウザで開くだけで使え、データは端末の中だけに保存されます。">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="つくる手帖">
+<meta property="og:title" content="くらしの手帖 — つくる手帖">
+<meta property="og:description" content="家計簿・予定板・ひみつ文書。毎日のくらしで使う道具を集めた一冊。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/kurashi.html">
+<meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66;
+    --paper:#F3F1EA; --paper-2:#ECE9DF; --surface:#FFFFFF;
+    --line:#D8D3C4; --line-strong:#B9B2A0;
+    --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cover:#1B2A4A; /* この帖の表紙色(藍) */
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);background:var(--paper);line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
+  .wrap{max-width:840px;margin:0 auto;padding:0 22px;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  /* ===== 共通ヘッダー ===== */
+  header.site{
+    border-bottom:1px solid var(--line);
+    background:rgba(243,241,234,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    position:sticky;top:0;z-index:20;
+  }
+  .site-inner{display:flex;align-items:center;justify-content:space-between;height:60px;
+    max-width:960px;margin:0 auto;padding:0 22px;}
+  .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand .mark{font-size:21px;font-weight:700;letter-spacing:.04em;}
+  .brand .mark .han{color:var(--accent);}
+  nav.site-nav{display:flex;gap:18px;}
+  nav.site-nav a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;white-space:nowrap;
+  }
+  nav.site-nav a:hover,nav.site-nav a[aria-current]{color:var(--accent);}
+  @media(max-width:620px){ nav.site-nav{display:none;} }
+
+  /* ===== 帖の扉(ページヘッダー) ===== */
+  .tobira{padding:44px 0 30px;position:relative;overflow:hidden;}
+  .tobira::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 80%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 80%);
+    opacity:.6;
+  }
+  .tobira-inner{position:relative;z-index:1;display:flex;align-items:center;gap:18px;}
+  .mini-book{
+    flex:none;width:56px;height:84px;border-radius:3px 7px 7px 3px;
+    background:var(--cover);display:flex;box-shadow:2px 3px 0 rgba(27,42,74,.16);
+  }
+  .mini-book .spine{width:8px;background:rgba(0,0,0,.18);border-radius:3px 0 0 3px;}
+  .mini-book .t{
+    writing-mode:vertical-rl;color:#FDFBF5;font-size:11px;font-weight:700;
+    letter-spacing:.1em;margin:auto;
+  }
+  .tobira h1{font-size:clamp(26px,4.6vw,38px);font-weight:700;letter-spacing:.02em;}
+  .tobira .lede{margin-top:14px;font-size:clamp(15px,2vw,17px);max-width:640px;position:relative;z-index:1;}
+  .crumb{
+    position:relative;z-index:1;margin-bottom:18px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13.5px;
+  }
+  .crumb a{color:var(--ink-soft);text-decoration:none;}
+  .crumb a:hover{color:var(--accent);}
+  .crumb .sep{color:var(--line-strong);margin:0 .5em;}
+
+  /* ===== PWAのおことわり ===== */
+  .pwa-note{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;margin:8px 0 34px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14.5px;color:var(--ink-soft);
+    line-height:1.9;
+  }
+  .pwa-note b{color:var(--ink);}
+
+  /* ===== 道具カード ===== */
+  .tools{padding-bottom:52px;}
+  .tool{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:24px 22px 20px;margin-bottom:22px;position:relative;
+  }
+  .tool::before{
+    content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;
+    background:var(--cover);border-radius:0 3px 3px 0;
+  }
+  .tool-head{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .tool-head .glyph{font-size:28px;flex:none;}
+  .tool-head h2{font-size:clamp(19px,3vw,23px);font-weight:700;}
+  .tool p.desc{font-size:15px;margin-bottom:14px;max-width:640px;}
+  .tool .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .tool .tags span{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:11.5px;color:var(--ink-soft);background:var(--paper);
+    border:1px solid var(--line);border-radius:999px;padding:2px 10px;letter-spacing:.03em;
+  }
+  .btns{display:flex;flex-wrap:wrap;gap:10px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:14px;font-weight:700;letter-spacing:.03em;text-decoration:none;
+    padding:10px 18px;border-radius:8px;border:1.5px solid transparent;cursor:pointer;
+  }
+  .btn-use{background:var(--green);color:#fff;}
+  .btn-use:hover{background:#325A45;}
+  .btn-read{background:transparent;color:var(--ink);border-color:var(--line-strong);}
+  .btn-read:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-video{background:var(--ink);color:#fff;border:none;font-family:inherit;}
+  .btn-video:hover{background:var(--ink-soft);}
+  .btn-video .tri{color:var(--accent);font-size:11px;}
+  .docs-line{
+    margin-top:14px;font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13.5px;color:var(--ink-soft);line-height:2;
+  }
+  .docs-line a{color:var(--ink-soft);text-decoration:none;border-bottom:1px dashed var(--line-strong);}
+  .docs-line a:hover{color:var(--accent);border-color:currentColor;}
+
+  /* ===== 次の一冊 ===== */
+  .next-sec{border-top:1px solid var(--line);background:var(--paper-2);padding:30px 0 36px;}
+  .next-sec .label{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:11.5px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:12px;
+  }
+  .next-links{display:flex;flex-wrap:wrap;gap:12px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .next-links a{
+    font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;
+    background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 18px;
+  }
+  .next-links a:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* ===== フッター ===== */
+  footer.site{border-top:1px solid var(--line);padding:24px 0 44px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .foot-links{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;}
+  .foot-links a{font-size:13px;color:var(--ink-soft);text-decoration:none;}
+  .foot-links a:hover{color:var(--accent);}
+  .foot-note{font-size:11.5px;color:var(--muted);}
+
+  /* ===== 動画モーダル ===== */
+  .vmodal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
+    background:rgba(27,42,74,.72);padding:18px;}
+  .vmodal.open{display:flex;}
+  .vmodal .box{width:min(760px,100%);background:#000;border-radius:10px;overflow:hidden;position:relative;}
+  .vmodal video{display:block;width:100%;height:auto;max-height:78vh;}
+  .vmodal .close{position:absolute;top:8px;right:8px;z-index:2;
+    background:rgba(243,241,234,.92);border:none;cursor:pointer;
+    width:34px;height:34px;border-radius:50%;font-size:16px;color:var(--ink);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="index.html">
+      <span class="mark">つくる<span class="han">手帖</span></span>
+    </a>
+    <nav class="site-nav" aria-label="サイト内">
+      <a href="kurashi.html" aria-current="page">くらしの手帖</a>
+      <a href="yohaku.html">手帖の余白</a>
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="shigoto.html">しごとの手帖</a>
+      <a href="kiroku.html">記録の手帖</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- 扉 -->
+  <section class="tobira">
+    <div class="wrap">
+      <p class="crumb"><a href="index.html">表紙</a><span class="sep">›</span>くらしの手帖</p>
+      <div class="tobira-inner">
+        <div class="mini-book" aria-hidden="true">
+          <span class="spine"></span><span class="t">くらし</span>
+        </div>
+        <h1>くらしの手帖</h1>
+      </div>
+      <p class="lede">家計簿、家族の予定、ないしょの文書。毎日のくらしで使う道具を、この一冊に集めました。</p>
+    </div>
+  </section>
+
+  <!-- 道具一覧 -->
+  <section class="tools">
+    <div class="wrap">
+
+      <div class="pwa-note">
+        どのアプリも、ブラウザで開くだけで使える<b>「PWA」</b>です。ホーム画面に追加すれば、ふつうのアプリのように起動できます。入力したデータはすべて<b>手元の端末の中だけ</b>に保存され、サーバーには送られません。
+      </div>
+
+      <!-- 家計簿 -->
+      <article class="tool" id="kakeibo">
+        <div class="tool-head">
+          <span class="glyph" aria-hidden="true">📒</span>
+          <h2>わが家の家計簿</h2>
+        </div>
+        <p class="desc">銀行・カードのCSVを取り込んで、家計の収支から確定申告の概算までを一つに。データは端末内だけに保存。</p>
+        <div class="tags">
+          <span>PWA</span><span>CSV取込</span><span>確定申告</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/demo-kakeibo/" target="_blank" rel="noopener">使ってみる ↗</a>
+          <a class="btn btn-read" href="articles/kakeibo.html">作り方を読む</a>
+          <button class="btn btn-video" type="button" data-video="docs/kakeibo-douga.mp4">
+            <span class="tri">▶</span> 動画を見る
+          </button>
+        </div>
+      </article>
+
+      <!-- 予定板 -->
+      <article class="tool" id="yotei">
+        <div class="tool-head">
+          <span class="glyph" aria-hidden="true">🗓️</span>
+          <h2>わが家の予定板</h2>
+        </div>
+        <p class="desc">家族それぞれの予定を1枚で共有。月間カレンダーと週間リスト、写真付き日記まで。データは端末内だけに保存。</p>
+        <div class="tags">
+          <span>PWA</span><span>カレンダー</span><span>家族共有</span><span>写真日記</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/yotei3/" target="_blank" rel="noopener">使ってみる ↗</a>
+          <a class="btn btn-read" href="articles/yotei.html">作り方を読む</a>
+          <button class="btn btn-video" type="button" data-video="docs/yotei3-douga.mp4">
+            <span class="tri">▶</span> 動画を見る
+          </button>
+        </div>
+        <p class="docs-line">
+          説明書:
+          <a href="viewer.html?f=docs%2Fyotei-setup.pdf&t=%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%82%AC%E3%82%A4%E3%83%89">セットアップガイド(PDF)</a> /
+          <a href="viewer.html?f=docs%2Fyoteiban-setumei.pdf&t=%E6%93%8D%E4%BD%9C%E8%AA%AC%E6%98%8E%E6%9B%B8">操作説明書(PDF)</a>
+        </p>
+      </article>
+
+      <!-- ひみつ文書 -->
+      <article class="tool" id="himitsu">
+        <div class="tool-head">
+          <span class="glyph" aria-hidden="true">🔒</span>
+          <h2>ひみつ文書</h2>
+        </div>
+        <p class="desc">LINEで送る文章を、ふたりだけの合言葉で暗号文に変える道具。届いた側は同じ合言葉で元の文章にもどせます。暗号化も復号もすべて端末の中だけで行い、文章も合言葉もどこにも送信されません。</p>
+        <div class="tags">
+          <span>PWA</span><span>暗号化</span><span>LINE連携</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/himitsu/" target="_blank" rel="noopener">使ってみる ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 次の一冊 -->
+  <section class="next-sec">
+    <div class="wrap">
+      <p class="label">NEXT</p>
+      <div class="next-links">
+        <a href="index.html">← 表紙にもどる</a>
+        <a href="yohaku.html">手帖の余白(あそび)へ →</a>
+        <a href="kiroku.html">記録の手帖(作り方)へ →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">表紙</a>
+      <a href="kurashi.html">くらしの手帖</a>
+      <a href="yohaku.html">手帖の余白</a>
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="shigoto.html">しごとの手帖</a>
+      <a href="kiroku.html">記録の手帖</a>
+      <a href="sitemap.html">サイトマップ</a>
+    </div>
+    <p class="foot-note">© 2026 つくる手帖 / GitHub Pages で公開 / 各アプリのデータは利用者の端末内にのみ保存されます</p>
+  </div>
+</footer>
+
+<!-- 動画モーダル -->
+<div class="vmodal" id="vmodal" aria-hidden="true">
+  <div class="box">
+    <button class="close" type="button" aria-label="動画を閉じる">×</button>
+    <video id="vplayer" controls playsinline preload="none"></video>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal=document.getElementById('vmodal');
+  var player=document.getElementById('vplayer');
+  document.querySelectorAll('[data-video]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      player.src=btn.getAttribute('data-video');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      player.play().catch(function(){});
+    });
+  });
+  function close(){
+    player.pause(); player.removeAttribute('src'); player.load();
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+  }
+  modal.querySelector('.close').addEventListener('click',close);
+  modal.addEventListener('click',function(e){ if(e.target===modal){ close(); } });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&modal.classList.contains('open')){ close(); } });
+})();
+</script>
+
+</body>
+</html>
