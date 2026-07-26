@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>お試し版(サンプルデータ入り) — 放課後デイ応援帖</title>
+<meta name="description" content="放課後デイ応援帖の各アプリを、架空のサンプルデータが入った状態ですぐ試せるお試し版。本番アプリとは別の場所に保存されるため、実データに影響しません。">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="つくる手帖">
+<meta property="og:title" content="お試し版(サンプルデータ入り) — 放課後デイ応援帖">
+<meta property="og:description" content="架空のサンプルデータが入った状態で、すぐに動作を試せます。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/otameshi.html">
+<meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66;
+    --paper:#F3F1EA; --paper-2:#ECE9DF; --surface:#FFFFFF;
+    --line:#D8D3C4; --line-strong:#B9B2A0;
+    --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cover:#3D6B52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    color:var(--ink);background:var(--paper);line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:800px;margin:0 auto;padding:0 22px;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  header.site{
+    border-bottom:1px solid var(--line);
+    background:rgba(243,241,234,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    position:sticky;top:0;z-index:20;
+  }
+  .site-inner{display:flex;align-items:center;justify-content:space-between;height:60px;
+    max-width:960px;margin:0 auto;padding:0 22px;}
+  .brand{text-decoration:none;color:var(--ink);font-size:21px;font-weight:700;letter-spacing:.04em;}
+  .brand .han{color:var(--accent);}
+  nav.site-nav{display:flex;gap:18px;}
+  nav.site-nav a{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;white-space:nowrap;
+  }
+  nav.site-nav a:hover{color:var(--accent);}
+  @media(max-width:620px){ nav.site-nav{display:none;} }
+
+  .tobira{padding:42px 0 26px;position:relative;overflow:hidden;}
+  .tobira::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 80%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent 80%);
+    opacity:.6;
+  }
+  .crumb{position:relative;z-index:1;margin-bottom:16px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13.5px;}
+  .crumb a{color:var(--ink-soft);text-decoration:none;}
+  .crumb a:hover{color:var(--accent);}
+  .crumb .sep{color:var(--line-strong);margin:0 .5em;}
+  .tobira h1{position:relative;z-index:1;font-size:clamp(25px,4.4vw,36px);font-weight:700;letter-spacing:.02em;}
+  .tobira .lede{position:relative;z-index:1;margin-top:14px;font-size:clamp(15px,2vw,17px);max-width:640px;}
+
+  .safe{
+    background:#EFF5F1;border:1px solid #CBDDD1;border-radius:10px;
+    padding:16px 18px;margin:18px 0 32px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14.5px;color:var(--ink-soft);line-height:1.95;
+  }
+  .safe b{color:var(--green);}
+  .safe .ttl{display:block;font-size:15px;color:var(--green);font-weight:700;margin-bottom:6px;}
+
+  .apps{padding-bottom:20px;}
+  .app{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:22px 22px 20px;margin-bottom:18px;position:relative;
+  }
+  .app::before{
+    content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;
+    background:var(--cover);border-radius:0 3px 3px 0;
+  }
+  .app-head{display:flex;align-items:center;gap:11px;margin-bottom:8px;}
+  .app-head .glyph{font-size:26px;flex:none;}
+  .app-head h2{font-size:clamp(18px,2.8vw,22px);font-weight:700;}
+  .app p.desc{font-size:15px;margin-bottom:8px;}
+  .app .inbox{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:13px;color:var(--ink-soft);
+    background:var(--paper);border:1px solid var(--line);border-radius:8px;
+    padding:9px 12px;margin-bottom:16px;line-height:1.8;
+  }
+  .btns{display:flex;flex-wrap:wrap;gap:10px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:14px;font-weight:700;letter-spacing:.03em;text-decoration:none;
+    padding:10px 18px;border-radius:8px;border:1.5px solid transparent;
+  }
+  .btn-open{background:var(--green);color:#fff;}
+  .btn-open:hover{background:#325A45;}
+  .btn-dl{background:transparent;color:var(--ink);border-color:var(--line-strong);}
+  .btn-dl:hover{border-color:var(--accent);color:var(--accent);}
+
+  .note-sec{border-top:1px solid var(--line);background:var(--paper-2);padding:28px 0 34px;margin-top:14px;}
+  .note-sec h2{font-size:19px;font-weight:700;margin-bottom:10px;}
+  .note-sec p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14.5px;color:var(--ink-soft);
+    line-height:1.95;margin-bottom:10px;}
+  .note-sec a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;}
+  .qa{margin-top:16px;}
+  .qa dt{font-weight:700;font-size:15px;margin-top:14px;}
+  .qa dd{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14px;color:var(--ink-soft);line-height:1.9;}
+
+  .next-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .next-links a{
+    font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;
+    background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 18px;
+  }
+  .next-links a:hover{border-color:var(--accent);color:var(--accent);}
+
+  footer.site{border-top:1px solid var(--line);padding:24px 0 44px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .foot-links{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;}
+  .foot-links a{font-size:13px;color:var(--ink-soft);text-decoration:none;}
+  .foot-links a:hover{color:var(--accent);}
+  .foot-note{font-size:11.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="brand" href="index.html">つくる<span class="han">手帖</span></a>
+    <nav class="site-nav" aria-label="サイト内">
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="ouen-apps.html">業務応援アプリ</a>
+      <a href="sample-renkei.html">サンプル連携</a>
+      <a href="sitemap.html">サイトマップ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="tobira">
+    <div class="wrap">
+      <p class="crumb"><a href="index.html">表紙</a><span class="sep">›</span><a href="ouen.html">放課後デイ応援帖</a><span class="sep">›</span>お試し版</p>
+      <h1>お試し版(サンプルデータ入り)</h1>
+      <p class="lede">架空の「みどり市」のデータが最初から入っています。取り込み作業をせずに、ひらいた瞬間から動きを試せます。</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="safe">
+      <span class="ttl">本番のデータには影響しません</span>
+      お試し版は、本番アプリとは<b>別の場所にデータを保存</b>するよう作ってあります。すでに本番アプリをお使いの端末でひらいても、記録や設定が書き換わることはありません。<br>
+      画面の上に出る帯の<b>「🔄 最初の状態にもどす」</b>を押せば、いつでも最初のサンプルの状態に戻せます。試したあとのデータを消したいときにもお使いください。
+    </div>
+  </div>
+
+  <section class="apps">
+    <div class="wrap">
+
+      <article class="app">
+        <div class="app-head"><span class="glyph" aria-hidden="true">🚌</span><h2>おむかえルート帖 お試し版</h2></div>
+        <p class="desc">学校5校・車両2台(みどり号・そら号)・児童8名が登録ずみ。学校を選んで配車すると、すぐにルートが組み上がります。</p>
+        <div class="inbox">まず試すなら:「①きょうの学校」で行き先を選ぶ → 「②ルート」で配車 → 連絡文をコピー</div>
+        <div class="btns">
+          <a class="btn btn-open" href="demo/omukae-route-otameshi.html">ひらいて試す →</a>
+          <a class="btn btn-dl" href="demo/omukae-route-otameshi.html" download>⬇ ダウンロード</a>
+        </div>
+      </article>
+
+      <article class="app">
+        <div class="app-head"><span class="glyph" aria-hidden="true">🗓️</span><h2>おむかえルート帖・月間版 お試し版</h2></div>
+        <p class="desc">上に加えて、児童8名の<b>自宅住所とお送り時刻</b>(すべて架空)も登録ずみ。お迎えとお送りの両方の計画を試せます。</p>
+        <div class="inbox">まず試すなら:カレンダーで日付を選ぶ → お迎え・お送りの配車を確認 → 「共有(LINEなど)」</div>
+        <div class="btns">
+          <a class="btn btn-open" href="demo/omukae-monthly-otameshi.html">ひらいて試す →</a>
+          <a class="btn btn-dl" href="demo/omukae-monthly-otameshi.html" download>⬇ ダウンロード</a>
+        </div>
+      </article>
+
+      <article class="app">
+        <div class="app-head"><span class="glyph" aria-hidden="true">📝</span><h2>支援きろく帖 お試し版</h2></div>
+        <p class="desc">実名・受給者証番号(すべて架空)入りの児童8名と、7月22日の記録3件が入っています。印刷や実績記録CSVの出力までそのまま試せます。</p>
+        <div class="inbox">まず試すなら:日付を2026-07-22にする → 記録を見る → 「出力」タブで実績記録票を印刷</div>
+        <div class="btns">
+          <a class="btn btn-open" href="demo/shien-kiroku-otameshi.html">ひらいて試す →</a>
+          <a class="btn btn-dl" href="demo/shien-kiroku-otameshi.html" download>⬇ ダウンロード</a>
+        </div>
+      </article>
+
+      <article class="app">
+        <div class="app-head"><span class="glyph" aria-hidden="true">⏱️</span><h2>作業日報 お試し版</h2></div>
+        <p class="desc">「見本 花子」さんの名前と、2日分の入力ずみ日報が入っています。時間帯を塗って日報を作る感覚をすぐ確かめられます。</p>
+        <div class="inbox">まず試すなら:カレンダーで7月21日・22日を開く → 帯をタップして修正 → 「LINEに送る文をコピー」</div>
+        <div class="btns">
+          <a class="btn btn-open" href="demo/nippo-otameshi.html">ひらいて試す →</a>
+          <a class="btn btn-dl" href="demo/nippo-otameshi.html" download>⬇ ダウンロード</a>
+        </div>
+      </article>
+
+      <article class="app">
+        <div class="app-head"><span class="glyph" aria-hidden="true">📊</span><h2>作業日報集計 お試し版</h2></div>
+        <p class="desc">3人分・3日分の日報が取り込みずみ。人別・日別の集計表と、Excel出力の動きを確認できます。</p>
+        <div class="inbox">まず試すなら:2026年7月を選ぶ → 人別/日別を切り替える → Excelで保存</div>
+        <div class="btns">
+          <a class="btn btn-open" href="demo/nippo-syuukei-otameshi.html">ひらいて試す →</a>
+          <a class="btn btn-dl" href="demo/nippo-syuukei-otameshi.html" download>⬇ ダウンロード</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="note-sec">
+    <div class="wrap">
+      <h2>おうち連絡帖について</h2>
+      <p>おうち連絡帖は、施設と保護者が<b>合言葉で暗号をやりとりする</b>仕組みのアプリです。ひとりでは動きを再現できないため、お試し版はご用意していません。<a href="sample-renkei.html">サンプル連携ページ</a>の合言葉の見本を使い、支援きろく帖と組み合わせてお試しください。</p>
+
+      <h2 style="margin-top:24px;">よくあるご質問</h2>
+      <dl class="qa">
+        <dt>お試し版で入力したデータは、本番アプリに移せますか?</dt>
+        <dd>いいえ、移せません。お試し版はあくまで動きを見るためのものです。本番でお使いになるときは、本番アプリを最初から設定してください。</dd>
+
+        <dt>「ダウンロード」は何のためにありますか?</dt>
+        <dd>ファイルを保存しておけば、インターネットにつながっていない場所でも動きをお見せできます。会議や職員研修で使うときにお使いください。</dd>
+
+        <dt>ホーム画面に追加できますか?</dt>
+        <dd>お試し版は追加できないようにしています。本番アプリと見分けがつかなくなるのを防ぐためです。</dd>
+
+        <dt>登場する人や学校は実在しますか?</dt>
+        <dd>いいえ。市名・学校名・児童名・受給者証番号・住所は、すべて架空のものです。</dd>
+      </dl>
+
+      <div class="next-links">
+        <a href="ouen-apps.html">← 業務応援アプリ(本番)へ</a>
+        <a href="sample-renkei.html">サンプル連携ページへ →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="index.html">表紙</a>
+      <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="ouen-apps.html">業務応援アプリ</a>
+      <a href="sample-renkei.html">サンプル連携</a>
+      <a href="sitemap.html">サイトマップ</a>
+    </div>
+    <p class="foot-note">© 2026 つくる手帖 / GitHub Pages で公開 / お試し版のデータは利用者の端末内にのみ保存されます</p>
+  </div>
+</footer>
+
+</body>
+</html>
