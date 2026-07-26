@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>和泉市まわり おでかけ療育 — 個別支援計画のたね</title>
+<meta name="description" content="放課後等デイサービス向け 療育プログラム。公園・お店・図書館・電車など和泉市の身近な地域資源を教室に、移動・買い物・公共マナーを段階的に。安全管理、記録、個別支援計画の記載例、保護者への連絡文例まで。">
+<style>
+
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; white-space:nowrap; }
+  .site-nav{ display:flex; gap:16px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
+  .site-nav a:hover{ color:var(--accent-deep); }
+
+  .head{ padding:52px 0 20px; text-align:center; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:34px; letter-spacing:.10em; margin:10px 0 6px; color:var(--paper);
+    text-shadow:0 1px 0 rgba(0,0,0,.18); }
+  .head .lede{ color:#FBF7EE; font-size:14.5px; max-width:600px; margin:0 auto; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+
+  .paper{
+    background:var(--note); border:1px solid var(--line); border-radius:8px;
+    box-shadow:0 6px 16px rgba(60,40,15,.22), 0 1px 0 rgba(255,255,255,.5) inset;
+    padding:26px 24px; margin:26px 0; position:relative;
+  }
+  .paper::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E8875A, var(--accent-deep) 70%);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);
+  }
+  .paper.tilt-l{ transform:rotate(-.4deg); }
+  .paper.tilt-r{ transform:rotate(.35deg); }
+  h2.sec{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px;
+    letter-spacing:.08em; margin-bottom:14px; padding-left:12px;
+    border-left:4px solid var(--accent); color:var(--ink);
+  }
+  h2.sec small{ display:block; font-size:11px; letter-spacing:.22em; color:var(--accent-deep);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:700; margin-bottom:2px; border:none; }
+  p.body{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+  p.body b{ color:var(--ink); }
+
+  .promise{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  @media(max-width:640px){ .promise{ grid-template-columns:1fr; } }
+  .promise .p{
+    background:var(--paper); border:1px dashed var(--line-strong); border-radius:8px;
+    padding:14px 12px; text-align:center;
+  }
+  .promise .p .ic{ font-size:26px; }
+  .promise .p .t{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:4px 0 2px; }
+  .promise .p .d{ font-size:12px; color:var(--muted); line-height:1.7; }
+
+  .flow{ counter-reset:step; margin-top:8px; }
+  .flow .st{
+    display:flex; gap:12px; padding:11px 4px; border-bottom:1px dashed var(--line);
+    align-items:flex-start;
+  }
+  .flow .st:last-child{ border-bottom:none; }
+  .flow .st::before{
+    counter-increment:step; content:counter(step);
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink);
+    color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; margin-top:3px;
+  }
+  .flow .st .tt{ font-weight:700; font-size:14px; }
+  .flow .st .tt .app{ color:var(--accent-deep); font-size:12px; margin-left:6px; }
+  .flow .st .dd{ font-size:13px; color:var(--ink-soft); }
+
+  .appcard{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:18px 16px; margin:16px 0;
+  }
+  .appcard .top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .appcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; letter-spacing:.06em; }
+  .appcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--accent);
+    border-radius:999px; padding:1px 9px; letter-spacing:.04em; }
+  .appcard .tag.g{ background:var(--green); }
+  .appcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .appcard ul{ margin:0 0 12px 2px; list-style:none; }
+  .appcard li{ font-size:13px; color:var(--ink-soft); padding-left:16px; position:relative; margin:3px 0; }
+  .appcard li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .links{ display:flex; flex-wrap:wrap; gap:8px; }
+  .lbtn{
+    display:inline-block; text-decoration:none; font-size:13px; font-weight:700;
+    border-radius:8px; padding:8px 14px; letter-spacing:.03em;
+  }
+  .lbtn.app{ background:var(--accent); color:#fff; box-shadow:0 2px 0 var(--accent-deep); }
+  .lbtn.app:hover{ background:var(--accent-deep); }
+  .lbtn.doc{ background:#fff; color:var(--ink); border:1.5px solid var(--line-strong); }
+  .lbtn.doc:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .soon{ font-size:11px; color:var(--muted); }
+
+  .install ol{ margin:6px 0 4px 4px; list-style:none; counter-reset:ins; }
+  .install ol li{ font-size:13.5px; color:var(--ink-soft); padding:6px 0 6px 30px; position:relative; }
+  .install ol li::before{ counter-increment:ins; content:counter(ins);
+    position:absolute; left:0; top:6px; width:22px; height:22px; border-radius:50%;
+    background:var(--paper-2); border:1px solid var(--line-strong); color:var(--ink);
+    font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .os{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:12px 0 2px; color:var(--ink); }
+
+  .caution li{ font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative; margin:6px 0; list-style:none; }
+  .caution li::before{ content:"※"; position:absolute; left:0; color:var(--accent-deep); }
+
+  footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+  footer a{ color:#FFE7C9; }
+
+  /* 紹介ムービー：ボタン→モーダル再生（つくる手帖 本体と同じ方式） */
+  .movie-lead{ font-size:14.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .vbtn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:11px 20px; border-radius:999px; border:1px solid var(--green);
+    background:var(--green); color:#fff; text-decoration:none;
+    font-size:14px; font-weight:700; letter-spacing:.03em;
+  }
+  .vbtn:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .vbtn .play{ font-size:.85em; }
+
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,15,8,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:8px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
+
+
+  /* ── 療育プログラム集 追加スタイル ── */
+  .filter{ display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 4px; }
+  .chip{ font-size:12px; font-weight:700; border-radius:999px; padding:5px 12px;
+    border:1.5px solid var(--line-strong); background:#fff; color:var(--ink-soft);
+    cursor:pointer; letter-spacing:.03em; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pcard{ background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:16px 16px 14px; margin:14px 0; }
+  .pcard.soon{ opacity:.72; border-style:dashed; }
+  .pcard .top{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .pcard .no{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:12px;
+    color:var(--muted); letter-spacing:.14em; }
+  .pcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:18px; letter-spacing:.05em; }
+  .pcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--green);
+    border-radius:999px; padding:1px 9px; letter-spacing:.03em; }
+  .pcard .tag.wip{ background:var(--muted); }
+  .pcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .meta{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .meta span{ font-size:11.5px; color:var(--ink-soft); background:var(--note);
+    border:1px solid var(--line); border-radius:5px; padding:2px 8px; }
+  .meta span b{ color:var(--accent-deep); font-weight:700; margin-right:4px; }
+
+  /* 詳細ページ */
+  table.t{ width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+  table.t th, table.t td{ border:1px solid var(--line); padding:7px 9px;
+    text-align:left; vertical-align:top; color:var(--ink-soft); }
+  table.t th{ background:var(--paper-2); color:var(--ink); font-weight:700; white-space:nowrap; }
+  table.t td b{ color:var(--ink); }
+  .wraptbl{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  h3.sub{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:16px; margin:20px 0 6px; color:var(--ink);
+    border-bottom:1px dashed var(--line-strong); padding-bottom:4px; }
+  ul.dot{ list-style:none; margin:6px 0 6px 2px; }
+  ul.dot li{ font-size:13.5px; color:var(--ink-soft); padding-left:16px;
+    position:relative; margin:4px 0; }
+  ul.dot li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  ul.check{ list-style:none; margin:6px 0; }
+  ul.check li{ font-size:13.5px; color:var(--ink-soft); padding-left:22px;
+    position:relative; margin:5px 0; }
+  ul.check li::before{ content:"☐"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .callout{ background:#FFF6EF; border:1px solid #E8C6AE; border-left:4px solid var(--accent);
+    border-radius:6px; padding:12px 14px; margin:14px 0; font-size:13.5px; color:var(--ink-soft); }
+  .callout b{ color:var(--accent-deep); }
+  .copybox{ background:var(--note); border:1px solid var(--line); border-radius:6px;
+    padding:12px 14px; margin:10px 0; font-size:13.5px; color:var(--ink-soft); white-space:pre-wrap; }
+  .cbtn{ display:inline-block; font-size:12.5px; font-weight:700; border-radius:8px;
+    padding:7px 14px; border:1.5px solid var(--line-strong); background:#fff;
+    color:var(--ink); cursor:pointer; letter-spacing:.03em; }
+  .cbtn:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .cbtn.done{ background:var(--green); color:#fff; border-color:var(--green); }
+  .toc{ display:flex; flex-wrap:wrap; gap:6px; }
+  .toc a{ font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:5px 11px; }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  figure.info{ margin:14px 0 4px; text-align:center; }
+  figure.info img{ width:100%; max-width:560px; height:auto; border:1px solid var(--line);
+    border-radius:8px; box-shadow:0 4px 12px rgba(60,40,15,.18); background:#fff; }
+  figure.info figcaption{ font-size:12px; color:var(--muted); margin-top:8px; }
+  .backlink{ display:inline-block; margin-top:6px; font-size:13px; color:var(--accent-deep);
+    text-decoration:none; font-weight:700; }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="ryoiku.html">個別支援計画のたね</a>
+    <nav class="site-nav">
+      <a href="ouen-apps.html">業務応援アプリ</a>
+      <a href="ryoiku.html">個別支援計画のたね</a>
+      <a href="index.html">つくる手帖</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head" id="top">
+  <div class="eyebrow">PROGRAM No.03</div>
+  <h1 class="mincho">和泉市まわり おでかけ療育</h1>
+  <p class="lede">まちぜんぶが、教室になる。<br>下見と事前学習で安全を固めて、近くの公園から電車まで段階的に。</p>
+</div>
+
+<main class="wrap">
+
+<!-- 目次 -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>CONTENTS</small>もくじ</h2>
+  <div class="toc">
+    <a href="#overview">0 ひと目でわかる5つの極意</a>
+    <a href="#outline">1 プログラムの位置づけ</a>
+    <a href="#assess">2 アセスメント</a>
+    <a href="#steps">3 ステップ構成</a>
+    <a href="#group">4 小集団としての運営</a>
+    <a href="#care">5 個別の配慮と安全管理</a>
+    <a href="#record">6 記録</a>
+    <a href="#plan">7 個別支援計画 記載例</a>
+    <a href="#parent">8 保護者への連絡文例</a>
+    <a href="#items">9 準備物と行き先例</a>
+  </div>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+<!-- 0 全体像 -->
+<section class="paper tilt-l" id="overview">
+  <h2 class="sec mincho"><small>OVERVIEW</small>ひと目でわかる5つの極意</h2>
+  <p class="body">おでかけは「イベント」ではなく、<b>買い物・移動・公共の場でのふるまいを実地で練習できる、いちばん濃い療育の時間</b>です。事業所の中では育てにくい力を、和泉市の身近な場所を教室にして育てます。</p>
+  <ul class="dot">
+    <li><b>極意1:下見のないおでかけはしない。</b>トイレ・危険箇所・逃げ場(静かな場所)を職員が先に把握する。</li>
+    <li><b>極意2:事前学習で「見通し」を渡す。</b>写真カードで行き先・順番・ルールを前日までに共有する。</li>
+    <li><b>極意3:ひとり一役。</b>隊長・地図係・時計係・カメラ係。役割が「参加」を生む。</li>
+    <li><b>極意4:近くから遠くへ。</b>徒歩の公園から始めて、お店、公共施設、電車へと段階を上げる。</li>
+    <li><b>極意5:帰ってからが仕上げ。</b>写真でふりかえる「おでかけ新聞」までがプログラム。</li>
+  </ul>
+</section>
+
+<!-- 1 位置づけ -->
+<section class="paper tilt-l" id="outline">
+  <h2 class="sec mincho"><small>OUTLINE</small>1 プログラムの位置づけ</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>五領域</th><td><b>健康・生活</b>(買い物・移動・公共マナーなどの生活スキル)/<b>人間関係・社会性</b>(順番・役割・店員さんとのやりとり)/<b>認知・行動</b>(見通し・切り替え・お金の計算)/<b>言語・コミュニケーション</b>(依頼・質問・報告)</td></tr>
+    <tr><th>地域連携</th><td>令和6年度改定で重視される<b>地域との交流の機会の提供</b>に対応。地域資源(公園・図書館・商店・公共交通)を継続的に活用します</td></tr>
+    <tr><th>ねらい</th><td>身近な地域の中で、移動・買い物・公共の場でのふるまいを実地で経験し、生活の行動範囲と自信を広げる</td></tr>
+    <tr><th>対象</th><td>小学生全般(外出スキルの段階に応じてグループ編成)</td></tr>
+    <tr><th>形態</th><td>小集団(児童3〜5名+職員2名以上を基本)</td></tr>
+    <tr><th>頻度</th><td>月1〜2回 × 継続(長期休暇中は回数を増やす)</td></tr>
+    <tr><th>場面</th><td>平日午後または休日・長期休暇の午前(暑い時期は屋内施設中心)</td></tr>
+  </table>
+  </div>
+  <div class="callout"><b>このプログラムのいちばん大事な原則。</b><br>おでかけの成否は当日ではなく<b>準備で決まります</b>。「下見・事前学習・職員間の役割分担・緊急時の取り決め」の4点がそろわない場合は、行き先を近場に変更するか延期します。<b>安全が最優先。楽しさはその上に載せるもの</b>です。</div>
+</section>
+
+<!-- 2 アセスメント -->
+<section class="paper tilt-r" id="assess">
+  <h2 class="sec mincho"><small>ASSESSMENT</small>2 アセスメント(初回・行き先変更時)</h2>
+
+  <h3 class="sub">2-1 いまの外出スキルの段階</h3>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>段階</th><th>状態</th><th>参加できる行き先の目安</th></tr>
+    <tr><td><b>O0</b></td><td>職員と手をつなぐことが必須。飛び出しのリスクが高い</td><td>事業所近くの公園(職員1対1で)</td></tr>
+    <tr><td><b>O1</b></td><td>声かけがあれば職員のそばを歩ける</td><td>徒歩圏の公園・散歩コース</td></tr>
+    <tr><td><b>O2</b></td><td>列で歩ける。店内で大声・多動が出ることがある</td><td>すいた時間帯のスーパー・図書館</td></tr>
+    <tr><td><b>O3</b></td><td>店内のルールを守れる。会計にチャレンジできる</td><td>買い物体験・博物館・美術館</td></tr>
+    <tr><td><b>O4</b></td><td>公共交通のマナーを事前学習すれば守れる</td><td>電車・バスでのおでかけ</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">2-2 実施前のチェック(事業所側)</h3>
+  <ul class="check">
+    <li>保護者の外出同意書(写真撮影の可否を含む)を得ている</li>
+    <li>行き先の下見を済ませ、トイレ・危険箇所・静かに過ごせる場所を把握した</li>
+    <li>児童ごとの飛び出し・迷子リスクと、当日の担当職員を決めた</li>
+    <li>アレルギー・服薬・体調面の注意点を全職員で共有した</li>
+    <li>緊急連絡カード(事業所名・連絡先)を児童の人数分用意した</li>
+    <li>雨天・体調不良時の代替プラン(事業所内プログラム)を決めてある</li>
+  </ul>
+</section>
+
+<!-- 3 ステップ -->
+<section class="paper tilt-l" id="steps">
+  <h2 class="sec mincho"><small>STEPS</small>3 ステップ構成(段階式・継続実施)</h2>
+
+  <h3 class="sub">Step 0(前日まで)— 事前学習</h3>
+  <p class="body">行き先の写真、当日のスケジュール、約束ごと(3つまで)を写真カードにして確認します。「いつ・どこへ・だれと・何をしに・何時に帰る」を全員が言えたら準備完了。不安の強い子には個別にもう一巡します。</p>
+
+  <h3 class="sub">Step 1 — 徒歩圏の公園(O0〜O1)</h3>
+  <p class="body">列で歩く、横断歩道で止まる、時間で切り替えて帰る。おでかけの基本形をいちばん近い場所で練習します。「行って、遊んで、時間で帰れた」がこの段階の成功です。</p>
+
+  <h3 class="sub">Step 2 — お店で「ひとつ買う」(O2〜O3)</h3>
+  <p class="body">スーパーや売店で、決めたもの(おやつなど100〜200円程度)を自分で選び、自分で会計します。お金は事前に封筒に小分けし、レジでのセリフ(「おねがいします」「ありがとう」)を事業所で練習してから行きます。</p>
+
+  <h3 class="sub">Step 3 — 公共施設(O2〜O3)</h3>
+  <p class="body">図書館・博物館・美術館など「静かにする場所」での過ごし方を経験します。声のものさし(声の大きさレベル表)を持参し、入口で全員で確認。滞在は短めに設定し、成功のうちに切り上げます。</p>
+
+  <h3 class="sub">Step 4 — 公共交通に乗る(O4)</h3>
+  <p class="body">一駅だけ電車に乗る、から始めます。切符またはICカードの操作、ホームでの立ち位置、車内の声の大きさ。往路は職員主導、復路は「地図係」「時計係」の子ども主導に切り替えると、達成感が大きくなります。</p>
+
+  <h3 class="sub">Step 5(帰所後〜翌回)— おでかけ新聞</h3>
+  <p class="body">撮ってきた写真を使って、ひとり1枚「おでかけ新聞」を作ります(写真を貼って一言書くだけでOK)。壁に掲示し、お迎えの保護者に本人が説明します。<b>経験を言葉にして誰かに伝えるところまでがおでかけ</b>です。</p>
+</section>
+
+<!-- 4 小集団 -->
+<section class="paper tilt-r" id="group">
+  <h2 class="sec mincho"><small>GROUP</small>4 小集団としての運営</h2>
+  <p class="body">おでかけ自体が小集団プログラムです。<b>ひとり一役</b>(隊長=先頭、地図係=道の確認、時計係=時間の確認、カメラ係=記録写真、会計係=お金)を割り当て、役割は毎回交代します。歩くのが不安な子は「カメラ係」など立ち止まれる役に、仕切りたい子は「隊長」に——<b>特性を役割に変換する</b>のがコツです。</p>
+</section>
+
+<!-- 5 配慮 -->
+<section class="paper tilt-l" id="care">
+  <h2 class="sec mincho"><small>CARE</small>5 個別の配慮と安全管理</h2>
+  <ul class="dot">
+    <li><b>飛び出しリスクのある子:</b>担当職員を固定し、車道側を職員が歩く。手つなぎを嫌がる場合はリュックの持ち手を軽く持つ等、本人が受け入れられる方法を事前に合意する。</li>
+    <li><b>人混み・音が苦手な子:</b>すいている時間帯を選ぶ。イヤーマフの持参可。「しんどくなったらこのカードを見せる」ヘルプカードを持たせ、静かな場所へ移動できる逃げ道を下見で確保しておく。</li>
+    <li><b>切り替えが難しい子:</b>「あと10分」「あと5分」の予告をタイマーで見える化。帰りの楽しみ(帰所後のおやつ等)をスケジュールに入れておく。</li>
+    <li><b>トイレが近い・こだわりがある子:</b>下見時にトイレの場所と様式(和式/洋式・多目的の有無)を確認し、出発前に全員でトイレを済ませる。</li>
+    <li><b>迷子対策:</b>集合場所を到着時に全員で確認。緊急連絡カードを携帯させ、「困ったらお店の人に見せる」練習を事業所でしておく。</li>
+  </ul>
+</section>
+
+<!-- 6 記録 -->
+<section class="paper tilt-r" id="record">
+  <h2 class="sec mincho"><small>RECORD</small>6 記録</h2>
+  <p class="body">支援きろく帖の「活動・様子」欄に貼り付けて使えます。</p>
+  <div class="copybox" id="txtRecord">【おでかけ療育記録】
+実施日:　　年　　月　　日/担当:
+行き先:　　　　　　　　/移動手段:徒歩・車両・電車・バス
+本日のStep:1・2・3・4/外出段階:O0・O1・O2・O3・O4
+役割:隊長・地図係・時計係・カメラ係・会計係・その他(　　)
+できたこと(移動):列歩行・横断・声の大きさ・切り替え
+できたこと(場面):買い物・会計・あいさつ・公共マナー
+配慮の使用:ヘルプカード・イヤーマフ・予告タイマー・その他(　　)
+ヒヤリハット:無・有(内容:　　　　　　　　　　)
+本人の言葉(ふりかえり):
+様子・特記:
+次回の目標:</div>
+  <button class="cbtn" data-copy="txtRecord">📋 記録テンプレートをコピー</button>
+</section>
+
+<!-- 7 計画記載例 -->
+<section class="paper tilt-l" id="plan">
+  <h2 class="sec mincho"><small>PLAN</small>7 個別支援計画 記載例</h2>
+  <p class="body">そのままではなく、<b>お子さんの実際の姿と、本人・保護者の意向</b>に合わせて書き直してからお使いください。</p>
+  <div class="copybox" id="txtPlan">【長期目標(6か月)】
+地域での外出活動において、公共の場のルールを守りながら、買い物や移動を職員の見守りのもとで行うことができる。
+
+【短期目標(3か月)】
+月1〜2回のおでかけ活動に役割を持って参加し、店舗での買い物場面で、商品を自分で選び会計まで行うことが3回中2回以上できる。
+
+【支援内容】
+月1〜2回、小集団でのおでかけ療育を実施する。実施前に写真カードによる事前学習で行き先・手順・約束ごとの見通しを共有し、当日はひとり一役の役割を担って参加できるようにする。人混みや音への苦手さに対しては、すいた時間帯の選定とヘルプカードの携帯により、本人が安心して過ごせる環境を整える。活動後は写真を用いたふりかえり(おでかけ新聞)を行い、経験を言葉にして伝える機会をつくる。
+
+【本人・家族の意向】
+(　本人:　　　　　　　　　　　　　　　　　)
+(　保護者:　　　　　　　　　　　　　　　　)</div>
+  <button class="cbtn" data-copy="txtPlan">📋 計画の文例をコピー</button>
+</section>
+
+<!-- 8 保護者 -->
+<section class="paper tilt-r" id="parent">
+  <h2 class="sec mincho"><small>FOR PARENTS</small>8 保護者への連絡文例</h2>
+  <p class="body">おうち連絡帖の連絡文や、連絡帳への記入に。</p>
+  <div class="copybox" id="txtParent">いつもお世話になっております。
+
+次回のおでかけ療育のご案内です。
+
+日時:　月　日(　)　時〜　時
+行き先:
+移動手段:
+持ち物:水筒、帽子、ハンカチ(おやつ代　　円をお預かりします)
+
+〇〇さんは前回、時計係として「あと10分だよ」とみんなに教える役をがんばってくれました。今回は買い物で、自分で選んだものをレジで会計することにチャレンジする予定です。
+
+当日の体調がすぐれない場合は無理をせず、事業所内での活動に切り替えますのでご安心ください。ご不明な点や、外出にあたってご心配なことがありましたら、いつでもお知らせください。</div>
+  <button class="cbtn" data-copy="txtParent">📋 連絡文例をコピー</button>
+  <div class="callout"><b>ご家庭にお願いすることは、ひとつだけで十分です。</b>帰宅後に「今日どこ行ったん?」と聞いて、本人の言葉で話させてあげること。おでかけ新聞を見ながらなら、話すのが苦手な子も伝えられます。</div>
+</section>
+
+<!-- 9 準備物と行き先例 -->
+<section class="paper tilt-l" id="items">
+  <h2 class="sec mincho"><small>ITEMS</small>9 準備物と行き先例</h2>
+  <ul class="dot">
+    <li>写真カード(行き先・スケジュール・約束ごと)、声のものさし表</li>
+    <li>緊急連絡カード(人数分)、救急セット、職員用携帯電話</li>
+    <li>ヘルプカード、イヤーマフ、予告用タイマー</li>
+    <li>会計用の小分け封筒、水筒・帽子、デジカメまたはスマホ(カメラ係用)</li>
+    <li>おでかけ新聞用の台紙・のり・ペン、掲示用具、記録シート</li>
+  </ul>
+
+  <h3 class="sub">和泉市とその周辺の行き先例</h3>
+  <p class="body">いずれも実施前に、開館日・利用ルール・団体利用の可否を<b>必ず最新の情報でご確認ください</b>。</p>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>行き先(例)</th><th>Step</th><th>ねらい・メモ</th></tr>
+    <tr><td>事業所周辺の公園</td><td>1</td><td>列歩行・横断・時間での切り替え。おでかけの基本形</td></tr>
+    <tr><td>近隣のスーパー・商店</td><td>2</td><td>「ひとつ買う」体験。すいた時間帯を下見で確認</td></tr>
+    <tr><td>和泉シティプラザの図書館</td><td>3</td><td>静かにする場所の練習。本を1冊選んで借りる体験も</td></tr>
+    <tr><td>和泉リサイクル環境公園</td><td>1〜3</td><td>季節の花と広場。環境絵画・環境習字のテーマ探しにも接続できる</td></tr>
+    <tr><td>大阪府立弥生文化博物館(池上曽根遺跡)</td><td>3</td><td>屋内で天候に左右されにくい。見学マナーの練習に</td></tr>
+    <tr><td>和泉市久保惣記念美術館</td><td>3</td><td>静けさのレベルが高い場所。O3以上のグループ向け</td></tr>
+    <tr><td>電車で一駅(和泉府中駅・和泉中央駅など)</td><td>4</td><td>切符/ICカード・ホームの安全・車内マナー。まずは一駅から</td></tr>
+  </table>
+  </div>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+</main>
+
+
+<script>
+'use strict';
+document.querySelectorAll('.cbtn[data-copy]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var el = document.getElementById(b.getAttribute('data-copy'));
+    if(!el) return;
+    var t = el.innerText;
+    var done = function(){
+      var o = b.textContent;
+      b.textContent = '✓ コピーしました';
+      b.classList.add('done');
+      setTimeout(function(){ b.textContent = o; b.classList.remove('done'); }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done, function(){ fallback(t, done); });
+    } else { fallback(t, done); }
+  });
+});
+function fallback(t, done){
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ alert('コピーできませんでした。長押しで選択してください。'); }
+  document.body.removeChild(ta);
+}
+</script>
+
+<footer>
+  <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
+  <div style="margin-top:6px;"><a href="ryoiku.html">個別支援計画のたね へ</a>　<a href="ouen.html">放課後デイ応援帖へ</a></div>
+</footer>
+</body>
+</html>
