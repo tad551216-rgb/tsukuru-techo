@@ -51,6 +51,13 @@ td b{color:var(--accent-deep);}
 padding:10px 20px;border-radius:999px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:99;}
 .toast.on{opacity:1;}
 a.doc{color:var(--accent-deep);font-weight:700;}
+
+.dl{background:#fff;border:1px solid var(--line,#D8D3C4);border-radius:10px;padding:14px 16px;margin:10px 0;}
+.dl b.f{font-size:15px;}
+.dl .to2{font-size:12.5px;color:#3D6B52;background:#EFF5F1;border-radius:6px;padding:6px 10px;margin-top:8px;line-height:1.7;}
+.dl p{font-size:13px;color:#3A4A66;margin:6px 0 0;line-height:1.8;}
+a.dbtn{display:inline-block;margin-top:10px;background:#1B2A4A;color:#fff;text-decoration:none;
+ font-size:13.5px;font-weight:700;padding:9px 16px;border-radius:8px;}
 </style>
 </head>
 <body>
@@ -66,6 +73,41 @@ a.doc{color:var(--accent-deep);font-weight:700;}
 <p class="lead">架空の「みどり市」を舞台に、おむかえルート帖・支援きろく帖・おうち連絡帖のマスター連携をひととおり体験できるサンプル一式です。使い方は<a class="doc" href="viewer.html?f=docs%2Fsample-renkei-guide.pdf&amp;t=%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E4%BD%93%E9%A8%93%E6%89%8B%E9%A0%86%E6%9B%B8">体験手順書（PDF）</a>をご覧ください。</p>
 <div class="warn">ここに登場する市・学校・児童・番号はすべて架空です。すでに実データでお使いの端末で試すときは、先に各アプリの「書き出し」「JSONで保存」で控えを取ってから始めてください。</div>
 </div>
+
+<section>
+<h2><span class="no">0</span>JSONファイルで、いっぱつ体験</h2>
+<p class="desc">下のファイルをダウンロードして各アプリで読み込むと、貼り付け作業なしで、すぐに動作確認ができます。<b>すでに実データが入っている端末では「まるごと」の2つは使わないでください</b>(データが置き換わります)。</p>
+
+<div class="dl">
+<b class="f">① おむかえルート帖 まるごと体験セット</b>
+<p>事業所・学校5校・車両2台・児童8名入り。読み込んだ瞬間から配車体験ができます。</p>
+<div class="to2">読み込み先:おむかえルート帖「設定タブ → JSONを読み込む」<br>⚠ 端末内のデータをすべて置き換えます(空の端末での体験用)</div>
+<a class="dbtn" href="docs/sample-omukae-full.json" download>⬇ ダウンロード</a>
+</div>
+
+<div class="dl">
+<b class="f">② 支援きろく帖 まるごと体験セット</b>
+<p>実名・受給者証番号(架空)入りの児童8名と、1日分の記録サンプル3件入り。印刷・CSV出力もすぐ試せます。</p>
+<div class="to2">読み込み先:支援きろく帖「出力タブ → 📥 JSONから復元する」<br>⚠ 端末内のデータをすべて置き換えます(空の端末での体験用)</div>
+<a class="dbtn" href="docs/sample-shien-full.json" download>⬇ ダウンロード</a>
+</div>
+
+<div class="dl">
+<b class="f">③ 学校データのみ(5校)</b>
+<p>いま使っている車両・設定はそのまま、学校だけを追加したいとき用。第1章のコピー版と同じ内容です。</p>
+<div class="to2">読み込み先:おむかえルート帖「設定タブ → JSONを読み込む」(学校だけが統合されます)</div>
+<a class="dbtn" href="docs/sample-omukae-gakkou.json" download>⬇ ダウンロード</a>
+</div>
+
+<div class="dl">
+<b class="f">④ 児童マスター(ニックネームと学校のみ・8名)</b>
+<p>第2章のコピー版と同じ内容のファイル版です。</p>
+<div class="to2">読み込み先:おむかえルート帖「設定タブ → JSONを読み込む」<br>支援きろく帖へは、ファイルの中身を開いてコピーし「連携タブ → 受け取った記録を取り込む」に貼り付けてください</div>
+<a class="dbtn" href="docs/sample-jidou-master.json" download>⬇ ダウンロード</a>
+</div>
+
+<p class="desc" style="margin-top:12px;">おうち連絡帖は、合言葉を使った暗号のやりとりで動くアプリのため、JSONファイル方式はありません。第4章の合言葉見本をお使いください。</p>
+</section>
 
 <section>
 <h2><span class="no">1</span>学校データ（5校）</h2>
