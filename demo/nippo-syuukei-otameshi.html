@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>日報集計</title>
+<meta name="theme-color" content="#2C4A3A">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --green:#2C4A3A; --green2:#3D6B52; --accent:#C77B4E;
+    --ink:#233029; --muted:#6E7E73; --line:#DCE3DC; --bg:#F1F4EF; --card:#fff;
+  }
+  body { background:var(--bg); color:var(--ink); line-height:1.6; padding-bottom:60px;
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+  .wrap { max-width:980px; margin:0 auto; padding:0 16px; }
+  header { background:var(--green); color:#fff; padding:20px 0 16px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.15); }
+  header h1 { font-size:21px; font-weight:800; letter-spacing:1px; }
+  header p { font-size:13px; opacity:0.85; margin-top:3px; }
+  h2 { font-size:15px; font-weight:800; color:var(--green2); margin:0 0 10px; display:flex; align-items:center; gap:8px; }
+  h2 .step { background:var(--accent); color:#fff; width:24px; height:24px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; font-size:14px; }
+  .card { background:var(--card); border-radius:14px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:16px; margin-bottom:20px; }
+  textarea { width:100%; min-height:140px; border:2px solid var(--line); border-radius:12px; padding:12px; font-size:14px; font-family:inherit; line-height:1.6; resize:vertical; }
+  textarea:focus { outline:none; border-color:var(--green2); }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px; }
+  button { font-family:inherit; cursor:pointer; border:none; border-radius:12px; font-size:15px; font-weight:700; padding:11px 18px; }
+  .btn-primary { background:var(--green2); color:#fff; }
+  .btn-accent { background:var(--accent); color:#fff; }
+  .btn-ghost { background:#EAF1EC; color:var(--green2); }
+  .btn-danger { background:#FBEAE6; color:#B0463C; }
+  .btn-sm { padding:8px 14px; font-size:14px; }
+  .hint { font-size:13px; color:var(--muted); margin-top:8px; line-height:1.6; }
+  .status { font-size:14px; font-weight:700; padding:10px 14px; border-radius:10px; margin-top:12px; }
+  .status.ok { background:#E7F1E9; color:#2C6B43; }
+  .status.err { background:#FBEAE6; color:#B0463C; }
+  .monthbar { display:flex; align-items:center; gap:12px; justify-content:center; }
+  .mlabel { font-size:18px; font-weight:800; color:var(--green2); min-width:130px; text-align:center; }
+  .navbtn { background:#EAF1EC; color:var(--green2); width:40px; height:40px; border-radius:10px; font-size:15px; }
+  .tabs { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+  .tab { background:#fff; color:var(--muted); border:2px solid var(--line); border-radius:999px; padding:8px 14px; font-size:14px; font-weight:700; }
+  .tab.active { background:var(--green2); color:#fff; border-color:var(--green2); }
+  .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:12px; border:1px solid var(--line); }
+  table { border-collapse:collapse; width:100%; min-width:max-content; background:#fff; }
+  th,td { padding:9px 13px; text-align:right; font-size:14px; white-space:nowrap; border-bottom:1px solid var(--line); }
+  th:first-child,td:first-child { text-align:left; position:sticky; left:0; background:#fff; font-weight:700; }
+  thead th { background:#EAF1EC; color:var(--green2); font-weight:800; position:sticky; top:0; }
+  tbody tr:nth-child(even) td { background:#FAFCF9; }
+  tbody tr:nth-child(even) td:first-child { background:#FAFCF9; }
+  tfoot td { font-weight:800; background:#F0F5F0; border-top:2px solid var(--green2); }
+  tfoot td:first-child { background:#F0F5F0; }
+  .empty { text-align:center; color:var(--muted); padding:32px 16px; font-size:15px; }
+  .chk-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--line); }
+  table.chk th, table.chk td { padding:6px 8px; text-align:center; font-size:12px; min-width:34px; border-bottom:1px solid var(--line); }
+  table.chk td.has { background:var(--green2); color:#fff; font-weight:700; }
+  table.chk th.sun, table.chk td.sun { color:#B85E5E; } table.chk th.sat, table.chk td.sat { color:#5E7CB8; }
+  table.chk th.namecol, table.chk td.namecol { text-align:left; position:sticky; left:0; background:#fff; font-weight:700; min-width:92px; font-size:13px; }
+  table.chk thead th { background:#EAF1EC; color:var(--green2); position:sticky; top:0; }
+  table.chk td.cnt { font-weight:800; color:var(--green2); }
+</style>
+</head>
+<body>
+<div style="display:block;background:#9F4A2B;color:#fff;padding:9px 12px;font-family:-apple-system,'Hiragino Sans',sans-serif;font-size:13px;line-height:1.7;text-align:center;"><b>お試し版</b>：サンプルデータ入り。本番アプリとは<b>別の場所</b>に保存されます。<button type="button" style="margin-left:8px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.6);border-radius:6px;padding:3px 10px;font-size:12px;font-family:inherit;cursor:pointer;" onclick="__demoReset()">🔄 最初の状態にもどす</button></div>
+<script>
+function __demoReset(){
+  if(!confirm('お試し版のデータを、最初のサンプルの状態にもどします。\nよろしいですか？')) return;
+  localStorage.removeItem('demo-agg-records'); location.reload();
+}
+</script>
+
+<header><div class="wrap"><h1>日報集計</h1><p>日報を取り込んで保存し、月単位で集計・出力します</p></div></header>
+
+<div class="wrap">
+  <div class="card">
+    <h2><span class="step">1</span>日報を取り込む</h2>
+    <textarea id="input" placeholder="LINEで届いた日報を1件ずつ貼り付けて「取り込んで保存」を押してください。&#10;1件ごとに自動保存され、入力欄は空に戻ります。LINEに戻って次の日報をコピー→貼り付け、をくり返せます。&#10;（まとめて貼り付けてもOKです）"></textarea>
+    <div class="row">
+      <button class="btn-primary" id="runBtn" onclick="importData()">取り込んで保存</button>
+      <button class="btn-ghost" onclick="document.getElementById('input').value=''">入力欄をクリア</button>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">2</span>対象の月をえらぶ</h2>
+    <div class="monthbar">
+      <button class="navbtn" onclick="moveMonth(-1)">◀</button>
+      <span class="mlabel" id="mlabel"></span>
+      <button class="navbtn" onclick="moveMonth(1)">▶</button>
+    </div>
+    <div id="monthMeta" class="hint" style="text-align:center"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">3</span>取込み状況（漏れ確認）</h2>
+    <div id="checkArea"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">4</span>集計と出力</h2>
+    <div id="aggArea"></div>
+  </div>
+
+  <div class="card">
+    <h2>データの管理</h2>
+    <p class="hint">取り込んだ日報はこの端末に保存されています。下のボタンで表示中の月のデータを削除できます。</p>
+    <div class="row">
+      <button class="btn-danger btn-sm" onclick="deleteMonth()">表示中の月のデータを削除</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+"use strict";
+var WEEK=["日","月","火","水","木","金","土"];
+var now=new Date();
+var curY=now.getFullYear(), curM=now.getMonth();
+var view="person";
+
+try{ if(!localStorage.getItem('demo-agg-records')) localStorage.setItem('demo-agg-records',"[{\"name\": \"見本 花子\", \"date\": \"2026-07-20\", \"items\": {\"送迎中支援\": 90, \"養育支援\": 240, \"休憩\": 30, \"掃除\": 30}}, {\"name\": \"見本 太郎\", \"date\": \"2026-07-20\", \"items\": {\"送迎中支援\": 120, \"養育支援\": 180, \"買出支援\": 60, \"休憩\": 30}}, {\"name\": \"見本 次郎\", \"date\": \"2026-07-20\", \"items\": {\"養育支援\": 300, \"会議\": 60, \"休憩\": 30}}, {\"name\": \"見本 花子\", \"date\": \"2026-07-21\", \"items\": {\"送迎中支援\": 90, \"養育支援\": 240, \"休憩\": 30, \"掃除\": 30}}, {\"name\": \"見本 太郎\", \"date\": \"2026-07-21\", \"items\": {\"送迎中支援\": 120, \"養育支援\": 180, \"買出支援\": 60, \"休憩\": 30}}, {\"name\": \"見本 次郎\", \"date\": \"2026-07-21\", \"items\": {\"養育支援\": 300, \"会議\": 60, \"休憩\": 30}}, {\"name\": \"見本 花子\", \"date\": \"2026-07-22\", \"items\": {\"送迎中支援\": 90, \"養育支援\": 240, \"休憩\": 30, \"掃除\": 30}}, {\"name\": \"見本 太郎\", \"date\": \"2026-07-22\", \"items\": {\"送迎中支援\": 120, \"養育支援\": 180, \"買出支援\": 60, \"休憩\": 30}}, {\"name\": \"見本 次郎\", \"date\": \"2026-07-22\", \"items\": {\"養育支援\": 300, \"会議\": 60, \"休憩\": 30}}]"); }catch(e){}
+function loadAll(){ try{ var v=localStorage.getItem("demo-agg-records"); return v?JSON.parse(v):[]; }catch(e){ return []; } }
+function saveAll(a){ try{ localStorage.setItem("demo-agg-records",JSON.stringify(a)); return true; }catch(e){ return false; } }
+var records=loadAll();
+var sessionCount=0; // この画面を開いてからの取込み累計
+
+function minutesToStr(min){ var h=Math.floor(min/60),m=min%60; if(min===0)return"0"; if(h===0)return m+"分"; if(m===0)return h+"時間"; return h+"時間"+m+"分"; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function ym(d){ return d.slice(0,7); }
+function curYM(){ return curY+"-"+String(curM+1).padStart(2,"0"); }
+function monthRecords(){ var k=curYM(); return records.filter(function(r){ return ym(r.date)===k; }); }
+
+function importData(){
+  var lines=document.getElementById("input").value.split(/\r?\n/);
+  var added=0,updated=0,errors=0,firstYM=null;
+  lines.forEach(function(line){
+    line=line.trim();
+    if(line.indexOf("#NIPPO1|")!==0) return;
+    var parts=line.split("|");
+    if(parts.length<3){ errors++; return; }
+    var name=parts[1]||"未設定", date=parts[2]||"";
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){ errors++; return; }
+    var items={};
+    for(var i=3;i<parts.length;i++){ var kv=parts[i].split("="); if(kv.length===2){ var v=parseInt(kv[1],10); if(!isNaN(v)) items[kv[0]]=(items[kv[0]]||0)+v; } }
+    if(!firstYM) firstYM=ym(date);
+    var key=name+"@"+date, ex=-1;
+    for(var j=0;j<records.length;j++){ if(records[j].name+"@"+records[j].date===key){ ex=j; break; } }
+    if(ex>=0){ records[ex]={name:name,date:date,items:items}; updated++; }
+    else { records.push({name:name,date:date,items:items}); added++; }
+  });
+  var st=document.getElementById("status");
+  if(added===0&&updated===0){
+    st.className="status err";
+    st.textContent="日報が見つかりませんでした。日報の最後にある「#NIPPO1|…」の行まで含めて貼り付けてください。"+(errors?("（不正な行 "+errors+"件をスキップ）"):"");
+    return;
+  }
+  saveAll(records);
+  document.getElementById("input").value="";
+  if(firstYM){ var p=firstYM.split("-"); curY=parseInt(p[0],10); curM=parseInt(p[1],10)-1; }
+  sessionCount += added + updated;
+  st.className="status ok";
+  st.textContent="取り込みました：新規"+added+"件・上書き"+updated+"件（この画面で合計"+sessionCount+"件）。続けて次の日報を貼り付けられます。"+(errors?("（不正な行 "+errors+"件はスキップ）"):"");
+  render();
+  // 入力欄へ戻してカーソルを入れる（LINEから戻ってすぐ貼り付けられるように）
+  var inp=document.getElementById("input");
+  window.scrollTo({ top:0, behavior:"smooth" });
+  inp.focus();
+}
+
+function moveMonth(d){ curM+=d; if(curM<0){curM=11;curY--;} if(curM>11){curM=0;curY++;} render(); }
+function deleteMonth(){
+  var n=monthRecords().length;
+  if(n===0){ alert("この月のデータはありません。"); return; }
+  if(!confirm(curY+"年"+(curM+1)+"月のデータ"+n+"件を削除します。よろしいですか？")) return;
+  var k=curYM();
+  records=records.filter(function(r){ return ym(r.date)!==k; });
+  saveAll(records); render();
+}
+
+function monthItems(){ var s=[]; monthRecords().forEach(function(r){ Object.keys(r.items).forEach(function(n){ if(s.indexOf(n)<0)s.push(n); }); }); return s; }
+function buildTable(mode,recs,items){
+  if(mode==="item"){
+    var names=[]; recs.forEach(function(r){ if(names.indexOf(r.name)<0)names.push(r.name); }); names.sort();
+    var rows=items.map(function(it){ var sums={}; names.forEach(function(nm){ var t=0; recs.forEach(function(r){ if(r.name===nm)t+=(r.items[it]||0); }); sums[nm]=t; }); return {label:it,sums:sums}; });
+    return {rows:rows,cols:names,head:"作業項目"};
+  }
+  var groups=[];
+  if(mode==="person"){ recs.forEach(function(r){ if(groups.indexOf(r.name)<0)groups.push(r.name); }); groups.sort(); }
+  else { recs.forEach(function(r){ if(groups.indexOf(r.date)<0)groups.push(r.date); }); groups.sort(); }
+  var rows=groups.map(function(g){ var sums={}; items.forEach(function(it){ var t=0; recs.forEach(function(r){ var key=(mode==="person"?r.name:r.date); if(key===g)t+=(r.items[it]||0); }); sums[it]=t; }); return {label:g,sums:sums}; });
+  return {rows:rows,cols:items,head:(mode==="person"?"氏名":"日付")};
+}
+function tableHTML(t){
+  var ct={}; t.cols.forEach(function(c){ct[c]=0;});
+  var h='<div class="table-wrap"><table><thead><tr><th>'+esc(t.head)+'</th>';
+  t.cols.forEach(function(c){ h+='<th>'+esc(c)+'</th>'; }); h+='<th>合計</th></tr></thead><tbody>';
+  t.rows.forEach(function(row){ var rt=0; h+='<tr><td>'+esc(row.label)+'</td>';
+    t.cols.forEach(function(c){ var v=row.sums[c]||0; rt+=v; ct[c]+=v; h+='<td>'+(v?minutesToStr(v):'–')+'</td>'; });
+    h+='<td>'+minutesToStr(rt)+'</td></tr>'; });
+  h+='</tbody><tfoot><tr><td>合計</td>'; var g=0;
+  t.cols.forEach(function(c){ g+=ct[c]; h+='<td>'+minutesToStr(ct[c])+'</td>'; });
+  h+='<td>'+minutesToStr(g)+'</td></tr></tfoot></table></div>'; return h;
+}
+
+function renderCheck(){
+  var recs=monthRecords(), el=document.getElementById("checkArea");
+  if(recs.length===0){ el.innerHTML='<div class="empty">この月のデータはまだありません。<br>上の「取り込んで保存」で日報を追加してください。</div>'; return; }
+  var names=[]; recs.forEach(function(r){ if(names.indexOf(r.name)<0)names.push(r.name); }); names.sort();
+  var dim=new Date(curY,curM+1,0).getDate();
+  var have={}; names.forEach(function(n){ have[n]={}; });
+  recs.forEach(function(r){ have[r.name][parseInt(r.date.slice(8),10)]=true; });
+  var h='<div class="chk-wrap"><table class="chk"><thead><tr><th class="namecol">氏名＼日</th>';
+  for(var d=1;d<=dim;d++){ var dow=new Date(curY,curM,d).getDay(); h+='<th class="'+(dow===0?'sun':dow===6?'sat':'')+'">'+d+'</th>'; }
+  h+='<th>日数</th></tr></thead><tbody>';
+  names.forEach(function(nm){
+    h+='<tr><td class="namecol">'+esc(nm)+'</td>'; var cnt=0;
+    for(var d=1;d<=dim;d++){ var dow=new Date(curY,curM,d).getDay();
+      if(have[nm][d]){ h+='<td class="has">✓</td>'; cnt++; }
+      else { h+='<td class="'+(dow===0?'sun':dow===6?'sat':'')+'">·</td>'; } }
+    h+='<td class="cnt">'+cnt+'日</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<p class="hint">✓＝その日の日報が取り込み済み。「·」の日はデータがありません（休み・未提出のどちらか）。横スクロールで月末まで確認できます。</p>';
+  el.innerHTML=h;
+}
+
+function setView(v){ view=v; renderAgg(); }
+function renderAgg(){
+  var el=document.getElementById("aggArea"), recs=monthRecords();
+  if(recs.length===0){ el.innerHTML='<div class="empty">この月のデータがありません。</div>'; return; }
+  var items=monthItems();
+  var h='<div class="tabs">';
+  h+='<button class="tab '+(view==="person"?"active":"")+'" onclick="setView(\'person\')">人別 × 項目</button>';
+  h+='<button class="tab '+(view==="item"?"active":"")+'" onclick="setView(\'item\')">項目別 × 人</button>';
+  h+='<button class="tab '+(view==="date"?"active":"")+'" onclick="setView(\'date\')">日別 × 項目</button>';
+  h+='</div>'+tableHTML(buildTable(view,recs,items));
+  h+='<div class="row" style="margin-top:14px">';
+  h+='<button class="btn-accent" onclick="exportXlsx(\'month\')">月報をExcel出力</button>';
+  h+='<button class="btn-accent" onclick="exportXlsx(\'week\')">週報をExcel出力</button>';
+  h+='<button class="btn-accent" onclick="exportXlsx(\'day\')">日報をExcel出力</button>';
+  h+='</div><p class="hint">月報＝対象月の合計。週報＝月内を週（月曜始まり）ごとに集計。日報＝1日ごとの明細。</p>';
+  el.innerHTML=h;
+}
+
+function sheetFromTable(t){
+  var aoa=[[t.head].concat(t.cols).concat(["合計"])], ct={}; t.cols.forEach(function(c){ct[c]=0;});
+  t.rows.forEach(function(row){ var rt=0,line=[row.label]; t.cols.forEach(function(c){ var v=row.sums[c]||0; rt+=v; ct[c]+=v; line.push(v/60); }); line.push(rt/60); aoa.push(line); });
+  var foot=["合計"],g=0; t.cols.forEach(function(c){ g+=ct[c]; foot.push(ct[c]/60); }); foot.push(g/60); aoa.push(foot); return aoa;
+}
+function weekMonday(dateStr){ var d=new Date(dateStr+"T00:00:00"); var day=(d.getDay()+6)%7; d.setDate(d.getDate()-day); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function exportXlsx(kind){
+  var recs=monthRecords();
+  if(recs.length===0){ alert("この月のデータがありません。"); return; }
+  var items=monthItems(), wb=XLSX.utils.book_new();
+  if(kind==="month"){
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sheetFromTable(buildTable("person",recs,items))),"人別");
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sheetFromTable(buildTable("item",recs,items))),"項目別");
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sheetFromTable(buildTable("date",recs,items))),"日別");
+  } else if(kind==="week"){
+    var weeks={}; recs.forEach(function(r){ var w=weekMonday(r.date); (weeks[w]=weeks[w]||[]).push(r); });
+    Object.keys(weeks).sort().forEach(function(w){
+      var t=buildTable("person",weeks[w],items);
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sheetFromTable(t)),"週 "+w.slice(5).replace("-","/"));
+    });
+  } else {
+    var head=["氏名","日付","曜日"].concat(items).concat(["合計(分)"]), aoa=[head];
+    recs.slice().sort(function(a,b){ return a.date<b.date?-1:a.date>b.date?1:(a.name<b.name?-1:1); }).forEach(function(r){
+      var dow=WEEK[new Date(r.date+"T00:00:00").getDay()], line=[r.name,r.date,dow],tot=0;
+      items.forEach(function(c){ var v=r.items[c]||0; tot+=v; line.push(v); }); line.push(tot); aoa.push(line);
+    });
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(aoa),"日別明細");
+  }
+  var fn="日報集計_"+curY+String(curM+1).padStart(2,"0")+"_"+(kind==="month"?"月報":kind==="week"?"週報":"日報")+".xlsx";
+  XLSX.writeFile(wb,fn);
+}
+
+function render(){
+  document.getElementById("mlabel").textContent=curY+"年"+(curM+1)+"月";
+  var recs=monthRecords(), names={}; recs.forEach(function(r){names[r.name]=1;});
+  document.getElementById("monthMeta").textContent = recs.length===0 ? "この月のデータはありません" : ("取込み済み："+Object.keys(names).length+"名・"+recs.length+"件");
+  renderCheck(); renderAgg();
+}
+render();
+</script>
+</body>
+</html>

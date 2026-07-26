@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>支援きろく帖 | つくる手帖</title>
+<meta name="description" content="放課後等デイサービスの実績記録と支援記録を、その場でサインまで。おむかえルート帖と連携する日報アプリ。">
+<meta name="theme-color" content="#2c5077">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="支援きろく帖">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+:root{
+  --paper:#f7f4ea;
+  --ink:#2b2a26;
+  --indigo:#2c5077;
+  --indigo-deep:#1e3a58;
+  --vermil:#c9472e;
+  --line:#d8d2c2;
+  --grid:rgba(44,80,119,.07);
+  --ok:#3a7d44;
+  --warn:#b0741a;
+  --card:#fffdf6;
+  --serif:"Hiragino Mincho ProN","Yu Mincho","游明朝",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0;}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 24px);
+  font-size:15px; line-height:1.6;
+  padding-bottom:calc(64px + env(safe-area-inset-bottom));
+}
+header.app{
+  position:sticky; top:0; z-index:20;
+  background:var(--indigo); color:#fdfbf4;
+  padding:calc(8px + env(safe-area-inset-top)) 14px 8px;
+  box-shadow:0 2px 6px rgba(30,58,88,.25);
+}
+header.app h1{
+  margin:0; font-family:var(--serif); font-size:19px; font-weight:600; letter-spacing:.08em;
+}
+header.app h1 small{font-family:var(--sans); font-size:11px; letter-spacing:.1em; opacity:.75; margin-left:8px;}
+.dateNav{display:flex; align-items:center; gap:8px; margin-top:6px;}
+.dateNav button{
+  background:rgba(255,255,255,.14); color:#fdfbf4; border:1px solid rgba(255,255,255,.3);
+  border-radius:8px; font-size:15px; padding:4px 12px; cursor:pointer;
+}
+.dateNav .dlabel{
+  flex:1; text-align:center; font-family:var(--serif); font-size:16px; letter-spacing:.05em;
+}
+.dateNav input[type=date]{position:absolute; opacity:0; width:1px; height:1px;}
+main{padding:12px 12px 24px; max-width:640px; margin:0 auto;}
+.tabbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:30;
+  display:flex; background:#fffdf6; border-top:2px solid var(--indigo);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.tabbar button{
+  flex:1; background:none; border:none; padding:9px 2px 7px; cursor:pointer;
+  font-size:11px; color:#7a7466; display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+.tabbar button .ico{font-size:20px; line-height:1;}
+.tabbar button.on{color:var(--vermil); font-weight:700;}
+section.tab{display:none;}
+section.tab.on{display:block;}
+h2.sec{
+  font-family:var(--serif); font-size:16px; color:var(--indigo-deep);
+  border-left:4px solid var(--vermil); padding-left:8px; margin:18px 0 10px; letter-spacing:.06em;
+}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:12px; margin-bottom:12px; box-shadow:0 1px 3px rgba(43,42,38,.06);
+}
+.card h3{
+  margin:0 0 4px; font-size:16px; font-family:var(--serif); color:var(--indigo-deep);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.chip{
+  display:inline-block; font-size:11px; padding:1px 8px; border-radius:99px;
+  background:#eef2f6; color:var(--indigo); border:1px solid #c9d4de; font-family:var(--sans); font-weight:600;
+}
+.chip.v{background:#faeae6; color:var(--vermil); border-color:#e5c0b7;}
+.chip.g{background:#e9f2ea; color:var(--ok); border-color:#bcd6c1;}
+.chip.v{background:#fdeee9; color:var(--verm); border-color:#f0c4b6; font-weight:700;}
+.row{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:6px 0;}
+.row label{font-size:13px; color:#5c574c;}
+.seg{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+.seg button{
+  border:1.5px solid var(--line); background:#fff; border-radius:9px;
+  padding:6px 10px; font-size:13px; color:#6b6557; cursor:pointer;
+}
+.seg button.on{border-color:var(--indigo); background:var(--indigo); color:#fff; font-weight:700;}
+.seg button.on.abs{border-color:var(--warn); background:var(--warn);}
+input[type=time]{
+  border:1.5px solid var(--line); border-radius:8px; padding:6px 8px;
+  font-size:16px; background:#fff; font-family:var(--sans); min-width:96px;
+}
+input[type=text], input[type=month], textarea, select{
+  border:1.5px solid var(--line); border-radius:8px; padding:7px 9px;
+  font-size:16px; background:#fff; font-family:var(--sans); width:100%;
+}
+textarea{min-height:56px; resize:vertical;}
+.mini{width:auto !important; min-width:72px;}
+.calc{
+  font-size:13px; background:#eef2f6; border:1px dashed #b9c7d4; border-radius:8px;
+  padding:6px 10px; color:var(--indigo-deep); margin:6px 0;
+}
+.calc b{font-size:15px;}
+.tgl{display:inline-flex; align-items:center; gap:5px; font-size:14px; cursor:pointer; padding:5px 8px; border:1.5px solid var(--line); border-radius:9px; background:#fff;}
+.tgl input{width:18px; height:18px; accent-color:var(--vermil);}
+.tgl.onbg{border-color:var(--vermil); background:#faeae6;}
+.btn{
+  display:inline-block; border:none; border-radius:10px; padding:10px 16px;
+  font-size:15px; font-weight:700; cursor:pointer; font-family:var(--sans);
+}
+.btn.p{background:var(--vermil); color:#fff;}
+.btn.s{background:var(--indigo); color:#fff;}
+.btn.o{background:#fff; color:var(--indigo); border:1.5px solid var(--indigo);}
+.btn.sm{padding:6px 12px; font-size:13px;}
+.btn.wide{width:100%; margin-top:6px;}
+.signBox{
+  display:flex; align-items:center; gap:10px; margin-top:8px;
+  background:#fbf8ef; border:1px solid var(--line); border-radius:10px; padding:8px 10px;
+}
+.signBox img{height:44px; background:#fff; border:1px solid var(--line); border-radius:6px;}
+.signBox .st{font-size:12px; color:#5c574c;}
+details.shien{margin-top:10px; border-top:1px dashed var(--line); padding-top:8px;}
+details.shien summary{
+  cursor:pointer; font-size:14px; font-weight:700; color:var(--indigo-deep);
+  list-style:none; display:flex; align-items:center; gap:6px;
+}
+details.shien summary::before{content:'▸'; color:var(--vermil); transition:transform .15s;}
+details.shien[open] summary::before{transform:rotate(90deg);}
+.fld{margin:8px 0;}
+.fld > label{display:block; font-size:12px; color:#5c574c; margin-bottom:3px; font-weight:600;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+.done{font-size:12px; color:var(--ok); font-weight:700;}
+.pend{font-size:12px; color:var(--warn); font-weight:700;}
+.empty{
+  text-align:center; color:#8a8474; padding:28px 12px; font-size:14px;
+  border:1.5px dashed var(--line); border-radius:12px; background:rgba(255,253,246,.6);
+}
+.note{font-size:12px; color:#7a7466; margin:6px 0; line-height:1.7;}
+.note b{color:var(--vermil);}
+dialog{
+  border:none; border-radius:14px; padding:0; max-width:min(94vw,480px); width:94vw;
+  box-shadow:0 8px 30px rgba(30,58,88,.35);
+}
+dialog::backdrop{background:rgba(43,42,38,.45);}
+dialog .dhead:focus{ outline:none; }
+dialog .dhead{
+  background:var(--indigo); color:#fdfbf4; padding:12px 16px;
+  font-family:var(--serif); font-size:16px; letter-spacing:.05em;
+}
+dialog .dbody{padding:14px 16px; background:var(--card); max-height:70vh; overflow-y:auto;}
+dialog .dfoot{
+  display:flex; gap:8px; justify-content:flex-end; padding:12px 16px;
+  background:var(--card); border-top:1px solid var(--line);
+}
+#signCanvas{
+  width:100%; height:180px; background:#fff; border:1.5px solid var(--indigo);
+  border-radius:10px; touch-action:none; display:block;
+}
+.sigHint{font-size:12px; color:#7a7466; text-align:center; margin:6px 0 0;}
+.dayChips{display:flex; gap:5px; flex-wrap:wrap;}
+.dayChips label{
+  border:1.5px solid var(--line); border-radius:8px; padding:5px 9px; font-size:13px;
+  cursor:pointer; background:#fff; user-select:none;
+}
+.dayChips input{display:none;}
+.dayChips label.on{background:var(--indigo); border-color:var(--indigo); color:#fff; font-weight:700;}
+.childRow{
+  display:flex; align-items:center; gap:10px; padding:10px 4px;
+  border-bottom:1px dashed var(--line);
+}
+.childRow .nm{flex:1; font-size:15px;}
+.childRow .nm small{display:block; font-size:11px; color:#8a8474;}
+#toast{
+  position:fixed; left:50%; bottom:calc(76px + env(safe-area-inset-bottom));
+  transform:translateX(-50%) translateY(16px); z-index:99;
+  background:var(--indigo-deep); color:#fdfbf4; font-size:13px;
+  padding:9px 18px; border-radius:99px; opacity:0; pointer-events:none;
+  transition:all .25s; white-space:nowrap; box-shadow:0 4px 14px rgba(30,58,88,.4);
+}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+.sumBar{
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;
+}
+.sumBar .s{
+  background:#fffdf6; border:1px solid var(--line); border-radius:10px;
+  padding:6px 12px; font-size:12px; color:#5c574c;
+}
+.sumBar .s b{font-size:16px; color:var(--indigo-deep); font-family:var(--serif); margin-right:2px;}
+#printArea{display:none;}
+@media print{
+  body{background:#fff; padding:0;}
+  header.app, main, .tabbar, #toast{display:none !important;}
+  #printArea{display:block; font-size:11px; color:#000;}
+  #printArea h2{font-size:15px; margin:0 0 4px; font-family:var(--serif);}
+  #printArea .phead{display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #000; padding-bottom:4px; margin-bottom:6px;}
+  #printArea table{width:100%; border-collapse:collapse; margin-bottom:14px;}
+  #printArea th, #printArea td{border:1px solid #444; padding:3px 4px; font-size:10px; vertical-align:middle;}
+  #printArea th{background:#eee; font-weight:700;}
+  #printArea td.c{text-align:center;}
+  #printArea img.sig{height:26px;}
+  #printArea .pageBreak{page-break-after:always;}
+  #printArea .shienBlock{border:1px solid #444; padding:6px 8px; margin-bottom:10px; page-break-inside:avoid;}
+  #printArea .shienBlock h4{margin:0 0 4px; font-size:12px; border-bottom:1px solid #999; padding-bottom:2px;}
+  #printArea .shienBlock p{margin:2px 0; font-size:10.5px;}
+}
+</style>
+</head>
+<body>
+<div style="display:block;background:#9F4A2B;color:#fff;padding:9px 12px;font-family:-apple-system,'Hiragino Sans',sans-serif;font-size:13px;line-height:1.7;text-align:center;"><b>お試し版</b>：サンプルデータ入り。本番アプリとは<b>別の場所</b>に保存されます。<button type="button" style="margin-left:8px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.6);border-radius:6px;padding:3px 10px;font-size:12px;font-family:inherit;cursor:pointer;" onclick="__demoReset()">🔄 最初の状態にもどす</button></div>
+<script>
+function __demoReset(){
+  if(!confirm('お試し版のデータを、最初のサンプルの状態にもどします。\nよろしいですか？')) return;
+  indexedDB.deleteDatabase('shien-kiroku-DEMO-db'); setTimeout(function(){location.reload();},400);
+}
+</script>
+
+<header class="app">
+  <h1>支援きろく帖<small>放課後等デイサービスの日報</small></h1>
+  <div class="dateNav">
+    <button id="btnPrev">‹</button>
+    <div class="dlabel" id="dateLabel">—</div>
+    <button id="btnToday" style="font-size:12px;">今日</button>
+    <button id="btnNext">›</button>
+    <input type="date" id="datePick">
+  </div>
+</header>
+
+<main>
+<!-- ========== きょうの記録 ========== -->
+<section class="tab on" id="tab-today">
+  <div class="sumBar" id="sumBar"></div>
+  <p class="note" id="noDayWarn" style="display:none;color:var(--verm);font-weight:700;margin-top:0;"></p>
+  <div id="todayList"></div>
+  <button class="btn o wide" id="btnAddGuest">＋ この日だけ利用する児童を追加</button>
+  <p class="note">入室〜退室の時間から算定時間数を自動計算します（送迎時間は含みません）。区分表示はあくまで参考です。実際の請求区分は、必ずお使いの請求ソフト・最新の告示でご確認ください。</p>
+</section>
+
+<!-- ========== 児童 ========== -->
+<section class="tab" id="tab-children">
+  <h2 class="sec">児童の登録</h2>
+  <p class="note">ニックネームは、おうち連絡帖・おむかえルート帖との<b>照合キー</b>です。あとから変えると連携が切れるので、最初に決めて動かさないのが安全です。</p>
+  <p class="note">学校名は<b>おむかえルート帖のデータを読み込んで選ぶ</b>運用です（連携タブでJSONを読み込むと学校リストが更新されます）。手入力による表記ゆれを防ぎます。<span id="schoolListInfo"></span></p>
+  <div id="childList"></div>
+  <button class="btn p wide" id="btnAddChild">＋ 児童を追加</button>
+  <h2 class="sec">マスターのやり取り（ニックネームと学校だけ）</h2>
+  <div class="card">
+    <p style="font-size:14px; margin:0 0 8px;">実名を含まない<b>ニックネーム＋学校名だけ</b>のマスターです。<b>同じ端末のおむかえルート帖に渡すときは「コピーする」</b>、LINE等で別の端末に送るときは「書き出す」を使ってください。</p>
+    <p class="note" style="margin:0 0 8px;"><b>おむかえルート帖を先に使っていた場合</b>は、逆向きに始められます。ルート帖の設定タブ →「児童データ」→「📤 支援きろく帖へ渡す（児童＋学校）」でコピーし、下の「📥 マスターを取り込む」に貼り付けてください。<b>児童と学校リストが同時に登録されます。</b></p>
+    <button class="btn s wide" id="btnMasterCopy">📋 コピーする（おむかえルート帖へ貼り付け）</button>
+    <button class="btn o wide" id="btnMasterOut">📤 マスターを書き出す（共有・LINEで送る）</button>
+    <button class="btn o wide" id="btnMasterIn">📥 マスターを取り込む</button>
+    <div id="masterResult" style="margin-top:10px;"></div>
+    <p class="note">取り込んだ側では、氏名がいったんニックネームで登録されます。児童タブで実名・受給者証番号などを補ってください。</p>
+  </div>
+</section>
+
+<!-- ========== 連携 ========== -->
+<section class="tab" id="tab-renkei">
+  <h2 class="sec">おむかえルート帖と連携</h2>
+  <div class="card">
+    <p style="font-size:14px; margin:0 0 8px;">おむかえルート帖で保存したJSONファイルを読み込むと、<b>確定済みの学校のお迎え時刻</b>が、その学校に通う児童の「送迎（往路）」に自動で入ります。</p>
+    <div class="fld">
+      <label>反映する日付</label>
+      <input type="date" id="renkeiDate" class="mini" style="width:auto;">
+    </div>
+    <button class="btn s wide" id="btnRenkeiFile">📂 JSONファイルを読み込む</button>
+    <input type="file" id="fileRenkei" accept=".json,application/json" style="display:none;">
+    <div id="renkeiResult" style="margin-top:10px;"></div>
+  </div>
+  <h2 class="sec">保護者連携（おうち連絡帖・デジタル署名）</h2>
+  <div class="card">
+    <p style="font-size:14px; margin:0 0 8px;">確定した記録を合言葉で暗号化してLINEで送ると、保護者は「おうち連絡帖」で内容を確認し、<b>デジタル署名</b>を返せます。返ってきた署名はここで検証され、記録に保存されます。</p>
+    <div class="fld"><label>児童</label><select id="dsigChild"></select></div>
+    <button class="btn s wide" id="btnDsigSend">🔐 記録を暗号化して送る（上の日付分）</button>
+    <button class="btn s wide" id="btnNewsSend">📢 お知らせを作って送る（全家庭共通）</button>
+    <button class="btn o wide" id="btnDsigRecv">📥 保護者から受信（かぎ登録・署名・予約依頼）</button>
+    <div id="dsigResult" style="margin-top:10px;"></div>
+    <h2 class="sec" style="margin-top:16px;">予約・変更依頼の受信箱</h2>
+    <div id="yoyakuInbox"></div>
+    <p class="note">合言葉は児童ごとに児童タブで設定し、LINEとは別の経路（面談時に紙・口頭）で保護者に渡してください。署名の検証後に記録を訂正すると署名は無効になります（訂正したら再送→再署名）。お知らせ用の合言葉は出力タブの施設情報で設定します。</p>
+  </div>
+  <h2 class="sec">日次集約ファイル（サイン込み・管理者へ）</h2>
+  <div class="card">
+    <p style="font-size:14px; margin:0 0 8px;">その日の記録を<b>保護者サイン画像ごと</b>1つのJSONファイルにまとめます。担当者が書き出し、AirDrop・クラウド・メール添付などで管理者へ渡してください（<b>LINEのトークには載せない</b>運用です）。管理者側は取り込むと、既存の記録と統合（マージ）されます。</p>
+    <button class="btn s wide" id="btnDailyOut">📦 この日の集約ファイルを書き出す</button>
+    <button class="btn o wide" id="btnDailyIn">📥 集約ファイルを取り込む（マージ）</button>
+    <input type="file" id="fileDailyIn" accept=".json,application/json" style="display:none;">
+    <div id="dailyResult" style="margin-top:10px;"></div>
+    <p class="note">取り込みは記録単位の統合です（「復元」のような全置き換えはしません）。同じ日・同じ児童の記録は取り込んだ内容で上書きされますが、<b>取り込みデータにサインがない場合は手元のサインを残します</b>。</p>
+  </div>
+  <h2 class="sec">端末間で記録をやり取り（ニックネーム）</h2>
+  <div class="card">
+    <p style="font-size:14px; margin:0 0 8px;">この日の記録を、<b>実名・受給者証番号を含めず</b>ニックネームだけで書き出します。LINEやメモで別の端末に送り、受け取った側で取り込むと、ニックネームの一致する児童に記録が入ります。</p>
+    <button class="btn s wide" id="btnShareOut">📤 この日の記録を書き出す</button>
+    <button class="btn o wide" id="btnShareIn">📥 受け取った記録を取り込む</button>
+    <div id="shareResult" style="margin-top:10px;"></div>
+    <p class="note">保護者サインの画像は含まれません（サインは各端末で取得してください）。児童タブで全員にニックネームを設定しておくと確実です。</p>
+  </div>
+  <p class="note">おむかえルート帖側の操作：設定 →「JSONファイルで保存」。学校名が一致した児童だけに反映されます。到着後の「入室時刻」は、これとは別に施設で記録してください（実績は入室〜退室で算定します）。</p>
+</section>
+
+<!-- ========== 出力 ========== -->
+<section class="tab" id="tab-out">
+  <h2 class="sec">月次の点検（締め前チェック）</h2>
+  <div class="card">
+    <div class="fld">
+      <label>対象月</label>
+      <input type="month" id="outMonth" class="mini" style="width:auto;">
+    </div>
+    <button class="btn p wide" id="btnCheck">🔍 この月を点検する</button>
+    <div id="checkResult" style="margin-top:10px;"></div>
+    <p class="note" style="margin-bottom:0;">サイン漏れ・入力漏れ・契約支給量オーバーなどをまとめて確認します。行をタップすると、その日の記録へ移動して直せます。</p>
+  </div>
+  <h2 class="sec">月次の出力</h2>
+  <div class="card">
+    <button class="btn s wide" id="btnCsv">📄 実績記録CSVを保存（算定時間数つき）</button>
+    <button class="btn s wide" id="btnPrintJisseki">🖨 実績記録票を印刷（サイン画像つき）</button>
+    <button class="btn s wide" id="btnPrintShien">🖨 支援記録（療育日誌）を印刷</button>
+  </div>
+  <h2 class="sec">バックアップ（5年保管のために）</h2>
+  <div class="card">
+    <p class="note" style="margin-top:0;">記録は法令により<b>5年間の保管</b>が必要です。この端末だけに置かず、月に一度はJSONファイルとして保存し、別の場所（PCやクラウド）にも控えを置くことをおすすめします。</p>
+    <button class="btn o wide" id="btnBackup">💾 すべてのデータをJSONで保存</button>
+    <button class="btn o wide" id="btnRestore">📥 JSONから復元する</button>
+    <input type="file" id="fileRestore" accept=".json,application/json" style="display:none;">
+    <div class="note" id="dataStats"></div>
+  </div>
+  <h2 class="sec">施設情報</h2>
+  <div class="card">
+    <div class="fld"><label>施設名（印刷物に表示）</label><input type="text" id="setFacility" placeholder="例：放課後デイ ○○"></div>
+    <div class="fld"><label>お知らせ用の合言葉（全家庭共通・おうち連絡帖に設定してもらう）</label><input type="text" id="setNewsPass" autocomplete="off"></div>
+    <button class="btn s sm" id="btnSaveFacility">保存</button>
+  </div>
+</section>
+</main>
+
+<nav class="tabbar">
+  <button data-tab="today" class="on"><span class="ico">📋</span>きょう</button>
+  <button data-tab="children"><span class="ico">👧</span>児童</button>
+  <button data-tab="renkei"><span class="ico">🚌</span>連携</button>
+  <button data-tab="out"><span class="ico">📤</span>出力</button>
+</nav>
+
+<!-- 児童編集ダイアログ -->
+<dialog id="dlgChild">
+  <div class="dhead" id="dlgChildTitle" tabindex="-1" autofocus>児童を追加</div>
+  <div class="dbody">
+    <div class="fld"><label>氏名 *</label><input type="text" id="cName" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+    <div class="fld"><label>ふりがな</label><input type="text" id="cKana" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+    <div class="fld"><label>ニックネーム（データやり取り用・実名の代わりに使います）</label><input type="text" id="cNick" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="例：たろちゃん"></div>
+    <div class="grid2">
+      <div class="fld"><label>受給者証番号</label><input type="text" id="cJukyu" inputmode="numeric" autocomplete="off"></div>
+      <div class="fld"><label>契約支給量（日/月）</label><input type="text" id="cShikyu" inputmode="numeric" autocomplete="off"></div>
+    </div>
+    <div class="fld"><label>学校（おむかえルート帖から取得したリスト）</label>
+      <select id="cSchoolSel" style="display:none;"></select>
+      <input type="text" id="cSchool" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="学校名を入力（リスト未取得のとき）">
+    </div>
+    <div class="fld"><label>保護者名</label><input type="text" id="cGuardian" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+    <div class="fld"><label>保護者連携の合言葉（おうち連絡帖用・省略可）</label><input type="text" id="cAikotoba" autocomplete="off" placeholder="家庭ごとに決めて紙や口頭で渡す"></div>
+    <div class="fld"><label>利用曜日（「きょう」に自動表示）</label>
+      <div class="dayChips" id="cDays"></div>
+    </div>
+    <div class="fld"><label>メモ（アレルギー・注意点など）</label><textarea id="cMemo"></textarea></div>
+  </div>
+  <div class="dfoot">
+    <button class="btn o sm" id="btnChildDel" style="margin-right:auto; color:var(--vermil); border-color:var(--vermil); display:none;">削除</button>
+    <button class="btn o sm" id="btnChildCancel">やめる</button>
+    <button class="btn p sm" id="btnChildSave">保存</button>
+  </div>
+</dialog>
+
+<!-- サインダイアログ -->
+<dialog id="dlgSign">
+  <div class="dhead" id="dlgSignTitle" tabindex="-1" autofocus>保護者サイン</div>
+  <div class="dbody">
+    <p style="font-size:13px; margin:0 0 8px; color:#5c574c;">本日のサービス提供内容をご確認のうえ、下の枠内にサインをお願いします。</p>
+    <canvas id="signCanvas"></canvas>
+    <p class="sigHint">指でそのまま書けます</p>
+  </div>
+  <div class="dfoot">
+    <button class="btn o sm" id="btnSignClear" style="margin-right:auto;">書き直す</button>
+    <button class="btn o sm" id="btnSignCancel">やめる</button>
+    <button class="btn p sm" id="btnSignSave">この内容で確認</button>
+  </div>
+</dialog>
+
+<!-- お知らせ作成ダイアログ -->
+<dialog id="dlgNews">
+  <div class="dhead" tabindex="-1" autofocus>お知らせを作って送る</div>
+  <div class="dbody">
+    <div class="fld"><label>件名</label><input type="text" id="nwTitle" placeholder="例：8月の療育スケジュールについて"></div>
+    <div class="fld"><label>内容</label><textarea id="nwBody" style="min-height:110px;" placeholder="例：8/11〜8/15はお盆休みです。夏祭りは8/20（木）14時から…"></textarea></div>
+    <p class="note" style="margin:0;">全家庭共通の「お知らせ用の合言葉」で暗号化されます。個人名や個別の内容は書かないでください（個別の連絡は「記録を暗号化して送る」で）。</p>
+  </div>
+  <div class="dfoot">
+    <button class="btn o sm" id="btnNewsCancel">やめる</button>
+    <button class="btn p sm" id="btnNewsDo">暗号化して送る</button>
+  </div>
+</dialog>
+
+<!-- ゲスト追加ダイアログ -->
+<dialog id="dlgGuest">
+  <div class="dhead" tabindex="-1" autofocus>この日だけ利用する児童</div>
+  <div class="dbody" id="guestList"></div>
+  <div class="dfoot"><button class="btn o sm" id="btnGuestClose">とじる</button></div>
+</dialog>
+
+<!-- 記録取り込みダイアログ -->
+<dialog id="dlgShareIn">
+  <div class="dhead" tabindex="-1" autofocus>受け取ったデータを取り込む</div>
+  <div class="dbody">
+    <p style="font-size:13px; margin:0 0 8px; color:#5c574c;">LINEやメモで受け取ったテキスト（記録・マスターどちらでも）を、そのまま貼り付けてください。</p>
+    <textarea id="shareInText" style="min-height:120px;" placeholder="支援きろく帖の記録 {&quot;app&quot;:…"></textarea>
+  </div>
+  <div class="dfoot">
+    <button class="btn o sm" id="btnShareInCancel">やめる</button>
+    <button class="btn p sm" id="btnShareInDo">取り込む</button>
+  </div>
+</dialog>
+
+<div id="toast"></div>
+<div id="printArea"></div>
+<script>
+'use strict';
+/* ============ IndexedDB ============ */
+const DB_NAME='shien-kiroku-DEMO-db', DB_VER=1;
+let db=null;
+function openDB(){
+  return new Promise((res,rej)=>{
+    const rq=indexedDB.open(DB_NAME, DB_VER);
+    rq.onupgradeneeded=e=>{
+      const d=e.target.result;
+      if(!d.objectStoreNames.contains('children')) d.createObjectStore('children',{keyPath:'id'});
+      if(!d.objectStoreNames.contains('records')){
+        const st=d.createObjectStore('records',{keyPath:'key'});
+        st.createIndex('date','date',{unique:false});
+      }
+      if(!d.objectStoreNames.contains('meta')) d.createObjectStore('meta',{keyPath:'k'});
+    };
+    rq.onsuccess=e=>{db=e.target.result; res();};
+    rq.onerror=()=>rej(rq.error);
+  });
+}
+function tx(store,mode){ return db.transaction(store,mode).objectStore(store); }
+function idbPut(store,val){ return new Promise((res,rej)=>{ const r=tx(store,'readwrite').put(val); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); }); }
+function idbDel(store,key){ return new Promise((res,rej)=>{ const r=tx(store,'readwrite').delete(key); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); }); }
+function idbAll(store){ return new Promise((res,rej)=>{ const r=tx(store,'readonly').getAll(); r.onsuccess=()=>res(r.result||[]); r.onerror=()=>rej(r.error); }); }
+function idbGet(store,key){ return new Promise((res,rej)=>{ const r=tx(store,'readonly').get(key); r.onsuccess=()=>res(r.result||null); r.onerror=()=>rej(r.error); }); }
+function idbByDate(date){ return new Promise((res,rej)=>{ const r=tx('records','readonly').index('date').getAll(date); r.onsuccess=()=>res(r.result||[]); r.onerror=()=>rej(r.error); }); }
+function idbClear(store){ return new Promise((res,rej)=>{ const r=tx(store,'readwrite').clear(); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); }); }
+
+/* ============ 状態 ============ */
+let children=[];            // 児童マスタ
+let recs={};                // 表示中日付のレコード childId -> record
+let curDate=todayStr();     // 表示中日付 YYYY-MM-DD
+let settings={facility:''};
+let seq=Date.now()%100000;
+
+const $=s=>document.querySelector(s);
+const $$=s=>Array.from(document.querySelectorAll(s));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove('show'),2000); }
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function ymd(ds){ const [y,m,d]=ds.split('-').map(Number); return {y,m,d}; }
+function wday(ds){ const {y,m,d}=ymd(ds); return new Date(y,m-1,d).getDay(); }
+const WNAMES=['日','月','火','水','木','金','土'];
+function dateLabel(ds){ const {y,m,d}=ymd(ds); return y+'年'+m+'月'+d+'日（'+WNAMES[wday(ds)]+'）'; }
+function shiftDate(ds,n){ const {y,m,d}=ymd(ds); const dt=new Date(y,m-1,d+n); return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0'); }
+function toMin(t){ const m=/^(\d{1,2}):(\d{2})$/.exec(t||''); return m?(+m[1])*60+(+m[2]):null; }
+function minToHM(min){ const h=Math.floor(min/60), m=min%60; return (h>0?h+'時間':'')+(m>0||h===0?m+'分':''); }
+
+/* 算定時間の計算（入室〜退室、送迎除く） */
+function calcSantei(rec){
+  const a=toMin(rec.inTime), b=toMin(rec.outTime);
+  if(a==null||b==null||b<=a) return null;
+  const dur=b-a;
+  let kubun='';
+  if(dur<30) kubun='30分未満（原則算定対象外の可能性）';
+  else if(dur<=90) kubun='区分1（1時間30分以下）';
+  else if(dur<=180) kubun='区分2（1時間30分超〜3時間）';
+  else if(dur<=300) kubun='区分3（3時間超〜5時間）';
+  else kubun='5時間超（延長支援の確認を）';
+  return {dur, kubun};
+}
+
+/* レコードのひな型 */
+function blankRec(date,childId){
+  return {
+    key:date+'_'+childId, date, childId,
+    kata:null,               // 'after' | 'holiday' | 'absent1' | 'absent0'
+    inTime:'', outTime:'',
+    pickGo:false, pickGoTime:'', pickBack:false,
+    extend:false,
+    sign:null, signAt:'',
+    temp:'', med:false, medNote:'', meal:'', toilet:'',
+    activity:'', episode:'',
+    hiyari:false, hiyariNote:'',
+    kousoku:false, kousokuNote:'',
+    staff:'',
+    guest:false
+  };
+}
+async function getRec(childId){
+  if(recs[childId]) return recs[childId];
+  const r=await idbGet('records', curDate+'_'+childId);
+  recs[childId]=r||blankRec(curDate,childId);
+  return recs[childId];
+}
+let saveTimers={};
+function saveRec(rec){
+  clearTimeout(saveTimers[rec.key]);
+  saveTimers[rec.key]=setTimeout(()=>{ idbPut('records',rec).catch(()=>toast('保存できませんでした')); },300);
+}
+
+/* ============ タブ ============ */
+$$('.tabbar button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    $$('.tabbar button').forEach(x=>x.classList.toggle('on',x===b));
+    $$('section.tab').forEach(s=>s.classList.toggle('on', s.id==='tab-'+b.dataset.tab));
+    if(b.dataset.tab==='children') renderChildren();
+    if(b.dataset.tab==='out') renderStats();
+  });
+});
+
+/* ============ 日付ナビ ============ */
+function setDate(ds){
+  curDate=ds; recs={};
+  $('#dateLabel').textContent=dateLabel(ds);
+  renderToday();
+}
+$('#btnPrev').addEventListener('click',()=>setDate(shiftDate(curDate,-1)));
+$('#btnNext').addEventListener('click',()=>setDate(shiftDate(curDate,1)));
+$('#btnToday').addEventListener('click',()=>setDate(todayStr()));
+$('#dateLabel').addEventListener('click',()=>{ const p=$('#datePick'); p.value=curDate; p.showPicker?p.showPicker():p.click(); });
+$('#datePick').addEventListener('change',e=>{ if(e.target.value) setDate(e.target.value); });
+
+/* ============ きょうの記録 ============ */
+async function todayChildIds(){
+  const w=wday(curDate);
+  const regular=children.filter(c=>c.active!==false && (c.days||[]).includes(w)).map(c=>c.id);
+  const dayRecs=await idbByDate(curDate);
+  const extra=dayRecs.filter(r=>r.guest||r.kata||r.sign||r.activity).map(r=>r.childId);
+  return Array.from(new Set([...regular,...extra])).filter(id=>children.some(c=>c.id===id));
+}
+function renderNoDayWarn(){
+  const el=$('#noDayWarn'); if(!el) return;
+  const nd=children.filter(c=>c.active!==false && (!Array.isArray(c.days)||!c.days.length));
+  if(!nd.length){ el.style.display='none'; return; }
+  el.style.display='';
+  el.innerHTML='⚠ 利用曜日が未設定の児童が'+nd.length+'名います（'+esc(nd.map(c=>c.name).join('・'))
+    +'）。「きょう」には自動表示されません。児童タブで曜日を設定するか、スポット利用なら下の「＋ この日だけ利用する児童を追加」からどうぞ。';
+}
+async function renderToday(){
+  renderNoDayWarn();
+  const ids=await todayChildIds();
+  const list=$('#todayList');
+  if(ids.length===0){
+    list.innerHTML='<div class="empty">この日に利用予定の児童がいません。<br>「児童」タブで利用曜日を設定するか、下のボタンで追加できます。</div>';
+    renderSum([]); return;
+  }
+  const loaded=[];
+  for(const id of ids){ loaded.push(await getRec(id)); }
+  list.innerHTML='';
+  ids.forEach(id=>{
+    const c=children.find(x=>x.id===id);
+    const r=recs[id];
+    list.appendChild(childCard(c,r));
+  });
+  renderSum(loaded);
+}
+function renderSum(recList){
+  const attend=recList.filter(r=>r.kata==='after'||r.kata==='holiday').length;
+  const signed=recList.filter(r=>r.sign).length;
+  const absent=recList.filter(r=>r.kata==='absent1'||r.kata==='absent0').length;
+  $('#sumBar').innerHTML=
+    '<div class="s"><b>'+recList.length+'</b>名予定</div>'+
+    '<div class="s"><b>'+attend+'</b>名利用</div>'+
+    '<div class="s"><b>'+absent+'</b>名欠席</div>'+
+    '<div class="s"><b>'+signed+'</b>/'+attend+' サイン済</div>';
+}
+function childCard(c,r){
+  const el=document.createElement('div');
+  el.className='card';
+  const santei=calcSantei(r);
+  const isAttend=r.kata==='after'||r.kata==='holiday';
+  const isAbsent=r.kata==='absent1'||r.kata==='absent0';
+  el.innerHTML=
+    '<h3>'+esc(c.name)+
+      (c.school?'<span class="chip">'+esc(c.school)+'</span>':'')+
+      (r.guest?'<span class="chip v">臨時</span>':'')+
+      (r.dsig&&r.dsig.ok?'<span class="chip g">🔏 署名検証済</span>':'')+
+      (r.sign?'<span class="done" style="margin-left:auto;">✔ サイン済 '+esc(r.signAt)+'</span>':(isAttend?'<span class="pend" style="margin-left:auto;">サイン未</span>':''))+
+    '</h3>'+
+    '<div class="seg" data-f="kata">'+
+      segBtn('after','放課後',r.kata)+segBtn('holiday','休業日',r.kata)+
+      segBtn('absent1','欠席（加算）',r.kata,true)+segBtn('absent0','欠席',r.kata,true)+
+    '</div>'+
+    (isAttend?
+      '<div class="row"><label>入室</label><input type="time" data-f="inTime" value="'+esc(r.inTime)+'">'+
+      '<label>退室</label><input type="time" data-f="outTime" value="'+esc(r.outTime)+'"></div>'+
+      (santei?'<div class="calc">算定時間 <b>'+minToHM(santei.dur)+'</b>　<span style="font-size:12px;">参考：'+esc(santei.kubun)+'</span></div>':'')+
+      '<div class="row">'+
+        '<label class="tgl'+(r.pickGo?' onbg':'')+'"><input type="checkbox" data-f="pickGo"'+(r.pickGo?' checked':'')+'>送迎 往</label>'+
+        (r.pickGo?'<input type="time" data-f="pickGoTime" class="mini" value="'+esc(r.pickGoTime)+'" title="お迎え時刻">':'')+
+        '<label class="tgl'+(r.pickBack?' onbg':'')+'"><input type="checkbox" data-f="pickBack"'+(r.pickBack?' checked':'')+'>送迎 復</label>'+
+        '<label class="tgl'+(r.extend?' onbg':'')+'"><input type="checkbox" data-f="extend"'+(r.extend?' checked':'')+'>延長支援</label>'+
+      '</div>'+
+      '<div class="signBox">'+
+        (r.sign?'<img src="'+r.sign+'" alt="サイン">':'')+
+        '<div class="st">'+(r.sign?'確認済（'+esc(r.signAt)+'）':'お迎え時に保護者の確認サインをもらいます')+'</div>'+
+        '<button class="btn '+(r.sign?'o':'p')+' sm" data-act="sign" style="margin-left:auto;">'+(r.sign?'書き直す':'✍ サイン')+'</button>'+
+      '</div>'
+    :'')+
+    (isAbsent?
+      '<div class="fld"><label>欠席時対応の記録（連絡日時・相談援助の内容）</label>'+
+      '<textarea data-f="episode" placeholder="例：13:05 母より発熱のため欠席の連絡。体調を伺い、次回利用日を確認。">'+esc(r.episode)+'</textarea></div>'
+    :'')+
+    (isAttend?
+    '<details class="shien"'+(r.activity||r.temp?' open':'')+'><summary>支援記録（療育日誌）</summary>'+
+      '<div class="grid2">'+
+        '<div class="fld"><label>体温（℃）</label><input type="text" inputmode="decimal" data-f="temp" value="'+esc(r.temp)+'" placeholder="36.5" autocomplete="off"></div>'+
+        '<div class="fld"><label>服薬</label><div class="row" style="margin:0;">'+
+          '<label class="tgl'+(r.med?' onbg':'')+'"><input type="checkbox" data-f="med"'+(r.med?' checked':'')+'>あり</label>'+
+          (r.med?'<input type="text" data-f="medNote" value="'+esc(r.medNote)+'" placeholder="薬名・時刻" style="flex:1;">':'')+
+        '</div></div>'+
+      '</div>'+
+      '<div class="grid2">'+
+        '<div class="fld"><label>食事・おやつ</label><input type="text" data-f="meal" value="'+esc(r.meal)+'" placeholder="完食／半分 など"></div>'+
+        '<div class="fld"><label>排泄</label><input type="text" data-f="toilet" value="'+esc(r.toilet)+'" placeholder="異常なし など"></div>'+
+      '</div>'+
+      '<div class="fld"><label>活動・プログラム内容（個別支援計画にもとづく支援）</label>'+
+        '<textarea data-f="activity" placeholder="例：宿題→制作活動（ちぎり絵）→自由遊び。SSTとして順番待ちの練習。">'+esc(r.activity)+'</textarea></div>'+
+      '<div class="fld"><label>本人の様子・変化（エピソード）</label>'+
+        '<textarea data-f="episode" placeholder="例：制作では集中して30分取り組めた。帰りの会で自分から発表。">'+esc(r.episode)+'</textarea></div>'+
+      '<div class="row">'+
+        '<label class="tgl'+(r.hiyari?' onbg':'')+'"><input type="checkbox" data-f="hiyari"'+(r.hiyari?' checked':'')+'>ヒヤリハット・事故</label>'+
+        '<label class="tgl'+(r.kousoku?' onbg':'')+'"><input type="checkbox" data-f="kousoku"'+(r.kousoku?' checked':'')+'>身体拘束（緊急やむを得ない場合）</label>'+
+      '</div>'+
+      (r.hiyari?'<div class="fld"><label>ヒヤリハット・事故の内容と対応</label><textarea data-f="hiyariNote">'+esc(r.hiyariNote)+'</textarea></div>':'')+
+      (r.kousoku?'<div class="fld"><label>身体拘束の理由・態様・開始/終了時刻（必須）</label><textarea data-f="kousokuNote">'+esc(r.kousokuNote)+'</textarea></div>':'')+
+      '<div class="fld"><label>記録者（職員氏名）</label><input type="text" data-f="staff" autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" value="'+esc(r.staff)+'"></div>'+
+    '</details>':'');
+  /* イベント */
+  el.querySelectorAll('.seg[data-f=kata] button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      r.kata=(r.kata===b.dataset.v)?null:b.dataset.v;
+      if(r.kata==='absent1'||r.kata==='absent0'){ r.inTime=''; r.outTime=''; r.sign=null; r.signAt=''; }
+      saveRec(r); renderToday();
+    });
+  });
+  el.querySelectorAll('[data-f]').forEach(inp=>{
+    if(inp.closest('.seg')) return;
+    const f=inp.dataset.f;
+    if(inp.type==='checkbox'){
+      inp.addEventListener('change',()=>{ r[f]=inp.checked; saveRec(r); renderToday(); });
+    }else{
+      inp.addEventListener('input',()=>{ r[f]=inp.value; saveRec(r); });
+      if(f==='inTime'||f==='outTime') inp.addEventListener('change',()=>renderToday());
+    }
+  });
+  const sb=el.querySelector('[data-act=sign]');
+  if(sb) sb.addEventListener('click',()=>openSign(c,r));
+  return el;
+}
+function segBtn(v,label,cur,abs){
+  return '<button data-v="'+v+'" class="'+(cur===v?('on'+(abs?' abs':'')):'')+'">'+label+'</button>';
+}
+
+/* ============ 臨時利用の追加 ============ */
+$('#btnAddGuest').addEventListener('click',async ()=>{
+  const ids=await todayChildIds();
+  const others=children.filter(c=>c.active!==false && !ids.includes(c.id));
+  const box=$('#guestList');
+  box.innerHTML=others.length?'':'<div class="empty">追加できる児童がいません。<br>先に「児童」タブで登録してください。</div>';
+  others.forEach(c=>{
+    const row=document.createElement('div');
+    row.className='childRow';
+    row.innerHTML='<div class="nm">'+esc(c.name)+(c.school?'<small>'+esc(c.school)+'</small>':'')+'</div><button class="btn s sm">追加</button>';
+    row.querySelector('button').addEventListener('click',async ()=>{
+      const r=await getRec(c.id); r.guest=true; saveRec(r);
+      $('#dlgGuest').close(); renderToday(); toast(c.name+'さんを追加しました');
+    });
+    box.appendChild(row);
+  });
+  $('#dlgGuest').showModal();
+});
+$('#btnGuestClose').addEventListener('click',()=>$('#dlgGuest').close());
+
+/* ============ サイン ============ */
+let signTarget=null, signDrawn=false;
+const cv=$('#signCanvas');
+function openSign(c,r){
+  signTarget=r; signDrawn=false;
+  $('#dlgSignTitle').textContent=c.name+'さん — 保護者サイン';
+  $('#dlgSign').showModal();
+  setTimeout(initCanvas,60);
+}
+function initCanvas(){
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.clientWidth, h=cv.clientHeight;
+  cv.width=w*dpr; cv.height=h*dpr;
+  const ctx=cv.getContext('2d');
+  ctx.scale(dpr,dpr);
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='#1e3a58'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.lineJoin='round';
+  cv._ctx=ctx;
+}
+function cvPos(e){
+  const rc=cv.getBoundingClientRect();
+  const p=e.touches?e.touches[0]:e;
+  return {x:p.clientX-rc.left, y:p.clientY-rc.top};
+}
+let drawing=false;
+function startDraw(e){ e.preventDefault(); drawing=true; const p=cvPos(e); cv._ctx.beginPath(); cv._ctx.moveTo(p.x,p.y); }
+function moveDraw(e){ if(!drawing) return; e.preventDefault(); const p=cvPos(e); cv._ctx.lineTo(p.x,p.y); cv._ctx.stroke(); signDrawn=true; }
+function endDraw(){ drawing=false; }
+cv.addEventListener('touchstart',startDraw,{passive:false});
+cv.addEventListener('touchmove',moveDraw,{passive:false});
+cv.addEventListener('touchend',endDraw);
+cv.addEventListener('mousedown',startDraw);
+cv.addEventListener('mousemove',moveDraw);
+window.addEventListener('mouseup',endDraw);
+$('#btnSignClear').addEventListener('click',initCanvas);
+$('#btnSignCancel').addEventListener('click',()=>$('#dlgSign').close());
+$('#btnSignSave').addEventListener('click',()=>{
+  if(!signDrawn){ toast('サインが書かれていません'); return; }
+  const out=document.createElement('canvas');
+  out.width=320; out.height=Math.round(320*cv.clientHeight/cv.clientWidth);
+  out.getContext('2d').drawImage(cv,0,0,out.width,out.height);
+  signTarget.sign=out.toDataURL('image/png');
+  const n=new Date();
+  signTarget.signAt=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+  saveRec(signTarget);
+  $('#dlgSign').close();
+  renderToday();
+  toast('サインを保存しました');
+});
+
+/* ============ 児童マスタ ============ */
+let editingChild=null;
+function renderChildren(){
+  const box=$('#childList');
+  const list=children.slice().sort((a,b)=>(a.kana||a.name).localeCompare(b.kana||b.name,'ja'));
+  box.innerHTML=list.length?'':'<div class="empty">まだ児童が登録されていません。<br>下のボタンから追加してください。</div>';
+  list.forEach(c=>{
+    const row=document.createElement('div');
+    row.className='childRow';
+    const days=(c.days||[]).map(d=>WNAMES[d]).join('・');
+    const noDay=!Array.isArray(c.days)||!c.days.length;
+    row.innerHTML='<div class="nm">'+esc(c.name)+(c.nick?' <span class="chip g">'+esc(c.nick)+'</span>':'')+(c.active===false?' <span class="chip">休止中</span>':'')+
+      (noDay&&c.active!==false?' <span class="chip v">曜日未設定</span>':'')+
+      '<small>'+esc(c.school||'')+(days?'　'+days+'曜':'')+(c.jukyu?'　受給者証 '+esc(c.jukyu):'')+'</small></div>'+
+      '<button class="btn o sm">編集</button>';
+    row.querySelector('button').addEventListener('click',()=>openChildDlg(c));
+    box.appendChild(row);
+  });
+}
+function buildDayChips(sel){
+  const box=$('#cDays'); box.innerHTML='';
+  WNAMES.forEach((w,i)=>{
+    const lb=document.createElement('label');
+    lb.textContent=w;
+    lb.classList.toggle('on', sel.includes(i));
+    lb.dataset.d=i;
+    lb.addEventListener('click',()=>lb.classList.toggle('on'));
+    box.appendChild(lb);
+  });
+}
+function renderSchoolInfo(){
+  const el=$('#schoolListInfo');
+  if(el) el.innerHTML=(settings.schools&&settings.schools.length)?'　現在のリスト：<b>'+settings.schools.length+'校</b>':'　<b>学校リスト未取得</b>';
+}
+function buildSchoolSelect(current){
+  const sel=$('#cSchoolSel'), txt=$('#cSchool');
+  const list=settings.schools||[];
+  if(!list.length){ sel.style.display='none'; txt.style.display=''; txt.value=current||''; return; }
+  let opts='<option value="">（未設定）</option>';
+  list.forEach(n=>{ opts+='<option value="'+esc(n)+'"'+(n===current?' selected':'')+'>'+esc(n)+'</option>'; });
+  const inList=!current||list.includes(current);
+  opts+='<option value="__free__"'+(!inList?' selected':'')+'>その他（直接入力）…</option>';
+  sel.innerHTML=opts;
+  sel.style.display='';
+  txt.style.display=inList?'none':'';
+  txt.value=inList?'':(current||'');
+  sel.onchange=()=>{
+    const free=sel.value==='__free__';
+    txt.style.display=free?'':'none';
+    if(free) txt.focus();
+  };
+}
+function selectedSchool(){
+  const sel=$('#cSchoolSel'), txt=$('#cSchool');
+  if(sel.style.display==='none') return txt.value.trim();
+  if(sel.value==='__free__') return txt.value.trim();
+  return sel.value;
+}
+function openChildDlg(c){
+  editingChild=c||null;
+  $('#dlgChildTitle').textContent=c?'児童の情報を編集':'児童を追加';
+  $('#cName').value=c?c.name:'';
+  $('#cKana').value=c?c.kana||'':'';
+  $('#cNick').value=c?c.nick||'':'';
+  $('#cJukyu').value=c?c.jukyu||'':'';
+  $('#cShikyu').value=c?c.shikyu||'':'';
+  buildSchoolSelect(c?c.school||'':'');
+  $('#cGuardian').value=c?c.guardian||'':'';
+  $('#cAikotoba').value=c?c.aikotoba||'':'';
+  $('#cMemo').value=c?c.memo||'':'';
+  buildDayChips(c?(c.days||[]):[]);
+  $('#btnChildDel').style.display=c?'':'none';
+  $('#dlgChild').showModal();
+  if(document.activeElement && /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) document.activeElement.blur();
+}
+$('#btnAddChild').addEventListener('click',()=>openChildDlg(null));
+$('#btnChildCancel').addEventListener('click',()=>$('#dlgChild').close());
+$('#btnChildSave').addEventListener('click',async ()=>{
+  const name=$('#cName').value.trim();
+  if(!name){ toast('氏名を入力してください'); return; }
+  const days=$$('#cDays label.on').map(l=>+l.dataset.d);
+  const nick=$('#cNick').value.trim();
+  if(nick && children.some(c=>c.nick===nick && c!==editingChild)){ toast('同じニックネームの児童がいます'); return; }
+  /* ニックネームは、おうち連絡帖・おむかえルート帖との照合キー。変更は連携が切れる */
+  if(editingChild && editingChild.nick && nick!==editingChild.nick){
+    let msg='ニックネームを変更します。\n\n旧：'+editingChild.nick+'\n新：'+(nick||'（なし）')+'\n\n'
+      +'ニックネームは、おうち連絡帖・おむかえルート帖との照合に使っています。\n';
+    if(editingChild.pubkey){
+      msg+='\n【保護者連携が切れます】この児童は保護者のかぎが登録済みです。おうち連絡帖でも「✏️ 名前・合言葉だけ直す」で同じ名前に直してもらってください。かぎの作り直しは不要です。\n';
+    }
+    msg+='\nおむかえルート帖には、あらためてマスターを取り込み直してください（過去のサインは旧の名前のまま残ります）。\n\n続けますか？';
+    if(!confirm(msg)) return;
+  }
+  const data={
+    name, kana:$('#cKana').value.trim(), nick, jukyu:$('#cJukyu').value.trim(),
+    shikyu:$('#cShikyu').value.trim(), school:selectedSchool(),
+    guardian:$('#cGuardian').value.trim(), aikotoba:$('#cAikotoba').value.trim(), memo:$('#cMemo').value.trim(),
+    days, active:true
+  };
+  if(editingChild){
+    Object.assign(editingChild,data);
+    await idbPut('children',editingChild);
+  }else{
+    const c=Object.assign({id:'c'+(++seq)},data);
+    children.push(c);
+    await idbPut('children',c);
+  }
+  $('#dlgChild').close();
+  renderChildren(); renderDsigSel(); recs={}; renderToday();
+  toast('保存しました');
+});
+$('#btnChildDel').addEventListener('click',async ()=>{
+  if(!editingChild) return;
+  if(!confirm(editingChild.name+'さんを削除しますか？\n過去の記録は残ります（5年保管のため）。')) return;
+  children=children.filter(c=>c.id!==editingChild.id);
+  await idbDel('children',editingChild.id);
+  $('#dlgChild').close();
+  renderChildren(); recs={}; renderToday();
+  toast('削除しました');
+});
+
+/* ============ おむかえルート帖 連携 ============ */
+$('#btnRenkeiFile').addEventListener('click',()=>{ $('#fileRenkei').value=''; $('#fileRenkei').click(); });
+$('#fileRenkei').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=async ()=>{
+    try{
+      const s=JSON.parse(rd.result);
+      await applyRoute(s);
+    }catch(err){ toast('読み込めませんでした（JSONの形式をご確認ください）'); }
+  };
+  rd.readAsText(f,'utf-8');
+});
+async function applyRoute(s){
+  if(!s || !Array.isArray(s.schools)){ toast('おむかえルート帖のデータではないようです'); return; }
+  /* 学校リストを更新（学校データの正本はおむかえルート帖） */
+  const names=Array.from(new Set(s.schools.map(x=>x&&x.name).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ja'));
+  if(names.length){
+    settings.schools=names;
+    await idbPut('meta',{k:'settings',v:settings});
+    renderSchoolInfo();
+  }
+  const date=$('#renkeiDate').value||todayStr();
+  const picks=s.picks||{};
+  /* 車両割当 schoolId -> 車両名 */
+  const vname={}; (s.vehicles||[]).forEach(v=>vname[v.id]=v.name);
+  const schoolVehicle={};
+  ((s.plan&&s.plan.assign)||[]).forEach(a=>(a.stops||[]).forEach(sid=>schoolVehicle[sid]=vname[a.vid]||''));
+  /* 学校名 -> {time, vehicle} （選択中の学校のみ） */
+  const bySchool={};
+  s.schools.forEach(sc=>{
+    const p=picks[sc.id];
+    if(p&&p.on&&p.time) bySchool[sc.name]={time:p.time, vehicle:schoolVehicle[sc.id]||'', confirmed:!!p.confirmed};
+  });
+  let hit=0; const missed=[]; const applied=[];
+  for(const c of children){
+    if(c.active===false||!c.school) continue;
+    const m=bySchool[c.school];
+    if(!m){ if((c.days||[]).includes(wday(date))) missed.push(c); continue; }
+    const key=date+'_'+c.id;
+    let r=await idbGet('records',key)||blankRec(date,c.id);
+    r.pickGo=true; r.pickGoTime=m.time;
+    if(!r.kata) r.kata=(wday(date)===0||wday(date)===6)?'holiday':'after';
+    await idbPut('records',r);
+    hit++; applied.push({c,m});
+  }
+  if(date===curDate){ recs={}; renderToday(); }
+  const box=$('#renkeiResult');
+  box.innerHTML=
+    (names.length?'<div class="calc" style="background:#e9f2ea;border-color:#bcd6c1;color:var(--ok);">🏫 学校リストを更新しました（<b>'+names.length+'校</b>）。児童登録で選べます。</div>':'')+
+    '<div class="calc">✔ <b>'+hit+'名</b>に往路のお迎え時刻を反映しました（'+dateLabel(date)+'）</div>'+
+    (applied.length?'<div class="note">'+applied.map(({c,m})=>esc(c.name)+'（'+esc(c.school)+' '+esc(m.time)+(m.vehicle?'・'+esc(m.vehicle):'')+(m.confirmed?'':'・<b>未確定</b>')+'）').join('<br>')+'</div>':'')+
+    (missed.length?'<div class="note"><b>学校名が一致しなかった児童：</b><br>'+missed.map(c=>esc(c.name)+'（'+esc(c.school||'学校名未登録')+'）').join('<br>')+'<br>児童タブで学校名の表記を揃えると自動反映されます。</div>':'');
+  toast(hit+'名に反映しました');
+}
+
+/* ============ 端末間のやり取り（ニックネーム） ============ */
+const SHARE_FIELDS=['kata','inTime','outTime','pickGo','pickGoTime','pickBack','extend',
+  'temp','med','medNote','meal','toilet','activity','episode','hiyari','hiyariNote','kousoku','kousokuNote','staff'];
+$('#btnShareOut').addEventListener('click',async ()=>{
+  const date=$('#renkeiDate').value||curDate;
+  const dayRecs=(await idbByDate(date)).filter(r=>r.kata);
+  if(!dayRecs.length){ toast('この日の記録がありません'); return; }
+  const noNick=[]; const items=[];
+  dayRecs.forEach(r=>{
+    const c=childOf(r.childId);
+    if(!c.name) return;
+    if(!c.nick){ noNick.push(c.name); return; }
+    const o={nick:c.nick};
+    SHARE_FIELDS.forEach(f=>{ if(r[f]!==''&&r[f]!==false&&r[f]!=null) o[f]=r[f]; });
+    items.push(o);
+  });
+  if(!items.length){ toast('ニックネーム設定済みの児童の記録がありません'); return; }
+  const payload={app:'shien-kiroku-share', ver:1, date, recs:items};
+  const text='支援きろく帖の記録（'+dateLabel(date)+'）\n'+JSON.stringify(payload);
+  const box=$('#shareResult');
+  box.innerHTML='<div class="calc">✔ <b>'+items.length+'名分</b>を書き出しました</div>'+
+    (noNick.length?'<div class="note"><b>ニックネーム未設定のため除外：</b>'+noNick.map(esc).join('、')+'</div>':'');
+  if(navigator.share){
+    try{ await navigator.share({text}); return; }catch(e){}
+  }
+  copyText(text).then(ok=>toast(ok!==false?'コピーしました。LINE等に貼り付けて送れます':'コピーできませんでした'));
+});
+function copyText(text){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text).then(()=>true).catch(()=>fallbackCopy(text));
+  }
+  return Promise.resolve(fallbackCopy(text));
+}
+function fallbackCopy(text){
+  const ta=document.createElement('textarea');
+  ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  let ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
+  document.body.removeChild(ta); return ok;
+}
+$('#btnShareIn').addEventListener('click',()=>{ $('#shareInText').value=''; $('#dlgShareIn').showModal(); });
+$('#btnShareInCancel').addEventListener('click',()=>$('#dlgShareIn').close());
+
+/* マスター書き出し（ニックネーム＋学校のみ・おむかえルート帖互換） */
+function buildMaster(){
+  const list=children.filter(c=>c.active!==false);
+  const withNick=list.filter(c=>c.nick);
+  const noNick=list.filter(c=>!c.nick).map(c=>c.name);
+  if(!withNick.length){ toast('ニックネーム設定済みの児童がいません'); return null; }
+  const schoolNames=Array.from(new Set(withNick.map(c=>c.school).filter(Boolean)));
+  const payload={
+    app:'shien-kiroku-master', ver:1,
+    children:withNick.map(c=>({nick:c.nick, school:c.school||'', days:Array.isArray(c.days)?c.days:[]})),
+    schools:schoolNames.map(n=>({name:n, kind:'小'}))
+  };
+  const text='支援きろく帖マスター（ニックネームと学校のみ）\n'+JSON.stringify(payload);
+  return {text, n:withNick.length, schools:schoolNames.length, noNick};
+}
+function showMasterResult(m, msg){
+  $('#masterResult').innerHTML='<div class="calc">✔ '+msg+'（児童<b>'+m.n+'名</b>・学校<b>'+m.schools+'校</b>）</div>'+
+    (m.noNick.length?'<div class="note"><b>ニックネーム未設定のため除外：</b>'+m.noNick.map(esc).join('、')+'</div>':'');
+}
+/* ① コピーする：共有シートを出さず、クリップボードへ直接。おむかえルート帖に貼り付ける用 */
+$('#btnMasterCopy').addEventListener('click',()=>{
+  const m=buildMaster(); if(!m) return;
+  copyText(m.text).then(ok=>{
+    if(ok===false){ toast('コピーできませんでした'); return; }
+    showMasterResult(m,'コピーしました');
+    $('#masterResult').innerHTML+='<div class="note">おむかえルート帖を開き、<b>設定タブの「読み込む」</b>（またはサインタブの「マスターを読み込む」）に貼り付けてください。</div>';
+    toast('コピーしました。おむかえルート帖に貼り付けてください');
+  });
+});
+/* ② 書き出す：共有シート経由（LINE等で別端末に送る用） */
+$('#btnMasterOut').addEventListener('click',()=>{
+  const m=buildMaster(); if(!m) return;
+  showMasterResult(m,'書き出しました');
+  if(navigator.share){
+    navigator.share({text:m.text}).catch(()=>{
+      copyText(m.text).then(ok=>toast(ok!==false?'コピーしました':'コピーできませんでした'));
+    });
+    return;
+  }
+  copyText(m.text).then(ok=>toast(ok!==false?'コピーしました。LINE等に貼り付けて送れます':'コピーできませんでした'));
+});
+$('#btnMasterIn').addEventListener('click',()=>{ $('#shareInText').value=''; $('#dlgShareIn').showModal(); });
+async function applyMaster(d){
+  let added=0, updated=0, schoolsUpdated=0;
+  /* おむかえルート帖から渡されたマスターには学校も入っている。学校リストも同時に更新する */
+  if(Array.isArray(d.schools)){
+    const names=Array.from(new Set(
+      d.schools.map(x=>x&&x.name).filter(Boolean).concat(settings.schools||[])
+    )).sort((a,b)=>a.localeCompare(b,'ja'));
+    if(names.length && names.join('\u0001')!==(settings.schools||[]).join('\u0001')){
+      settings.schools=names;
+      await idbPut('meta',{k:'settings',v:settings});
+      renderSchoolInfo();
+      schoolsUpdated=names.length;
+    }
+  }
+  for(const o of d.children){
+    if(!o||!o.nick) continue;
+    const hit=children.find(c=>c.nick===o.nick);
+    if(hit){
+      if(o.school) hit.school=o.school;
+      if(Array.isArray(o.days) && o.days.length) hit.days=o.days;
+      await idbPut('children',hit);
+      updated++;
+    }else{
+      const c={id:'c'+(++seq), name:o.nick, kana:'', nick:o.nick, jukyu:'', shikyu:'',
+        school:o.school||'', guardian:'', memo:'', days:Array.isArray(o.days)?o.days:[], active:true};
+      children.push(c);
+      await idbPut('children',c);
+      added++;
+    }
+  }
+  renderChildren(); recs={}; renderToday();
+  return {added,updated,schoolsUpdated};
+}
+$('#btnShareInDo').addEventListener('click',async ()=>{
+  const raw=$('#shareInText').value;
+  const i=raw.indexOf('{');
+  if(i<0){ toast('データが見つかりません'); return; }
+  try{
+    const d=JSON.parse(raw.slice(i));
+    if(d.app==='ouchi-key'){ $('#dlgShareIn').close(); await applyOuchiKey(d); return; }
+    if(d.app==='ouchi-yoyaku'){ $('#dlgShareIn').close(); await applyOuchiYoyaku(d); return; }
+    if(d.app==='ouchi-sign'){ $('#dlgShareIn').close(); await applyOuchiSign(d); return; }
+    if(d.app==='shien-kiroku-master'&&Array.isArray(d.children)){
+      const r=await applyMaster(d);
+      $('#dlgShareIn').close();
+      $('#masterResult').innerHTML='<div class="calc">✔ マスターを取り込みました（追加<b>'+r.added+'名</b>・更新<b>'+r.updated+'名</b>）</div>'+
+        (r.schoolsUpdated?'<div class="calc" style="background:#e9f2ea;border-color:#bcd6c1;color:var(--ok);">🏫 学校リストも更新しました（<b>'+r.schoolsUpdated+'校</b>）。児童登録で選べます。</div>':'')+
+        (r.added?'<div class="note">追加された児童は氏名がニックネームのままです。児童タブで実名・ふりがな・受給者証番号・利用曜日などを補ってください。</div>':'');
+      toast('マスターを取り込みました');
+      return;
+    }
+    if(d.app!=='shien-kiroku-share'||!Array.isArray(d.recs)){
+      /* おむかえルート帖の「書き出してコピー」テキストにも対応 */
+      if(Array.isArray(d.schools)){
+        $('#dlgShareIn').close();
+        await applyRoute(d);
+        return;
+      }
+      toast('支援きろく帖の共有データではありません'); return;
+    }
+    const date=d.date||curDate;
+    let hit=0; const missed=[];
+    for(const o of d.recs){
+      const c=children.find(x=>x.nick&&x.nick===o.nick);
+      if(!c){ missed.push(o.nick); continue; }
+      const key=date+'_'+c.id;
+      let r=await idbGet('records',key)||blankRec(date,c.id);
+      SHARE_FIELDS.forEach(f=>{ if(f in o) r[f]=o[f]; });
+      await idbPut('records',r);
+      hit++;
+    }
+    if(date===curDate){ recs={}; renderToday(); }
+    $('#dlgShareIn').close();
+    $('#shareResult').innerHTML='<div class="calc">✔ <b>'+hit+'名分</b>を取り込みました（'+dateLabel(date)+'）</div>'+
+      (missed.length?'<div class="note"><b>一致する児童がいませんでした：</b>'+missed.map(esc).join('、')+'<br>児童タブで同じニックネームを設定すると取り込めます。</div>':'');
+    toast(hit+'名分を取り込みました');
+  }catch(e){ toast('読み込めませんでした'); }
+});
+
+/* ============ 日次集約ファイル（サイン込み・完全な記録） ============ */
+const DAILY_FIELDS=[...SHARE_FIELDS,'guest'];
+$('#btnDailyOut').addEventListener('click',async ()=>{
+  const date=$('#renkeiDate').value||curDate;
+  const dayRecs=(await idbByDate(date)).filter(r=>r.kata);
+  if(!dayRecs.length){ toast('この日の記録がありません'); return; }
+  const noNick=[]; const items=[]; let signCount=0;
+  dayRecs.forEach(r=>{
+    const c=childOf(r.childId);
+    if(!c.name) return;
+    if(!c.nick){ noNick.push(c.name); return; }
+    const o={nick:c.nick};
+    DAILY_FIELDS.forEach(f=>{ o[f]=r[f]; });         // 全項目を完全な形で
+    o.sign=r.sign||null; o.signAt=r.signAt||'';
+    if(o.sign) signCount++;
+    items.push(o);
+  });
+  if(!items.length){ toast('ニックネーム設定済みの児童の記録がありません'); return; }
+  const payload={app:'shien-kiroku-daily', ver:1, date, exported:new Date().toISOString(), recs:items};
+  dl(new Blob([JSON.stringify(payload)],{type:'application/json'}),'kiroku-daily-'+date+'.json');
+  $('#dailyResult').innerHTML='<div class="calc">✔ <b>'+items.length+'名分</b>を書き出しました（サイン<b>'+signCount+'</b>件を含む）</div>'+
+    (noNick.length?'<div class="note"><b>ニックネーム未設定のため除外：</b>'+noNick.map(esc).join('、')+'</div>':'');
+  toast('集約ファイルを保存しました');
+});
+$('#btnDailyIn').addEventListener('click',()=>{ $('#fileDailyIn').value=''; $('#fileDailyIn').click(); });
+$('#fileDailyIn').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=async ()=>{
+    try{
+      const d=JSON.parse(rd.result);
+      if(d.app!=='shien-kiroku-daily'||!Array.isArray(d.recs)||!d.date){ toast('日次集約ファイルではありません'); return; }
+      let merged=0, signIn=0, signKept=0; const missed=[];
+      for(const o of d.recs){
+        const c=children.find(x=>x.nick&&x.nick===o.nick);
+        if(!c){ missed.push(o.nick); continue; }
+        const key=d.date+'_'+c.id;
+        let r=await idbGet('records',key)||blankRec(d.date,c.id);
+        DAILY_FIELDS.forEach(f=>{ if(f in o) r[f]=o[f]; });
+        if(o.sign){ r.sign=o.sign; r.signAt=o.signAt||''; signIn++; }
+        else if(r.sign){ signKept++; }               // 手元のサインを保護
+        await idbPut('records',r);
+        merged++;
+      }
+      if(d.date===curDate){ recs={}; renderToday(); }
+      $('#dailyResult').innerHTML='<div class="calc">✔ <b>'+merged+'名分</b>を統合しました（'+dateLabel(d.date)+'）<br>取り込んだサイン <b>'+signIn+'</b>件'+(signKept?'／手元のサインを保持 '+signKept+'件':'')+'</div>'+
+        (missed.length?'<div class="note"><b>一致する児童がいませんでした：</b>'+missed.map(esc).join('、')+'<br>児童タブで同じニックネームを設定して、もう一度取り込んでください。</div>':'');
+      toast(merged+'名分を統合しました');
+    }catch(err){ toast('読み込めませんでした（JSONの形式をご確認ください）'); }
+  };
+  rd.readAsText(f,'utf-8');
+});
+
+/* ============ 月次の点検 ============ */
+function checkMonth(rows){
+  const issues=[];
+  const add=(title, sev)=>{ const g={title, sev, items:[]}; issues.push(g); return g; };
+  const gSign=add('サイン未取得（提供の都度の確認漏れ）','high');
+  const gTime=add('入退室時刻の入力漏れ（算定時間が出ません）','high');
+  const gOdd=add('時刻の異常（退室が入室より前・30分未満）','high');
+  const gAbs=add('欠席（加算）の対応記録が空欄','high');
+  const gHiya=add('ヒヤリハット・身体拘束の内容未記入','high');
+  const gStaff=add('記録者名の未記入','mid');
+  const gAct=add('活動内容が空欄（支援記録の中身）','mid');
+  rows.forEach(r=>{
+    const attend=r.kata==='after'||r.kata==='holiday';
+    if(attend){
+      if(!r.sign) gSign.items.push(r);
+      if(!r.inTime||!r.outTime) gTime.items.push(r);
+      else{
+        const st=calcSantei(r);
+        if(!st) gOdd.items.push(Object.assign({note:'退室が入室より前'},r));
+        else if(st.dur<30) gOdd.items.push(Object.assign({note:minToHM(st.dur)},r));
+      }
+      if(!r.activity) gAct.items.push(r);
+      if(!r.staff) gStaff.items.push(r);
+      if(r.hiyari&&!r.hiyariNote) gHiya.items.push(Object.assign({note:'ヒヤリハット'},r));
+      if(r.kousoku&&!r.kousokuNote) gHiya.items.push(Object.assign({note:'身体拘束'},r));
+    }
+    if(r.kata==='absent1'&&!r.episode) gAbs.items.push(r);
+  });
+  /* 契約支給量オーバー */
+  const gShikyu=add('契約支給量オーバーの可能性','high');
+  const useDays={};
+  rows.forEach(r=>{
+    if(r.kata==='after'||r.kata==='holiday'){
+      (useDays[r.childId]=useDays[r.childId]||new Set()).add(r.date);
+    }
+  });
+  Object.keys(useDays).forEach(cid=>{
+    const c=childOf(cid);
+    const limit=parseInt(c.shikyu,10);
+    if(!isNaN(limit)&&limit>0&&useDays[cid].size>limit){
+      gShikyu.items.push({date:'', childId:cid, note:'利用'+useDays[cid].size+'日／契約'+limit+'日'});
+    }
+  });
+  return issues.filter(g=>g.items.length);
+}
+function jumpTo(date){
+  setDate(date);
+  $$('.tabbar button').forEach(x=>x.classList.toggle('on', x.dataset.tab==='today'));
+  $$('section.tab').forEach(s=>s.classList.toggle('on', s.id==='tab-today'));
+  window.scrollTo(0,0);
+}
+$('#btnCheck').addEventListener('click',async ()=>{
+  const ym=$('#outMonth').value; if(!ym){ toast('対象月を選んでください'); return; }
+  const rows=await monthRecs(ym);
+  const box=$('#checkResult');
+  if(!rows.length){ box.innerHTML='<div class="empty">この月の記録がありません。</div>'; return; }
+  const issues=checkMonth(rows);
+  const total=issues.reduce((a,g)=>a+g.items.length,0);
+  if(!total){
+    box.innerHTML='<div class="calc" style="background:#e9f2ea;border-color:#bcd6c1;color:var(--ok);">✔ <b>問題は見つかりませんでした</b>（記録 '+rows.length+'件を点検）</div>';
+    return;
+  }
+  let html='<div class="calc" style="background:#faeae6;border-color:#e5c0b7;color:var(--vermil);">要確認 <b>'+total+'件</b>（記録 '+rows.length+'件を点検）</div>';
+  issues.forEach(g=>{
+    html+='<div style="font-size:13px;font-weight:700;color:'+(g.sev==='high'?'var(--vermil)':'var(--warn)')+';margin:12px 2px 4px;">'
+      +(g.sev==='high'?'⚠ ':'・')+esc(g.title)+'（'+g.items.length+'件）</div>';
+    g.items.forEach(it=>{
+      const c=childOf(it.childId);
+      html+='<div class="childRow" data-jump="'+esc(it.date)+'" style="cursor:pointer;">'
+        +'<div class="nm">'+(it.date?it.date.slice(5).replace('-','/')+'（'+WNAMES[wday(it.date)]+'）　':'')
+        +esc(c.name||'（削除済）')
+        +(it.note?'<small>'+esc(it.note)+'</small>':'')+'</div>'
+        +(it.date?'<span style="color:#8a8474;font-size:13px;">›</span>':'')+'</div>';
+    });
+  });
+  box.innerHTML=html;
+  box.querySelectorAll('[data-jump]').forEach(el=>{
+    el.addEventListener('click',()=>{ if(el.dataset.jump) jumpTo(el.dataset.jump); });
+  });
+});
+
+/* ============ 保護者連携（おうち連絡帖・デジタル署名） ============ */
+const te2=new TextEncoder();
+const b64buf=buf=>btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64s=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function pbkdf(pass,salt){
+  const base=await crypto.subtle.importKey('raw',te2.encode(pass),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function encTextK(pass,plain){
+  const salt=crypto.getRandomValues(new Uint8Array(16));
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await pbkdf(pass,salt);
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,te2.encode(plain)));
+  const all=new Uint8Array(28+ct.length);
+  all.set(salt,0); all.set(iv,16); all.set(ct,28);
+  return b64buf(all);
+}
+function renderDsigSel(){
+  const sel=$('#dsigChild'); if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">（選んでください）</option>'+
+    children.filter(c=>c.active!==false).sort((a,b)=>(a.kana||a.name).localeCompare(b.kana||b.name,'ja'))
+      .map(c=>'<option value="'+esc(c.id)+'"'+(c.id===cur?' selected':'')+'>'+esc(c.name)+(c.nick?'（'+esc(c.nick)+'）':'')+'</option>').join('');
+}
+function buildPayload(c,r){
+  const st=calcSantei(r);
+  return JSON.stringify({
+    app:'kiroku-summary', v:1, date:r.date, nick:c.nick,
+    kata:KATA_LABEL[r.kata]||'', inTime:r.inTime||'', outTime:r.outTime||'',
+    santei:st?minToHM(st.dur):'', pickGo:!!r.pickGo, pickBack:!!r.pickBack,
+    activity:r.activity||'', episode:r.episode||'', staff:r.staff||'',
+    facility:settings.facility||''
+  });
+}
+$('#btnDsigSend').addEventListener('click',async ()=>{
+  const cid=$('#dsigChild').value;
+  if(!cid){ toast('児童を選んでください'); return; }
+  const c=childOf(cid);
+  if(!c.nick){ toast('この児童にはニックネームが未設定です（児童タブで設定）'); return; }
+  if(!c.aikotoba){ toast('この児童には合言葉が未設定です（児童タブで設定）'); return; }
+  const date=$('#renkeiDate').value||curDate;
+  const r=await idbGet('records',date+'_'+cid);
+  if(!r||!r.kata){ toast(dateLabel(date)+'の記録がありません'); return; }
+  const payload=buildPayload(c,r);
+  r.dsigPayload=payload;               // 検証用に送信時の原文を保存
+  if(r.dsig){ delete r.dsig; }          // 再送＝旧署名は無効に
+  await idbPut('records',r);
+  if(recs[cid]) recs[cid]=r;
+  const data=await encTextK(c.aikotoba,payload);
+  const text='おうち連絡帖 きょうのれんらく\n'+JSON.stringify({app:'ouchi-renraku',v:1,nick:c.nick,date,data});
+  $('#dsigResult').innerHTML='<div class="calc">✔ '+esc(c.name)+'さんの'+dateLabel(date)+'の記録を暗号化しました（'+text.length+'文字）</div>';
+  if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){} }
+  copyText(text).then(ok=>toast(ok!==false?'コピーしました。LINEで保護者に送ってください':'コピーできませんでした'));
+});
+$('#btnDsigRecv').addEventListener('click',()=>{ $('#shareInText').value=''; $('#dlgShareIn').showModal(); });
+async function applyOuchiKey(d){
+  if(!Array.isArray(d.nicks)||!d.pub){ toast('かぎ登録の形式が違います'); return; }
+  let n=0; const missed=[];
+  for(const nick of d.nicks){
+    const c=children.find(x=>x.nick===nick);
+    if(!c){ missed.push(nick); continue; }
+    c.pubkey=d.pub;
+    await idbPut('children',c);
+    n++;
+  }
+  $('#dsigResult').innerHTML='<div class="calc">🔑 保護者のかぎを<b>'+n+'名</b>に登録しました</div>'+
+    (missed.length?'<div class="note"><b>一致する児童がいませんでした：</b>'+missed.map(esc).join('、')+'</div>':'');
+  toast('かぎを登録しました');
+}
+async function applyOuchiSign(d){
+  const c=children.find(x=>x.nick===d.nick);
+  if(!c){ toast('「'+d.nick+'」に一致する児童がいません'); return; }
+  if(!c.pubkey){ toast(c.name+'さんの保護者のかぎが未登録です（先にかぎ登録テキストを取り込んでください）'); return; }
+  const r=await idbGet('records',d.date+'_'+c.id);
+  if(!r||!r.dsigPayload){ toast('この日の送信記録が見つかりません（先に「記録を暗号化して送る」を実行した端末で検証してください）'); return; }
+  try{
+    const hashNow=b64buf(await crypto.subtle.digest('SHA-256',te2.encode(r.dsigPayload)));
+    const pub=await crypto.subtle.importKey('spki',unb64s(c.pubkey),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+    const sigOk=await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},pub,unb64s(d.sig),te2.encode(r.dsigPayload));
+    const ok=sigOk&&hashNow===d.hash;
+    if(!ok){
+      $('#dsigResult').innerHTML='<div class="calc" style="background:#faeae6;border-color:#e5c0b7;color:var(--vermil);">⚠ 署名を検証できませんでした（'+esc(c.name)+'さん・'+esc(d.date)+'）。送信後に記録を訂正した場合は、もう一度送って再署名を依頼してください。</div>';
+      toast('検証に失敗しました');
+      return;
+    }
+    r.dsig={sigAt:d.sigAt||'', hash:d.hash, sig:d.sig, ok:true};
+    await idbPut('records',r);
+    if(d.date===curDate){ recs={}; renderToday(); }
+    $('#dsigResult').innerHTML='<div class="calc" style="background:#e9f2ea;border-color:#bcd6c1;color:var(--ok);">🔏 <b>署名を検証しました</b>　'+esc(c.name)+'さん・'+esc(d.date)+'　署名日時 '+esc((d.sigAt||'').replace('T',' '))+'</div>';
+    toast('デジタル署名を保存しました');
+  }catch(e){ toast('検証中にエラーが発生しました'); }
+}
+
+/* ============ お知らせ・予約依頼 ============ */
+$('#btnNewsSend').addEventListener('click',()=>{
+  if(!settings.newsPass){ toast('先に出力タブの施設情報で「お知らせ用の合言葉」を設定してください'); return; }
+  $('#nwTitle').value=''; $('#nwBody').value='';
+  $('#dlgNews').showModal();
+});
+$('#btnNewsCancel').addEventListener('click',()=>$('#dlgNews').close());
+$('#btnNewsDo').addEventListener('click',async ()=>{
+  const title=$('#nwTitle').value.trim(), body=$('#nwBody').value.trim();
+  if(!title||!body){ toast('件名と内容を入れてください'); return; }
+  const payload=JSON.stringify({app:'ouchi-news-body',v:1,title,body,at:new Date().toISOString().slice(0,19),facility:settings.facility||''});
+  const data=await encTextK(settings.newsPass,payload);
+  const text='おうち連絡帖 施設からのお知らせ\n'+JSON.stringify({app:'ouchi-news',v:1,data});
+  $('#dlgNews').close();
+  if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){} }
+  copyText(text).then(ok=>toast(ok!==false?'コピーしました。LINEグループ等に貼り付けてください':'コピーできませんでした'));
+});
+
+/* 予約・変更依頼の受信箱（meta保存） */
+let yoyakuList=[];
+async function loadYoyaku(){
+  const m=await idbGet('meta','yoyaku');
+  yoyakuList=(m&&m.v)||[];
+}
+function saveYoyaku(){ return idbPut('meta',{k:'yoyaku',v:yoyakuList.slice(0,300)}); }
+async function decTextK(pass,data){
+  const all=unb64s(data);
+  const key=await pbkdf(pass,all.slice(0,16));
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:all.slice(16,28)},key,all.slice(28));
+  return new TextDecoder().decode(pt);
+}
+async function applyOuchiYoyaku(d){
+  const c=children.find(x=>x.nick===d.nick);
+  if(!c){ toast('「'+esc(d.nick)+'」に一致する児童がいません'); return; }
+  if(!c.aikotoba){ toast(c.name+'さんの合言葉が未設定です'); return; }
+  let o, plain;
+  try{ plain=await decTextK(c.aikotoba,d.data); o=JSON.parse(plain); }
+  catch(e){ toast('復号できませんでした（合言葉の不一致）'); return; }
+  /* 署名の検証（かぎ登録済みなら・復号した原文に対して） */
+  let sigOk=null;
+  if(c.pubkey&&d.sig){
+    try{
+      const pub=await crypto.subtle.importKey('spki',unb64s(c.pubkey),{name:'ECDSA',namedCurve:'P-256'},false,['verify']);
+      sigOk=await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},pub,unb64s(d.sig),te2.encode(plain));
+    }catch(e){ sigOk=false; }
+  }
+  const req={id:'y'+Date.now()+Math.floor(Math.random()*1000), childId:c.id, nick:c.nick,
+    type:o.type||'', dates:o.dates||[], note:o.note||'', at:o.at||'', sigOk, status:'未対応', decidedAt:''};
+  yoyakuList.unshift(req);
+  await saveYoyaku();
+  renderYoyakuInbox();
+  $('#dsigResult').innerHTML='<div class="calc">📅 '+esc(c.name)+'さんの依頼を受信箱に追加しました'+(sigOk===false?'（<b style="color:var(--vermil)">署名検証NG</b>）':sigOk?'（🔏署名検証済）':'')+'</div>';
+  toast('依頼を受信しました');
+}
+function renderYoyakuInbox(){
+  const box=$('#yoyakuInbox'); if(!box) return;
+  const open=yoyakuList.filter(r=>r.status==='未対応');
+  const done=yoyakuList.filter(r=>r.status!=='未対応').slice(0,5);
+  if(!yoyakuList.length){ box.innerHTML='<div class="empty" style="padding:16px;">依頼はまだありません。保護者からのテキストを「📥 受信」に貼り付けると、ここに入ります。</div>'; return; }
+  let html='';
+  open.forEach(r=>{ html+=yoyakuCard(r,true); });
+  if(done.length){
+    html+='<div style="font-size:12px;color:#8a8474;margin:10px 2px 4px;">対応済み（直近）</div>';
+    done.forEach(r=>{ html+=yoyakuCard(r,false); });
+  }
+  box.innerHTML=html;
+  box.querySelectorAll('[data-approve]').forEach(b=>b.addEventListener('click',()=>decideYoyaku(b.dataset.approve,'承認')));
+  box.querySelectorAll('[data-deny]').forEach(b=>b.addEventListener('click',()=>decideYoyaku(b.dataset.deny,'不可')));
+}
+function yoyakuCard(r,active){
+  const c=childOf(r.childId);
+  return '<div class="card" style="padding:10px 12px;'+(active?'':'opacity:.75;')+'">'+
+    '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'+
+      '<b>'+esc(c.name||r.nick)+'</b><span class="chip">'+esc(r.type)+'</span>'+
+      (r.sigOk?'<span class="chip g">🔏署名済</span>':(r.sigOk===false?'<span class="chip v">署名NG</span>':''))+
+      (active?'':'<span class="chip">'+esc(r.status)+'</span>')+
+      '<span style="margin-left:auto;font-size:11px;color:#8a8474;">'+esc((r.at||'').replace('T',' ').slice(5,16))+'</span></div>'+
+    '<div style="font-size:14px;margin:4px 0;">'+r.dates.map(esc).join('、')+'</div>'+
+    (r.note?'<div style="font-size:13px;color:#5c574c;">'+esc(r.note)+'</div>':'')+
+    (active?'<div class="row" style="margin-top:8px;">'+
+      '<button class="btn p sm" data-approve="'+r.id+'">承認して返信</button>'+
+      '<button class="btn o sm" data-deny="'+r.id+'" style="color:var(--vermil);border-color:var(--vermil);">不可で返信</button></div>':'')+
+  '</div>';
+}
+async function decideYoyaku(id,status){
+  const r=yoyakuList.find(x=>x.id===id); if(!r) return;
+  const c=childOf(r.childId);
+  if(!c.aikotoba){ toast('合言葉が未設定です'); return; }
+  const comment=prompt(status==='承認'?'ひとことコメント（省略可）：':'理由・代案など（省略可）：','')||'';
+  r.status=status; r.decidedAt=new Date().toISOString().slice(0,19); r.comment=comment;
+  await saveYoyaku();
+  /* 承認した利用希望は「きょう」の予定に自動反映 */
+  let added=0;
+  if(status==='承認'&&(r.type==='利用希望'||r.type==='変更')){
+    for(const d of r.dates){
+      const key=d+'_'+c.id;
+      let rec=await idbGet('records',key)||blankRec(d,c.id);
+      rec.guest=true;
+      await idbPut('records',rec);
+      added++;
+    }
+    if(r.dates.includes(curDate)){ recs={}; renderToday(); }
+  }
+  /* おやすみ連絡の承認 → 該当日を欠席（加算）候補に */
+  if(status==='承認'&&r.type==='おやすみ'){
+    for(const d of r.dates){
+      const key=d+'_'+c.id;
+      let rec=await idbGet('records',key)||blankRec(d,c.id);
+      if(!rec.kata||rec.kata==='after'||rec.kata==='holiday'){ rec.kata='absent1'; rec.episode=rec.episode||('おうち連絡帖より '+(r.at||'').replace('T',' ')+' 欠席連絡。'+(r.note?'理由：'+r.note:'')); }
+      await idbPut('records',rec);
+    }
+    if(r.dates.includes(curDate)){ recs={}; renderToday(); }
+  }
+  const payload=JSON.stringify({app:'ouchi-approve-body',v:1,nick:c.nick,type:r.type,dates:r.dates,
+    status,comment,at:r.decidedAt,facility:settings.facility||''});
+  const data=await encTextK(c.aikotoba,payload);
+  const text='おうち連絡帖 おねがいへのお返事\n'+JSON.stringify({app:'ouchi-approve',v:1,nick:c.nick,data});
+  renderYoyakuInbox();
+  const info=(status==='承認'&&added?'　予定に'+added+'日分を反映しました':'');
+  $('#dsigResult').innerHTML='<div class="calc">📮 '+esc(c.name)+'さんへ【'+status+'】の返信を作成しました'+info+'</div>';
+  if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){} }
+  copyText(text).then(ok=>toast(ok!==false?'返信をコピーしました。LINEで保護者に送ってください':'コピーできませんでした'));
+}
+
+/* ============ 出力 ============ */
+function monthRecs(ym){ // ym: 'YYYY-MM'
+  return new Promise((res)=>{
+    idbAll('records').then(all=>{
+      res(all.filter(r=>r.date&&r.date.startsWith(ym)&&r.kata).sort((a,b)=>a.date<b.date?-1:1));
+    });
+  });
+}
+const KATA_LABEL={after:'学校終了後', holiday:'学校休業日', absent1:'欠席（欠席時対応加算）', absent0:'欠席'};
+function childName(id){ const c=children.find(x=>x.id===id); return c?c.name:'（削除済）'; }
+function childOf(id){ return children.find(x=>x.id===id)||{}; }
+
+$('#btnCsv').addEventListener('click',async ()=>{
+  const ym=$('#outMonth').value; if(!ym){ toast('対象月を選んでください'); return; }
+  const rows=await monthRecs(ym);
+  if(!rows.length){ toast('この月の記録がありません'); return; }
+  const head=['日付','曜日','児童氏名','受給者証番号','提供形態','開始時間','終了時間','算定時間数','送迎(往)','送迎(復)','欠席時対応加算','延長支援','保護者確認','記録者'];
+  const lines=[head.join(',')];
+  rows.forEach(r=>{
+    const c=childOf(r.childId);
+    const st=calcSantei(r);
+    const santei=st?(String(Math.floor(st.dur/60))+':'+String(st.dur%60).padStart(2,'0')):'';
+    lines.push([
+      r.date, WNAMES[wday(r.date)], csvEsc(c.name||'（削除済）'), csvEsc(c.jukyu||''),
+      KATA_LABEL[r.kata]||'', r.inTime||'', r.outTime||'', santei,
+      r.pickGo?'1':'', r.pickBack?'1':'',
+      r.kata==='absent1'?'1':'', r.extend?'1':'',
+      r.sign?'済':'未', csvEsc(r.staff||'')
+    ].join(','));
+  });
+  const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv'});
+  dl(blob,'jisseki-'+ym+'.csv');
+  toast('CSVを保存しました');
+});
+function csvEsc(s){ s=String(s==null?'':s); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
+function dl(blob,name){
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+}
+
+/* 実績記録票 印刷 */
+$('#btnPrintJisseki').addEventListener('click',async ()=>{
+  const ym=$('#outMonth').value; if(!ym){ toast('対象月を選んでください'); return; }
+  const rows=await monthRecs(ym);
+  if(!rows.length){ toast('この月の記録がありません'); return; }
+  const byChild={};
+  rows.forEach(r=>{ (byChild[r.childId]=byChild[r.childId]||[]).push(r); });
+  const [y,m]=ym.split('-');
+  let html='';
+  Object.keys(byChild).forEach(cid=>{
+    const c=childOf(cid);
+    html+='<div class="pageBreak">'+
+      '<div class="phead"><h2>放課後等デイサービス提供実績記録票（'+y+'年'+(+m)+'月分）</h2>'+
+      '<div>'+esc(settings.facility||'')+'</div></div>'+
+      '<p style="font-size:11px; margin:2px 0 6px;">児童氏名：<b>'+esc(c.name||'')+'</b>　受給者証番号：'+esc(c.jukyu||'　　　　')+'　契約支給量：'+esc(c.shikyu||'　')+'日/月　保護者：'+esc(c.guardian||'')+'</p>'+
+      '<table><tr><th>日付</th><th>曜</th><th>提供形態</th><th>開始</th><th>終了</th><th>算定時間数</th><th>往</th><th>復</th><th>欠席時対応</th><th>延長</th><th>保護者確認</th></tr>';
+    byChild[cid].forEach(r=>{
+      const st=calcSantei(r);
+      html+='<tr><td class="c">'+r.date.slice(8)+'日</td><td class="c">'+WNAMES[wday(r.date)]+'</td>'+
+        '<td class="c">'+esc(KATA_LABEL[r.kata]||'')+'</td>'+
+        '<td class="c">'+esc(r.inTime||'')+'</td><td class="c">'+esc(r.outTime||'')+'</td>'+
+        '<td class="c">'+(st?minToHM(st.dur):'')+'</td>'+
+        '<td class="c">'+(r.pickGo?'○':'')+'</td><td class="c">'+(r.pickBack?'○':'')+'</td>'+
+        '<td class="c">'+(r.kata==='absent1'?'○':'')+'</td><td class="c">'+(r.extend?'○':'')+'</td>'+
+        '<td class="c">'+(r.sign?'<img class="sig" src="'+r.sign+'">':'')+'</td></tr>';
+    });
+    html+='</table></div>';
+  });
+  $('#printArea').innerHTML=html;
+  window.print();
+});
+
+/* 支援記録 印刷 */
+$('#btnPrintShien').addEventListener('click',async ()=>{
+  const ym=$('#outMonth').value; if(!ym){ toast('対象月を選んでください'); return; }
+  const rows=await monthRecs(ym);
+  if(!rows.length){ toast('この月の記録がありません'); return; }
+  const [y,m]=ym.split('-');
+  let html='<div class="phead"><h2>サービス提供記録（支援記録）　'+y+'年'+(+m)+'月分</h2><div>'+esc(settings.facility||'')+'</div></div>';
+  rows.forEach(r=>{
+    const c=childOf(r.childId);
+    const st=calcSantei(r);
+    html+='<div class="shienBlock">'+
+      '<h4>'+r.date+'（'+WNAMES[wday(r.date)]+'）　'+esc(c.name||'')+'　'+esc(KATA_LABEL[r.kata]||'')+
+      (r.inTime?'　'+esc(r.inTime)+'〜'+esc(r.outTime):'')+(st?'（'+minToHM(st.dur)+'）':'')+'</h4>'+
+      (r.kata==='absent1'||r.kata==='absent0'
+        ?'<p><b>欠席時の対応：</b>'+esc(r.episode||'')+'</p>'
+        :'<p><b>体調：</b>体温 '+esc(r.temp||'—')+'℃　服薬 '+(r.med?'あり（'+esc(r.medNote)+'）':'なし')+'　食事 '+esc(r.meal||'—')+'　排泄 '+esc(r.toilet||'—')+'</p>'+
+         '<p><b>活動内容：</b>'+esc(r.activity||'')+'</p>'+
+         '<p><b>本人の様子：</b>'+esc(r.episode||'')+'</p>'+
+         '<p><b>ヒヤリハット・事故：</b>'+(r.hiyari?'あり — '+esc(r.hiyariNote):'なし')+
+         '　<b>身体拘束：</b>'+(r.kousoku?'あり — '+esc(r.kousokuNote):'なし')+'</p>')+
+      '<p style="text-align:right;"><b>記録者：</b>'+esc(r.staff||'　　　　')+'</p>'+
+    '</div>';
+  });
+  $('#printArea').innerHTML=html;
+  window.print();
+});
+
+/* バックアップ・復元 */
+$('#btnBackup').addEventListener('click',async ()=>{
+  const data={
+    app:'shien-kiroku', ver:1, exported:new Date().toISOString(),
+    settings, children, records:await idbAll('records')
+  };
+  dl(new Blob([JSON.stringify(data)],{type:'application/json'}),'shien-kiroku-'+todayStr()+'.json');
+  toast('バックアップを保存しました');
+});
+$('#btnRestore').addEventListener('click',()=>{ $('#fileRestore').value=''; $('#fileRestore').click(); });
+$('#fileRestore').addEventListener('change',e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=async ()=>{
+    try{
+      const d=JSON.parse(rd.result);
+      if(d.app!=='shien-kiroku'||!Array.isArray(d.children)){ toast('このアプリのバックアップではありません'); return; }
+      if(!confirm('現在のデータをすべて置き換えます。よろしいですか？')) return;
+      await idbClear('children'); await idbClear('records');
+      for(const c of d.children) await idbPut('children',c);
+      for(const r of (d.records||[])) await idbPut('records',r);
+      settings=Object.assign({facility:''},d.settings||{});
+      await idbPut('meta',{k:'settings',v:settings});
+      children=d.children.slice();
+      recs={};
+      $('#setFacility').value=settings.facility||'';
+      renderChildren(); renderToday(); renderStats();
+      toast('復元しました');
+    }catch(err){ toast('読み込めませんでした'); }
+  };
+  rd.readAsText(f,'utf-8');
+});
+async function renderStats(){
+  const all=await idbAll('records');
+  $('#dataStats').textContent='現在の保存件数：児童 '+children.length+'名／記録 '+all.filter(r=>r.kata).length+'件';
+}
+$('#btnSaveFacility').addEventListener('click',async ()=>{
+  settings.facility=$('#setFacility').value.trim();
+  settings.newsPass=$('#setNewsPass').value.trim();
+  await idbPut('meta',{k:'settings',v:settings});
+  toast('保存しました');
+});
+
+/* ============ 起動 ============ */
+
+const __DEMO_SEED={"app": "shien-kiroku", "ver": 1, "children": [{"id": "sample01", "name": "翠川 太一", "kana": "みどりかわ たいち", "nick": "たっくん", "jukyu": "0012345601", "shikyu": "23", "school": "みどり市立ひばり小学校", "guardian": "翠川 保護者", "aikotoba": "みどり01", "memo": "(サンプル児童です)", "days": [1, 3, 5], "active": true}, {"id": "sample02", "name": "翠川 咲良", "kana": "みどりかわ さくら", "nick": "さーちゃん", "jukyu": "0012345602", "shikyu": "23", "school": "みどり市立ひばり小学校", "guardian": "翠川 保護者", "aikotoba": "みどり02", "memo": "(サンプル児童です)", "days": [1, 2, 4], "active": true}, {"id": "sample03", "name": "青葉 健太", "kana": "あおば けんた", "nick": "けんちゃん", "jukyu": "0012345603", "shikyu": "23", "school": "みどり市立つばめ小学校", "guardian": "青葉 保護者", "aikotoba": "みどり03", "memo": "(サンプル児童です)", "days": [2, 4, 5], "active": true}, {"id": "sample04", "name": "白鳥 優子", "kana": "しらとり ゆうこ", "nick": "ゆうこりん", "jukyu": "0012345604", "shikyu": "23", "school": "みどり市立つばめ小学校", "guardian": "白鳥 保護者", "aikotoba": "みどり04", "memo": "(サンプル児童です)", "days": [1, 3, 5], "active": true}, {"id": "sample05", "name": "茜部 涼", "kana": "あかねべ りょう", "nick": "りょうくん", "jukyu": "0012345605", "shikyu": "23", "school": "みどり市立かえで小学校", "guardian": "茜部 保護者", "aikotoba": "みどり05", "memo": "(サンプル児童です)", "days": [1, 2, 3, 4, 5], "active": true}, {"id": "sample06", "name": "桃山 真人", "kana": "ももやま まさと", "nick": "まーくん", "jukyu": "0012345606", "shikyu": "23", "school": "みどり市立かえで小学校", "guardian": "桃山 保護者", "aikotoba": "みどり06", "memo": "(サンプル児童です)", "days": [2, 4], "active": true}, {"id": "sample07", "name": "藍原 美月", "kana": "あいはら みづき", "nick": "みっちゃん", "jukyu": "0012345607", "shikyu": "23", "school": "みどり市立わかば支援学校", "guardian": "藍原 保護者", "aikotoba": "みどり07", "memo": "(サンプル児童です)", "days": [1, 3, 5], "active": true}, {"id": "sample08", "name": "空田 大空", "kana": "そらた そら", "nick": "そらくん", "jukyu": "0012345608", "shikyu": "23", "school": "みどり市立みなみ中学校", "guardian": "空田 保護者", "aikotoba": "みどり08", "memo": "(サンプル児童です)", "days": [3, 5], "active": true}], "records": [{"key": "2026-07-22_sample02", "date": "2026-07-22", "childId": "sample02", "kata": "after", "inTime": "15:05", "outTime": "17:30", "pickGo": true, "pickGoTime": "14:30", "pickBack": true, "extend": false, "sign": null, "signAt": "", "temp": "36.5", "med": false, "medNote": "", "meal": "おやつ完食", "toilet": "", "activity": "共同お絵かき、指先あそび", "episode": "ぐるぐる丸をたくさん描き、「かたつむり!」と教えてくれた。", "hiyari": false, "hiyariNote": "", "kousoku": false, "kousokuNote": "", "staff": "見本 花子", "guest": false}, {"key": "2026-07-22_sample03", "date": "2026-07-22", "childId": "sample03", "kata": "after", "inTime": "15:20", "outTime": "17:45", "pickGo": true, "pickGoTime": "15:00", "pickBack": true, "extend": false, "sign": null, "signAt": "", "temp": "36.5", "med": false, "medNote": "", "meal": "おやつ完食", "toilet": "", "activity": "宿題(音読)、ブロック遊び", "episode": "音読を最後まで自分から。ブロックでは友だちに1個貸せた。", "hiyari": false, "hiyariNote": "", "kousoku": false, "kousokuNote": "", "staff": "見本 花子", "guest": false}, {"key": "2026-07-22_sample05", "date": "2026-07-22", "childId": "sample05", "kata": "after", "inTime": "15:20", "outTime": "18:00", "pickGo": true, "pickGoTime": "15:00", "pickBack": true, "extend": false, "sign": null, "signAt": "", "temp": "36.5", "med": false, "medNote": "", "meal": "おやつ完食", "toilet": "", "activity": "宿題(計算プリント)、風船バレー", "episode": "計算は10問中9問正解。風船バレーで順番を待てた。", "hiyari": false, "hiyariNote": "", "kousoku": false, "kousokuNote": "", "staff": "見本 花子", "guest": false}], "settings": {"facility": "放課後デイ みどりの家"}};
+async function __demoSeed(){
+  try{
+    const cur=await idbAll('children');
+    if(cur.length) return;
+    for(const c of __DEMO_SEED.children) await idbPut('children',c);
+    for(const r of (__DEMO_SEED.records||[])) await idbPut('records',r);
+    await idbPut('meta',{k:'settings',v:__DEMO_SEED.settings});
+  }catch(e){}
+}
+(async function init(){
+  await openDB();
+  await __demoSeed();
+  children=await idbAll('children');
+  const st=await idbGet('meta','settings');
+  if(st&&st.v) settings=Object.assign({facility:''},st.v);
+  $('#setFacility').value=settings.facility||'';
+  $('#setNewsPass').value=settings.newsPass||'';
+  renderSchoolInfo();
+  renderDsigSel();
+  await loadYoyaku();
+  renderYoyakuInbox();
+  const now=todayStr();
+  $('#renkeiDate').value=now;
+  $('#outMonth').value=now.slice(0,7);
+  setDate(now);
+})();
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    Promise.resolve().catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
