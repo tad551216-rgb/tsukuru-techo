@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クレヨンとなかよし — 個別支援計画のたね</title>
+<meta name="description" content="放課後等デイサービス向け 療育プログラム。握り込みから3指持ちへ。なぐり描きを止めずに、道具と環境の工夫で持ち方と筆圧を育てる書字前プログラム。アセスメント、スモールステップ、記録、個別支援計画の記載例、保護者への連絡文例まで。">
+<style>
+
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; white-space:nowrap; }
+  .site-nav{ display:flex; gap:16px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
+  .site-nav a:hover{ color:var(--accent-deep); }
+
+  .head{ padding:52px 0 20px; text-align:center; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:34px; letter-spacing:.10em; margin:10px 0 6px; color:var(--paper);
+    text-shadow:0 1px 0 rgba(0,0,0,.18); }
+  .head .lede{ color:#FBF7EE; font-size:14.5px; max-width:600px; margin:0 auto; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+
+  .paper{
+    background:var(--note); border:1px solid var(--line); border-radius:8px;
+    box-shadow:0 6px 16px rgba(60,40,15,.22), 0 1px 0 rgba(255,255,255,.5) inset;
+    padding:26px 24px; margin:26px 0; position:relative;
+  }
+  .paper::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E8875A, var(--accent-deep) 70%);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);
+  }
+  .paper.tilt-l{ transform:rotate(-.4deg); }
+  .paper.tilt-r{ transform:rotate(.35deg); }
+  h2.sec{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px;
+    letter-spacing:.08em; margin-bottom:14px; padding-left:12px;
+    border-left:4px solid var(--accent); color:var(--ink);
+  }
+  h2.sec small{ display:block; font-size:11px; letter-spacing:.22em; color:var(--accent-deep);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:700; margin-bottom:2px; border:none; }
+  p.body{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+  p.body b{ color:var(--ink); }
+
+  .promise{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  @media(max-width:640px){ .promise{ grid-template-columns:1fr; } }
+  .promise .p{
+    background:var(--paper); border:1px dashed var(--line-strong); border-radius:8px;
+    padding:14px 12px; text-align:center;
+  }
+  .promise .p .ic{ font-size:26px; }
+  .promise .p .t{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:4px 0 2px; }
+  .promise .p .d{ font-size:12px; color:var(--muted); line-height:1.7; }
+
+  .flow{ counter-reset:step; margin-top:8px; }
+  .flow .st{
+    display:flex; gap:12px; padding:11px 4px; border-bottom:1px dashed var(--line);
+    align-items:flex-start;
+  }
+  .flow .st:last-child{ border-bottom:none; }
+  .flow .st::before{
+    counter-increment:step; content:counter(step);
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--ink);
+    color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; margin-top:3px;
+  }
+  .flow .st .tt{ font-weight:700; font-size:14px; }
+  .flow .st .tt .app{ color:var(--accent-deep); font-size:12px; margin-left:6px; }
+  .flow .st .dd{ font-size:13px; color:var(--ink-soft); }
+
+  .appcard{
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:18px 16px; margin:16px 0;
+  }
+  .appcard .top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .appcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; letter-spacing:.06em; }
+  .appcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--accent);
+    border-radius:999px; padding:1px 9px; letter-spacing:.04em; }
+  .appcard .tag.g{ background:var(--green); }
+  .appcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .appcard ul{ margin:0 0 12px 2px; list-style:none; }
+  .appcard li{ font-size:13px; color:var(--ink-soft); padding-left:16px; position:relative; margin:3px 0; }
+  .appcard li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .links{ display:flex; flex-wrap:wrap; gap:8px; }
+  .lbtn{
+    display:inline-block; text-decoration:none; font-size:13px; font-weight:700;
+    border-radius:8px; padding:8px 14px; letter-spacing:.03em;
+  }
+  .lbtn.app{ background:var(--accent); color:#fff; box-shadow:0 2px 0 var(--accent-deep); }
+  .lbtn.app:hover{ background:var(--accent-deep); }
+  .lbtn.doc{ background:#fff; color:var(--ink); border:1.5px solid var(--line-strong); }
+  .lbtn.doc:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .soon{ font-size:11px; color:var(--muted); }
+
+  .install ol{ margin:6px 0 4px 4px; list-style:none; counter-reset:ins; }
+  .install ol li{ font-size:13.5px; color:var(--ink-soft); padding:6px 0 6px 30px; position:relative; }
+  .install ol li::before{ counter-increment:ins; content:counter(ins);
+    position:absolute; left:0; top:6px; width:22px; height:22px; border-radius:50%;
+    background:var(--paper-2); border:1px solid var(--line-strong); color:var(--ink);
+    font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .os{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:15px; margin:12px 0 2px; color:var(--ink); }
+
+  .caution li{ font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative; margin:6px 0; list-style:none; }
+  .caution li::before{ content:"※"; position:absolute; left:0; color:var(--accent-deep); }
+
+  footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+  footer a{ color:#FFE7C9; }
+
+  /* 紹介ムービー：ボタン→モーダル再生（つくる手帖 本体と同じ方式） */
+  .movie-lead{ font-size:14.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .vbtn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:11px 20px; border-radius:999px; border:1px solid var(--green);
+    background:var(--green); color:#fff; text-decoration:none;
+    font-size:14px; font-weight:700; letter-spacing:.03em;
+  }
+  .vbtn:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .vbtn .play{ font-size:.85em; }
+
+  .vmodal{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .vmodal[hidden]{ display:none; }
+  .vmodal-backdrop{ position:absolute; inset:0; background:rgba(20,15,8,.82); }
+  .vmodal-box{ position:relative; width:min(94vw,920px); display:flex; justify-content:center; }
+  .vmodal-video{ width:100%; max-height:82vh; background:#000; border-radius:8px; box-shadow:0 24px 60px rgba(0,0,0,.45); }
+  .vmodal-close{ position:absolute; top:-42px; right:-2px; background:transparent; border:0; color:#fff; font-size:30px; line-height:1; cursor:pointer; padding:6px 10px; z-index:2; }
+
+
+  /* ── 療育プログラム集 追加スタイル ── */
+  .filter{ display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 4px; }
+  .chip{ font-size:12px; font-weight:700; border-radius:999px; padding:5px 12px;
+    border:1.5px solid var(--line-strong); background:#fff; color:var(--ink-soft);
+    cursor:pointer; letter-spacing:.03em; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pcard{ background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:16px 16px 14px; margin:14px 0; }
+  .pcard.soon{ opacity:.72; border-style:dashed; }
+  .pcard .top{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .pcard .no{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-size:12px;
+    color:var(--muted); letter-spacing:.14em; }
+  .pcard .nm{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:18px; letter-spacing:.05em; }
+  .pcard .tag{ font-size:11px; font-weight:700; color:#fff; background:var(--green);
+    border-radius:999px; padding:1px 9px; letter-spacing:.03em; }
+  .pcard .tag.wip{ background:var(--muted); }
+  .pcard .lead{ font-size:13.5px; color:var(--ink-soft); margin:8px 0 10px; }
+  .meta{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .meta span{ font-size:11.5px; color:var(--ink-soft); background:var(--note);
+    border:1px solid var(--line); border-radius:5px; padding:2px 8px; }
+  .meta span b{ color:var(--accent-deep); font-weight:700; margin-right:4px; }
+
+  /* 詳細ページ */
+  table.t{ width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+  table.t th, table.t td{ border:1px solid var(--line); padding:7px 9px;
+    text-align:left; vertical-align:top; color:var(--ink-soft); }
+  table.t th{ background:var(--paper-2); color:var(--ink); font-weight:700; white-space:nowrap; }
+  table.t td b{ color:var(--ink); }
+  .wraptbl{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  h3.sub{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:16px; margin:20px 0 6px; color:var(--ink);
+    border-bottom:1px dashed var(--line-strong); padding-bottom:4px; }
+  ul.dot{ list-style:none; margin:6px 0 6px 2px; }
+  ul.dot li{ font-size:13.5px; color:var(--ink-soft); padding-left:16px;
+    position:relative; margin:4px 0; }
+  ul.dot li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  ul.check{ list-style:none; margin:6px 0; }
+  ul.check li{ font-size:13.5px; color:var(--ink-soft); padding-left:22px;
+    position:relative; margin:5px 0; }
+  ul.check li::before{ content:"☐"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .callout{ background:#FFF6EF; border:1px solid #E8C6AE; border-left:4px solid var(--accent);
+    border-radius:6px; padding:12px 14px; margin:14px 0; font-size:13.5px; color:var(--ink-soft); }
+  .callout b{ color:var(--accent-deep); }
+  .copybox{ background:var(--note); border:1px solid var(--line); border-radius:6px;
+    padding:12px 14px; margin:10px 0; font-size:13.5px; color:var(--ink-soft); white-space:pre-wrap; }
+  .cbtn{ display:inline-block; font-size:12.5px; font-weight:700; border-radius:8px;
+    padding:7px 14px; border:1.5px solid var(--line-strong); background:#fff;
+    color:var(--ink); cursor:pointer; letter-spacing:.03em; }
+  .cbtn:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .cbtn.done{ background:var(--green); color:#fff; border-color:var(--green); }
+  .toc{ display:flex; flex-wrap:wrap; gap:6px; }
+  .toc a{ font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:5px 11px; }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  figure.info{ margin:14px 0 4px; text-align:center; }
+  figure.info img{ width:100%; max-width:560px; height:auto; border:1px solid var(--line);
+    border-radius:8px; box-shadow:0 4px 12px rgba(60,40,15,.18); background:#fff; }
+  figure.info figcaption{ font-size:12px; color:var(--muted); margin-top:8px; }
+  .backlink{ display:inline-block; margin-top:6px; font-size:13px; color:var(--accent-deep);
+    text-decoration:none; font-weight:700; }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="ryoiku.html">個別支援計画のたね</a>
+    <nav class="site-nav">
+      <a href="ouen-apps.html">業務応援アプリ</a>
+      <a href="ryoiku.html">個別支援計画のたね</a>
+      <a href="index.html">つくる手帖</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head" id="top">
+  <div class="eyebrow">PROGRAM No.02</div>
+  <h1 class="mincho">クレヨンとなかよし</h1>
+  <p class="lede">握り込みから3指持ちへ。なぐり描きは、一度も止めません。<br>手で直さず、道具と環境に仕事をさせる——書字への最初の一歩です。</p>
+</div>
+
+<main class="wrap">
+
+<!-- 目次 -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>CONTENTS</small>もくじ</h2>
+  <div class="toc">
+    <a href="#overview">0 ひと目でわかる5つの極意</a>
+    <a href="#outline">1 プログラムの位置づけ</a>
+    <a href="#assess">2 アセスメント</a>
+    <a href="#steps">3 ステップ構成</a>
+    <a href="#group">4 小集団プログラム</a>
+    <a href="#care">5 個別の配慮</a>
+    <a href="#record">6 記録</a>
+    <a href="#plan">7 個別支援計画 記載例</a>
+    <a href="#parent">8 保護者への連絡文例</a>
+    <a href="#items">9 準備物</a>
+  </div>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+<!-- 0 全体像 -->
+<section class="paper tilt-l" id="overview">
+  <h2 class="sec mincho"><small>OVERVIEW</small>ひと目でわかる5つの極意</h2>
+  <p class="body">クレヨンの持ち方は、鉛筆——つまり<b>書字の入口</b>です。ただし持ち方は「教える」ものではなく、<b>手の発達に合わせて自然に変わっていく</b>もの。このプログラムは、なぐり描きの楽しさを一度も止めることなく、道具と環境の工夫で握り込みから3指持ちへの移行を後押しします。</p>
+  <ul class="dot">
+    <li><b>極意1:なぐり描きを止めない。</b>なぐり描きは発達に必要な通過点。「ちゃんと描いて」は言わない。</li>
+    <li><b>極意2:手で直さず、道具で誘導する。</b>太さ・短さ・形(三角・ブロック型)が持ち方をつくる。</li>
+    <li><b>極意3:描画中は指導しない。</b>持ち方の練習は、描く時間とは別の「指あそび」で。</li>
+    <li><b>極意4:大きい紙から小さい紙へ。</b>腕全体の動き→手首→指先、の順に育つ。</li>
+    <li><b>極意5:描いた絵は必ず飾る。</b>上手下手の評価はせず、「描いたら見てもらえる」を約束にする。</li>
+  </ul>
+</section>
+
+<!-- 1 位置づけ -->
+<section class="paper tilt-l" id="outline">
+  <h2 class="sec mincho"><small>OUTLINE</small>1 プログラムの位置づけ</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>五領域</th><td><b>運動・感覚</b>(手指の分離・筆圧の調整・手と目の協応)/<b>認知・行動</b>(形の認識・模倣・課題への集中)/<b>言語・コミュニケーション</b>(描いたものを介したやりとり)/<b>人間関係・社会性</b>(作品を認められる経験・自己肯定感)</td></tr>
+    <tr><th>ねらい</th><td>描く楽しさを保ったまま、クレヨンの持ち方と筆圧のコントロールを育て、書字(鉛筆)への土台をつくる</td></tr>
+    <tr><th>対象</th><td>未就学〜小学校低学年(手の発達段階に合わせて調整)</td></tr>
+    <tr><th>形態</th><td>個別(10〜15分)+小集団(共同お絵かき15分)</td></tr>
+    <tr><th>頻度</th><td>週1〜2回 × 8週で1クール</td></tr>
+    <tr><th>場面</th><td>おやつ前の課題タイム/自由遊びの中のお絵かきコーナー</td></tr>
+  </table>
+  </div>
+  <div class="callout"><b>このプログラムのいちばん大事な原則。</b><br>持ち方は年齢ではなく<b>手の発達段階</b>で決まります。握り込み持ちは「間違い」ではなく、その子の手がいま居る場所です。<b>描いている最中に手を掴んで直すことはしません。</b>移行は、道具の選択・紙の大きさ・机の高さといった環境の側から誘導します。</div>
+</section>
+
+<!-- 2 アセスメント -->
+<section class="paper tilt-r" id="assess">
+  <h2 class="sec mincho"><small>ASSESSMENT</small>2 アセスメント(初回・4週ごと)</h2>
+
+  <h3 class="sub">2-1 いまの持ち方の段階</h3>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>段階</th><th>状態</th><th>見立て</th></tr>
+    <tr><td><b>C0</b></td><td>手のひら全体で握り、腕ごと動かす(握り込み持ち)</td><td>肩・肘中心の動き。腕全体で描く時期</td></tr>
+    <tr><td><b>C1</b></td><td>握り込みのまま、手首が動き始める</td><td>大きな往復線・ぐるぐるが出てくる</td></tr>
+    <tr><td><b>C2</b></td><td>指のはらで持つ(4〜5本指持ち)</td><td>手のひらと指が分かれ始めた合図</td></tr>
+    <tr><td><b>C3</b></td><td>3指で持てるが、指が固く動きは手首中心(静的3指持ち)</td><td>あと一歩。指あそびで指先の動きを育てる</td></tr>
+    <tr><td><b>C4</b></td><td>3指で持ち、指先が動く(動的3指持ち)</td><td>目標段階。鉛筆への移行準備OK</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">2-2 描ける線・かたちのチェック</h3>
+  <ul class="check">
+    <li>点・とんとん打ち(筆圧の第一歩)</li>
+    <li>横・縦の往復線(手首の動き)</li>
+    <li>ぐるぐる丸(連続した回転)</li>
+    <li>閉じた丸(始点と終点を合わせる——大きな発達の節目)</li>
+    <li>十字・顔らしきもの(かたちの組み合わせ)</li>
+  </ul>
+
+  <h3 class="sub">2-3 前提のチェック</h3>
+  <ul class="check">
+    <li>クレヨンの感触・手の汚れへの苦手さの有無を確認した</li>
+    <li>利き手の傾向を確認した(未確定の子は持ち替えを止めない)</li>
+    <li>椅子と机の高さが合っている(足底が床につき、肘が机に乗る)</li>
+    <li>口に入れる時期を過ぎているか(未満なら食品由来素材のクレヨンを使用)</li>
+  </ul>
+</section>
+
+<!-- 3 ステップ -->
+<section class="paper tilt-l" id="steps">
+  <h2 class="sec mincho"><small>STEPS</small>3 ステップ構成</h2>
+
+  <h3 class="sub">準備期(毎回5分)— 指あそび</h3>
+  <p class="body">描く前のウォーミングアップとして、持ち方を直接練習しない<b>指あそび</b>を行います。シールはがし、洗濯ばさみ、粘土ちぎり、指先でのおはじきつまみ、グーパー・指ばらばら体操。<b>ここで育てた指が、描くときに勝手に仕事をします。</b></p>
+
+  <h3 class="sub">Step 1(1〜2週)— 大きな紙に、大きな線(C0〜C1)</h3>
+  <p class="body">模造紙や床に貼った大きな紙に、腕全体でのびのび描きます。持ち方は一切指摘しません。「ぐるぐる〜」「とんとんとん」など<b>音のかけ声と一緒に</b>描くと、線の種類が増えていきます。</p>
+
+  <h3 class="sub">Step 2(2〜3週)— 道具で持ち方を誘導する(C1〜C2)</h3>
+  <p class="body"><b>短くて太いクレヨン(ブロック型・三角軸・卵型)</b>に切り替えます。短いクレヨンは物理的に握り込めないため、自然と指で持つようになります。ここでも口頭での指示はせず、道具に仕事をさせます。</p>
+
+  <h3 class="sub">Step 3(3〜5週)— 線あそび(C2〜C3)</h3>
+  <p class="body">紙をだんだん小さくしながら、「雨ざあざあ(縦線)」「おうだんほどう(横線)」「かたつむり(ぐるぐる)」「あめだま(閉じた丸)」など、<b>遊びの文脈で線の種類</b>を増やします。なぞりではなく、職員が隣で同じ線を描く「まねっこ」方式で。</p>
+
+  <h3 class="sub">Step 4(5〜7週)— かたちと筆圧(C3)</h3>
+  <p class="body">丸+点=顔、丸+線=太陽、のように<b>かたちの組み合わせ</b>へ。同時に「アリさんの線(そーっと薄く)」「ゾウさんの線(ぎゅっと濃く)」で筆圧の切り替えを遊びにします。塗り絵は枠の小さすぎないものを選びます。</p>
+
+  <h3 class="sub">Step 5(7〜8週〜)— 描きたいものを描く(C3〜C4)</h3>
+  <p class="body">本人が描きたいものを描き、タイトルを聞いて作品として掲示します。動的3指持ち(C4)が安定してきたら、太い三角鉛筆を「お兄さん・お姉さんの道具」として紹介し、書字プログラムへつなぎます。</p>
+</section>
+
+<!-- 4 小集団 -->
+<section class="paper tilt-r" id="group">
+  <h2 class="sec mincho"><small>GROUP</small>4 小集団プログラム(15分)</h2>
+  <p class="body"><b>おおきな共同画</b>:模造紙1枚をみんなで囲み、「今日は海!」などテーマを決めて、それぞれが好きな場所に好きなものを描き足します。順番の交渉、友だちの絵を消さない・上から描かないというルール、完成をみんなで眺める時間——描く力と社会性を同時に育てます。持ち方の段階が違う子が混ざっても成立するのが共同画の良さです。</p>
+</section>
+
+<!-- 5 配慮 -->
+<section class="paper tilt-l" id="care">
+  <h2 class="sec mincho"><small>CARE</small>5 個別の配慮</h2>
+  <ul class="dot">
+    <li><b>クレヨンの感触・汚れが苦手な子:</b>紙巻きクレヨン・ホルダー付きを使う、ウェットティッシュを手元に常備、「ついたら拭けば大丈夫」を毎回確認。水でおとせるクレヨンなら机の汚れの不安も減らせる。</li>
+    <li><b>描くこと自体を拒否する子:</b>紙とクレヨンから始めず、ホワイトボード+指、砂・小麦粉粘土、水書きなど「消える描画」から。職員が描くのを見る「見学参加」も参加のうち。</li>
+    <li><b>筆圧が強すぎて折る子:</b>折れにくいブロッククレヨンを使い、「折れても大丈夫、ちびクレヨンは持ちやすい」と伝える。折れたことを失敗にしない。</li>
+    <li><b>筆圧が弱い子:</b>発色の良い柔らかめのクレヨンで「描けば必ず色が出る」成功体験を先に。腹ばい姿勢での描画は体幹と筆圧を同時に育てる。</li>
+    <li><b>左利きの子:</b>持ち替えさせない。見本は左側に置き、腕が重ならない席の配置にする。</li>
+    <li><b>こだわりの強い子:</b>同じ色・同じ絵ばかりでも止めない。こだわりの題材に一要素だけ足す(いつもの電車+「今日は雨の日の電車」)方式で広げる。</li>
+  </ul>
+</section>
+
+<!-- 6 記録 -->
+<section class="paper tilt-r" id="record">
+  <h2 class="sec mincho"><small>RECORD</small>6 記録</h2>
+  <p class="body">支援きろく帖の「活動・様子」欄に貼り付けて使えます。</p>
+  <div class="copybox" id="txtRecord">【クレヨンプログラム記録】
+実施日:　　年　　月　　日/担当:
+本日のStep:準備期・1・2・3・4・5
+持ち方段階:C0・C1・C2・C3・C4
+使った道具:ブロック型・三角軸・普通クレヨン・その他(　　)
+描けた線:点・縦線・横線・ぐるぐる・閉じた丸・かたち(　　)
+筆圧:強・適・弱/紙の大きさ:模造紙・画用紙・小
+指あそび:シール・洗濯ばさみ・粘土・その他(　　)
+意欲:高・普通・低/感触の苦手さ:有・無
+本人の言葉(何を描いたか):
+様子・特記:
+次回の目標:</div>
+  <button class="cbtn" data-copy="txtRecord">📋 記録テンプレートをコピー</button>
+</section>
+
+<!-- 7 計画記載例 -->
+<section class="paper tilt-l" id="plan">
+  <h2 class="sec mincho"><small>PLAN</small>7 個別支援計画 記載例</h2>
+  <p class="body">そのままではなく、<b>お子さんの実際の姿と、本人・保護者の意向</b>に合わせて書き直してからお使いください。</p>
+  <div class="copybox" id="txtPlan">【長期目標(6か月)】
+描画・書字につながる手指の使い方を育て、クレヨンを3指で持って、描きたいものを楽しんで描くことができる。
+
+【短期目標(3か月)】
+短く太いクレヨンを指で持ち(C2以上)、閉じた丸を含む3種類以上の線を、遊びの中で自分から描くことができる。
+
+【支援内容】
+週1〜2回、おやつ前の10〜15分、個別のお絵かき活動を実施する。活動前には持ち方の直接指導に代えて、シールはがし・洗濯ばさみ等の指あそびを毎回組み込む。クレヨンはブロック型・三角軸など持ち方を自然に誘導する形状のものを使用し、描画中に手を取って修正することは行わない。紙の大きさを段階的に調整し、描いた作品は事業所内に掲示して達成感につなげる。小集団では共同画を通じて、順番や場所の共有といった社会性の経験も併せて行う。
+
+【本人・家族の意向】
+(　本人:　　　　　　　　　　　　　　　　　)
+(　保護者:　　　　　　　　　　　　　　　　)</div>
+  <button class="cbtn" data-copy="txtPlan">📋 計画の文例をコピー</button>
+</section>
+
+<!-- 8 保護者 -->
+<section class="paper tilt-r" id="parent">
+  <h2 class="sec mincho"><small>FOR PARENTS</small>8 保護者への連絡文例</h2>
+  <p class="body">おうち連絡帖の連絡文や、連絡帳への記入に。</p>
+  <div class="copybox" id="txtParent">いつもお世話になっております。
+
+〇〇さんのお絵かきの取り組みについてお知らせします。
+
+今日は短い太めのクレヨンを使って、ぐるぐる丸をたくさん描きました。短いクレヨンだと自然に指で持つ形になり、〇〇さんも指のはらで上手に持てていました。描いた「かたつむり」は事業所に飾っていますので、お迎えの際にぜひご覧ください。
+
+ひとつお願いがございます。ご家庭でお絵かきをするとき、持ち方を手で直すことはお控えいただけますと幸いです。持ち方は手の発達とともに自然に変わっていきますので、いまは「描くのが楽しい」が何より大切です。
+
+ご家庭では、シールはがし、洗濯ばさみ遊び、粘土ちぎりなどの指先あそびが、そのまま持ち方の力につながります。よろしければ一緒に楽しんでみてください。</div>
+  <button class="cbtn" data-copy="txtParent">📋 連絡文例をコピー</button>
+  <div class="callout"><b>ご家庭にお願いすることは、ひとつだけで十分です。</b>「持ち方を手で直さない」。おはしのプログラムと同じ原則です。直したくなる気持ちを、指あそびに変えてもらいましょう。</div>
+</section>
+
+<!-- 9 準備物 -->
+<section class="paper tilt-l" id="items">
+  <h2 class="sec mincho"><small>ITEMS</small>9 準備物</h2>
+  <ul class="dot">
+    <li>ブロック型(卵型)クレヨン、三角軸クレヨン、通常のクレヨン(移行用)</li>
+    <li>水でおとせるクレヨン(机・壁汚れ対策/感触が苦手な子にも)</li>
+    <li>模造紙・画用紙(大→小の段階用)、床貼り用テープ</li>
+    <li>指あそび教材:シール台紙、洗濯ばさみ、粘土、おはじき</li>
+    <li>ホワイトボードとマーカー(描くこと拒否の子の入口用)</li>
+    <li>ウェットティッシュ、汚れてよいスモック、掲示スペース、記録シート</li>
+  </ul>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+</main>
+
+
+<script>
+'use strict';
+document.querySelectorAll('.cbtn[data-copy]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var el = document.getElementById(b.getAttribute('data-copy'));
+    if(!el) return;
+    var t = el.innerText;
+    var done = function(){
+      var o = b.textContent;
+      b.textContent = '✓ コピーしました';
+      b.classList.add('done');
+      setTimeout(function(){ b.textContent = o; b.classList.remove('done'); }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done, function(){ fallback(t, done); });
+    } else { fallback(t, done); }
+  });
+});
+function fallback(t, done){
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ alert('コピーできませんでした。長押しで選択してください。'); }
+  document.body.removeChild(ta);
+}
+</script>
+
+<footer>
+  <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
+  <div style="margin-top:6px;"><a href="ryoiku.html">個別支援計画のたね へ</a>　<a href="ouen.html">放課後デイ応援帖へ</a></div>
+</footer>
+</body>
+</html>
