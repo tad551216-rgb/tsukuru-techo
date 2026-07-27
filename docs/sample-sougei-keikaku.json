@@ -1,0 +1,176 @@
+{
+ "facility": {
+  "name": "デイサービス みどりの里",
+  "addr": "みどり市中央1-1-1",
+  "lat": 34.48,
+  "lng": 135.43
+ },
+ "users": [
+  {
+   "id": "u1",
+   "name": "松本 静江",
+   "addr": "みどり市ひばり町2-8-1",
+   "lat": 34.4935,
+   "lng": 135.429,
+   "wc": true,
+   "days": [
+    1,
+    3,
+    5
+   ],
+   "pickT": "09:30",
+   "dropT": "15:30",
+   "memo": "玄関に段差2段。車椅子は職員2名で対応",
+   "active": true
+  },
+  {
+   "id": "u2",
+   "name": "川上 定男",
+   "addr": "みどり市ひばり町4-1-6",
+   "lat": 34.4908,
+   "lng": 135.4342,
+   "wc": false,
+   "days": [
+    1,
+    3,
+    5
+   ],
+   "pickT": "09:40",
+   "dropT": "15:30",
+   "memo": "",
+   "active": true
+  },
+  {
+   "id": "u3",
+   "name": "中村 ハル",
+   "addr": "みどり市つばめ台1-9-3",
+   "lat": 34.4871,
+   "lng": 135.4402,
+   "wc": false,
+   "days": [
+    2,
+    4
+   ],
+   "pickT": "09:45",
+   "dropT": "15:45",
+   "memo": "杖歩行。乗降に時間がかかります",
+   "active": true
+  },
+  {
+   "id": "u4",
+   "name": "田島 正一",
+   "addr": "みどり市つばめ台3-2-7",
+   "lat": 34.4846,
+   "lng": 135.4451,
+   "wc": false,
+   "days": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "pickT": "10:00",
+   "dropT": "16:00",
+   "memo": "",
+   "active": true
+  },
+  {
+   "id": "u5",
+   "name": "沢田 きよ",
+   "addr": "みどり市かえで町1-5-4",
+   "lat": 34.4791,
+   "lng": 135.4222,
+   "wc": true,
+   "days": [
+    2,
+    4
+   ],
+   "pickT": "09:50",
+   "dropT": "15:45",
+   "memo": "スロープ使用。ご家族が在宅",
+   "active": true
+  },
+  {
+   "id": "u6",
+   "name": "岡田 茂",
+   "addr": "みどり市かえで町5-3-9",
+   "lat": 34.4762,
+   "lng": 135.427,
+   "wc": false,
+   "days": [
+    1,
+    3,
+    5
+   ],
+   "pickT": "10:10",
+   "dropT": "16:15",
+   "memo": "",
+   "active": true
+  },
+  {
+   "id": "u7",
+   "name": "白石 とみ",
+   "addr": "みどり市わかば丘2-4-2",
+   "lat": 34.4725,
+   "lng": 135.434,
+   "wc": false,
+   "days": [
+    3,
+    5
+   ],
+   "pickT": "10:15",
+   "dropT": "16:15",
+   "memo": "マンション3階。エントランスまでお迎え",
+   "active": true
+  },
+  {
+   "id": "u8",
+   "name": "森 康夫",
+   "addr": "みどり市みなみ町2-7-5",
+   "lat": 34.4699,
+   "lng": 135.421,
+   "wc": false,
+   "days": [
+    1,
+    2,
+    4
+   ],
+   "pickT": "10:20",
+   "dropT": "16:30",
+   "memo": "",
+   "active": true
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "v1",
+   "name": "ハイエースNo1",
+   "seats": 8,
+   "wcSlots": 0,
+   "active": true
+  },
+  {
+   "id": "v2",
+   "name": "N-BOX車椅子No1",
+   "seats": 4,
+   "wcSlots": 1,
+   "active": true
+  },
+  {
+   "id": "v3",
+   "name": "N-BOX車椅子No2",
+   "seats": 4,
+   "wcSlots": 1,
+   "active": true
+  }
+ ],
+ "settings": {
+  "leg": 10,
+  "speed": 25,
+  "board": 5,
+  "gap": 60
+ },
+ "days": {},
+ "seq": 2000
+}
