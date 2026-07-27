@@ -32,6 +32,7 @@
     --grid:#E3DFD3;
     --green:#3D6B52;      /* 緑 */
     --cork:#8A6A45;       /* 余白の帖のコルク色 */
+    --dayserv:#35706B;    /* デイサービス応援帖(青竹) */
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -56,10 +57,10 @@
   .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
   .brand .mark{font-size:21px;font-weight:700;letter-spacing:.04em;}
   .brand .mark .han{color:var(--accent);}
-  nav.site-nav{display:flex;gap:18px;}
+  nav.site-nav{display:flex;gap:14px;}
   nav.site-nav a{
     font-family:-apple-system,"Hiragino Sans",sans-serif;
-    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;white-space:nowrap;
+    font-size:12.5px;color:var(--ink-soft);text-decoration:none;letter-spacing:.02em;white-space:nowrap;
   }
   nav.site-nav a:hover{color:var(--accent);}
   @media(max-width:620px){ nav.site-nav{display:none;} }
@@ -145,6 +146,7 @@
     color:#FDFBF5;margin:auto;
   }
   .book .title.long{font-size:17.5px;letter-spacing:.02em;line-height:1.22;}
+  .book .title.xlong{font-size:16px;letter-spacing:0;line-height:1.2;}
   .book .who{
     font-family:-apple-system,"Hiragino Sans",sans-serif;
     font-size:12.5px;letter-spacing:.04em;color:rgba(253,251,245,.9);
@@ -154,6 +156,7 @@
   .book.kurashi{background:var(--ink);}
   .book.yohaku{background:var(--cork);}
   .book.ouen{background:var(--green);}
+  .book.dayserv{background:var(--dayserv);}
   .book.shigoto{background:var(--ink-soft);}
   .book.kiroku{background:var(--accent-deep);}
   .shelf-caption{
@@ -241,6 +244,7 @@
       <a href="kurashi.html">くらしの手帖</a>
       <a href="yohaku.html">手帖の余白</a>
       <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="day.html">デイサービス応援帖</a>
       <a href="shigoto.html">しごとの手帖</a>
       <a href="kiroku.html">記録の手帖</a>
     </nav>
@@ -256,7 +260,7 @@
         <div class="hero-text">
           <p class="eyebrow">MAKING MY OWN TOOLS WITH AI</p>
           <h1>自分や家族のための<br>小さな道具を、<span class="em">スマホとAI</span>でつくっています。</h1>
-          <p class="lede">どれもブラウザで開くだけで使える道具です。データは手元の端末の中だけに保存され、サーバーには送られません。</p>
+          <p class="lede">役に立ちそうな道具があれば、どうぞ自由にお使いください。自分用に作りかえてもらえたら、もっとうれしい。どれもブラウザで開くだけで使え、データは手元の端末の中だけに保存されます。</p>
         </div>
         <img class="hero-techon" src="characters/techon.png" alt="つくる手帖のキャラクター、手帖くん">
       </div>
@@ -274,7 +278,7 @@
     <div class="wrap">
       <p class="sec-label">SHELF</p>
       <h2>手帖の棚</h2>
-      <p class="sec-note">目的ごとに、五冊に分けました。気になる一冊をどうぞ。</p>
+      <p class="sec-note">目的ごとに、六冊に分けました。気になる一冊をどうぞ。</p>
 
       <div class="shelf" role="list">
         <div class="shelf-inner">
@@ -297,6 +301,13 @@
           <span class="face">
             <span class="title long">放課後デイ応援帖</span>
             <span class="who">放課後等デイ<br>サービスの方へ</span>
+          </span>
+        </a>
+        <a class="book dayserv" role="listitem" href="day.html">
+          <span class="spine"></span>
+          <span class="face">
+            <span class="title xlong">デイサービス応援帖</span>
+            <span class="who">日帰り入浴・送迎の<br>事業所の方へ</span>
           </span>
         </a>
         <a class="book shigoto" role="listitem" href="shigoto.html">
@@ -332,6 +343,10 @@
           <span class="items">おむかえルート帖/支援きろく帖/おうち連絡帖/作業日報&amp;集計/個別支援計画のたね</span>
         </div>
         <div class="toc-row">
+          <span class="name"><span class="dot">●</span><a href="day.html">デイサービス応援帖</a></span>
+          <span class="items">そうげい計画帖/入浴きろく帖</span>
+        </div>
+        <div class="toc-row">
           <span class="name"><span class="dot">●</span><a href="shigoto.html">しごとの手帖</a></span>
           <span class="items">バーコードスキャン(Forguncy対応)/CRUD一覧ジェネレーター</span>
         </div>
@@ -361,7 +376,7 @@
       <h2>このサイトについて</h2>
       <p class="story">70歳になりました。出発点は、父が営む鉄工所。倒産で残ったのは、生産管理のために独学したパソコンの知識だけでした。30歳でシステム開発を始め、40年。会長に退いてできた自分の時間で出会ったのがAIです。大きな成功を狙うつもりはありません。誰か一人の役に立てば、それで価値がある。</p>
       <p>
-        <a class="more" href="kiroku.html#iron-to-ai">くわしい歩み「鉄からシステム、そしてAIへ」を読む →</a>
+        <a class="more" href="articles/iron-to-ai.html">くわしい歩み「鉄からシステム、そしてAIへ」を読む →</a>
       </p>
       <div class="pillars">
         <div class="pillar">
@@ -389,6 +404,7 @@
         <a href="kurashi.html">くらしの手帖</a>
         <a href="yohaku.html">手帖の余白</a>
         <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="day.html">デイサービス応援帖</a>
         <a href="shigoto.html">しごとの手帖</a>
         <a href="kiroku.html">記録の手帖</a>
         <a href="sitemap.html">サイトマップ</a>

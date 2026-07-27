@@ -265,7 +265,7 @@
 
 <footer>
   <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
-  <div style="margin-top:6px;"><a href="ouen.html">放課後デイ応援帖へ</a>　<a href="index.html">つくる手帖 ポータルへ</a></div>
+  <div style="margin-top:6px;"><a href="ouen.html">放課後デイ応援帖へ</a>　<a href="day.html">デイサービス応援帖へ</a>　<a href="index.html">つくる手帖 ポータルへ</a></div>
 </footer>
 
 <script>
@@ -347,6 +347,12 @@ const OMAKE = [
     app:'https://tad551216-rgb.github.io/nippo-syuukei/',
     guide:'#install',
     manual:DOCS+'nippo-shukei-manual.pdf'
+  },
+  {
+    name:'ヒヤリハット帖', tag:'安全・管理者向け', tagClass:'',
+    lead:'ヒヤリハットと事故を、選ぶだけで報告書に。何時に・どこで・何が多いかを集計し、次に手を打つ場所を見えるようにします。',
+    items:['報告書づくり（離設・置き去り・噛みつき・誤食など）','時間帯・場所・できごとの集計と、会議用のまとめ文','報告書の印刷とCSV出力'],
+    app:'https://tad551216-rgb.github.io/hiyari-techo/'
   }
 ];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
