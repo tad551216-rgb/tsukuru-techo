@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>しごとの手帖 — つくる手帖</title>
-<meta name="description" content="バーコードスキャン、CRUD一覧ジェネレーター。40年の開発現場から生まれた、Forguncy対応の業務ツールを集めた一冊。処理はすべてブラウザ内で完結します。">
+<title>デイサービス応援帖 — つくる手帖</title>
+<meta name="description" content="日帰り入浴特化型デイサービスのための道具。送迎計画をつくる「そうげい計画帖」と、入浴前のバイタルから皮膚の観察まで記録する「入浴きろく帖」。どちらも端末の中だけにデータを保存します。">
 <link rel="icon" href="icons/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="つくる手帖">
-<meta property="og:title" content="しごとの手帖 — つくる手帖">
-<meta property="og:description" content="バーコードスキャン、CRUD一覧ジェネレーター。開発現場で使う業務ツールを集めた一冊。">
-<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/shigoto.html">
+<meta property="og:title" content="デイサービス応援帖 — つくる手帖">
+<meta property="og:description" content="送迎計画と入浴記録。日帰り入浴特化型デイサービスのための道具。">
+<meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/day.html">
 <meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -22,7 +22,7 @@
     --line:#D8D3C4; --line-strong:#B9B2A0;
     --accent:#C2603A; --accent-deep:#9F4A2B;
     --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
-    --cover:#3A4A66; /* この帖の表紙色(灰藍) */
+    --cover:#35706B; /* この帖の表紙色(青竹) */
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -31,11 +31,9 @@
     color:var(--ink);background:var(--paper);line-height:1.85;
     -webkit-font-smoothing:antialiased;
   }
-  .sans{font-family:-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;}
   .wrap{max-width:840px;margin:0 auto;padding:0 22px;}
   a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
 
-  /* ===== 共通ヘッダー ===== */
   header.site{
     border-bottom:1px solid var(--line);
     background:rgba(243,241,234,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -54,7 +52,6 @@
   nav.site-nav a:hover,nav.site-nav a[aria-current]{color:var(--accent);}
   @media(max-width:620px){ nav.site-nav{display:none;} }
 
-  /* ===== 帖の扉 ===== */
   .tobira{padding:44px 0 30px;position:relative;overflow:hidden;}
   .tobira::before{
     content:"";position:absolute;inset:0;z-index:0;
@@ -71,10 +68,10 @@
   }
   .mini-book .spine{width:8px;background:rgba(0,0,0,.18);border-radius:3px 0 0 3px;}
   .mini-book .t{
-    writing-mode:vertical-rl;color:#FDFBF5;font-size:11px;font-weight:700;
-    letter-spacing:.1em;margin:auto;
+    writing-mode:vertical-rl;color:#FDFBF5;font-size:10.5px;font-weight:700;
+    letter-spacing:.08em;margin:auto;
   }
-  .tobira h1{font-size:clamp(26px,4.6vw,38px);font-weight:700;letter-spacing:.02em;}
+  .tobira h1{font-size:clamp(25px,4.4vw,36px);font-weight:700;letter-spacing:.02em;}
   .tobira .lede{margin-top:14px;font-size:clamp(15px,2vw,17px);max-width:660px;position:relative;z-index:1;}
   .crumb{
     position:relative;z-index:1;margin-bottom:18px;
@@ -84,7 +81,6 @@
   .crumb a:hover{color:var(--accent);}
   .crumb .sep{color:var(--line-strong);margin:0 .5em;}
 
-  /* ===== おことわり ===== */
   .pwa-note{
     background:var(--paper-2);border:1px solid var(--line);border-radius:10px;
     padding:16px 18px;margin:8px 0 34px;
@@ -93,8 +89,7 @@
   }
   .pwa-note b{color:var(--ink);}
 
-  /* ===== 道具カード ===== */
-  .tools{padding-bottom:52px;}
+  .tools{padding-bottom:20px;}
   .tool{
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
     padding:24px 22px 20px;margin-bottom:22px;position:relative;
@@ -113,37 +108,37 @@
     font-size:11.5px;color:var(--ink-soft);background:var(--paper);
     border:1px solid var(--line);border-radius:999px;padding:2px 10px;letter-spacing:.03em;
   }
+  .feat{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:13.5px;color:var(--ink-soft);line-height:1.95;
+    background:var(--paper);border:1px solid var(--line);border-radius:9px;
+    padding:11px 14px;margin-bottom:16px;
+  }
+  .feat b{color:var(--ink);}
   .btns{display:flex;flex-wrap:wrap;gap:10px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
   .btn{
     display:inline-flex;align-items:center;gap:7px;
     font-size:14px;font-weight:700;letter-spacing:.03em;text-decoration:none;
     padding:10px 18px;border-radius:8px;border:1.5px solid transparent;cursor:pointer;
   }
-  .btn-use{background:var(--green);color:#fff;}
-  .btn-use:hover{background:#325A45;}
+  .btn-use{background:var(--cover);color:#fff;}
+  .btn-use:hover{background:#2C5D59;}
   .btn-read{background:transparent;color:var(--ink);border-color:var(--line-strong);}
   .btn-read:hover{border-color:var(--accent);color:var(--accent);}
-  .docs-line{
-    margin-top:14px;font-family:-apple-system,"Hiragino Sans",sans-serif;
-    font-size:13.5px;color:var(--ink-soft);line-height:2;
-  }
-  .docs-line a{color:var(--ink-soft);text-decoration:none;border-bottom:1px dashed var(--line-strong);}
-  .docs-line a:hover{color:var(--accent);border-color:currentColor;}
 
-  /* ===== 次の一冊 ===== */
-  .next-sec{border-top:1px solid var(--line);background:var(--paper-2);padding:30px 0 36px;}
-  .next-sec .label{
-    font-family:-apple-system,"Hiragino Sans",sans-serif;
-    font-size:11.5px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:12px;
-  }
-  .next-links{display:flex;flex-wrap:wrap;gap:12px;font-family:-apple-system,"Hiragino Sans",sans-serif;}
+  .note-sec{border-top:1px solid var(--line);background:var(--paper-2);padding:30px 0 36px;}
+  .note-sec h2{font-size:19px;font-weight:700;margin-bottom:10px;}
+  .note-sec p{font-family:-apple-system,"Hiragino Sans",sans-serif;font-size:14.5px;
+    color:var(--ink-soft);line-height:1.95;margin-bottom:10px;}
+  .note-sec a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;}
+  .next-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;}
   .next-links a{
     font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;
     background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 18px;
   }
   .next-links a:hover{border-color:var(--accent);color:var(--accent);}
 
-  /* ===== フッター ===== */
   footer.site{border-top:1px solid var(--line);padding:24px 0 44px;
     font-family:-apple-system,"Hiragino Sans",sans-serif;}
   .foot-links{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;}
@@ -163,8 +158,8 @@
       <a href="kurashi.html">くらしの手帖</a>
       <a href="yohaku.html">手帖の余白</a>
       <a href="ouen.html">放課後デイ応援帖</a>
-      <a href="day.html">デイサービス応援帖</a>
-      <a href="shigoto.html" aria-current="page">しごとの手帖</a>
+      <a href="day.html" aria-current="page">デイサービス応援帖</a>
+      <a href="shigoto.html">しごとの手帖</a>
       <a href="kiroku.html">記録の手帖</a>
     </nav>
   </div>
@@ -172,74 +167,83 @@
 
 <main>
 
-  <!-- 扉 -->
   <section class="tobira">
     <div class="wrap">
-      <p class="crumb"><a href="index.html">表紙</a><span class="sep">›</span>しごとの手帖</p>
+      <p class="crumb"><a href="index.html">表紙</a><span class="sep">›</span>デイサービス応援帖</p>
       <div class="tobira-inner">
         <div class="mini-book" aria-hidden="true">
-          <span class="spine"></span><span class="t">しごと</span>
+          <span class="spine"></span><span class="t">デイ</span>
         </div>
-        <h1>しごとの手帖</h1>
+        <h1>デイサービス応援帖</h1>
       </div>
-      <p class="lede">40年、製造業のシステムをつくってきました。その現場でいま実際に使っている道具を、この一冊に集めています。</p>
+      <p class="lede">日帰り入浴に特化したデイサービスのための道具です。放課後デイと一緒に運営されている事業所の方にも、そのままお使いいただけます。</p>
     </div>
   </section>
 
-  <!-- 道具一覧 -->
   <section class="tools">
     <div class="wrap">
 
       <div class="pwa-note">
-        どのツールも処理はすべて<b>ブラウザの中だけ</b>で完結します。読み取った映像も、解析したファイルも、<b>端末の外には送信されません</b>。
+        どちらもブラウザで開くだけで使える<b>「PWA」</b>です。ホーム画面に追加すれば、ふつうのアプリのように起動できます。入力したデータはすべて<b>その端末の中だけ</b>に保存され、サーバーには送られません。<b>無料でお使いいただけます。</b>
       </div>
 
-      <!-- バーコードスキャン -->
-      <article class="tool" id="barcode">
+      <!-- そうげい計画帖 -->
+      <article class="tool" id="sougei">
         <div class="tool-head">
-          <span class="glyph" aria-hidden="true">📷</span>
-          <h2>バーコードスキャン</h2>
+          <span class="glyph" aria-hidden="true">🚐</span>
+          <h2>そうげい計画帖</h2>
         </div>
-        <p class="desc">Forguncyアプリをブラウザで実行する際、標準機能では使えないカメラでのバーコード/QRコード読み取りを行うカスタム部品。ZXingで端末内完結、映像・読み取り結果はどこにも送信されません。</p>
+        <p class="desc">利用者さんのご自宅とご希望の時刻から、その日の配車とルートを組み立てます。車椅子の席数まで見て割り振るので、乗れない組み合わせになりません。</p>
+        <div class="feat">
+          <b>車椅子の席を数えて配車</b>します。曜日ごとのご利用予定から自動で当日の顔ぶれを出し、順番の入れかえや車の変更は指でそのまま。組んだ予定は<b>Googleマップのルート</b>で開けて、<b>LINEでドライバーに送る</b>こともできます。
+        </div>
         <div class="tags">
-          <span>Forguncy対応</span><span>ZXing</span><span>1D/QR</span><span>HTTPS必須</span>
+          <span>PWA</span><span>送迎ルート</span><span>車椅子対応</span><span>月間カレンダー</span>
         </div>
         <div class="btns">
-          <a class="btn btn-use" href="https://tad551216-rgb.github.io/barcode-scanner/" target="_blank" rel="noopener">ひらく ↗</a>
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/sougei-keikaku/" target="_blank" rel="noopener">使ってみる ↗</a>
+          <a class="btn btn-read" href="docs/sample-sougei-keikaku.json" download>⬇ サンプルデータ</a>
         </div>
-        <p class="docs-line">
-          資料:
-          <a href="viewer.html?f=docs%2Fforguncy-barcode-manual.pdf&t=%E3%83%90%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%B3%20%E6%89%8B%E9%A0%86%E6%9B%B8">手順書(PDF)</a> /
-          <a href="docs/forguncy-barcode-page-script.js" download>組み込み用JS(ダウンロード)</a>
-        </p>
       </article>
 
-      <!-- CRUD一覧ジェネレーター -->
-      <article class="tool" id="crud">
+      <!-- 入浴きろく帖 -->
+      <article class="tool" id="nyuyoku">
         <div class="tool-head">
-          <span class="glyph" aria-hidden="true">📑</span>
-          <h2>CRUD一覧ジェネレーター</h2>
+          <span class="glyph" aria-hidden="true">♨️</span>
+          <h2>入浴きろく帖</h2>
         </div>
-        <p class="desc">Forguncyのプロジェクトファイル(.fgcp)から、ページ別のCRUD(作成・参照・更新・削除)一覧Excelを作る保守ツール。解凍・解析・Excel生成はすべてブラウザ内で完結し、ファイルは端末から外に出ません。</p>
+        <p class="desc">入浴前のバイタルから、からだの観察、ご家族への申し送りまで。入浴に特化したサービスの一日を、そのまま1枚に記録します。</p>
+        <div class="feat">
+          <b>からだの見取り図</b>で、気になったところをタップするだけで皮膚の記録が残せます。前面と背面を切り替えられ、褥瘡のできやすい仙骨部・かかと・肩甲骨も部位として分けてあります。<br>
+          入浴前のバイタルは、事業所で決めた目安から外れると<b>その場で赤く知らせます</b>。ただし<b>入浴の可否をアプリが決めることはありません</b>——実施するか、部分浴に変えるか、見合わせるかは、必ず職員の方が選ぶ形です。
+        </div>
         <div class="tags">
-          <span>Forguncy対応</span><span>.fgcp解析</span><span>Excel出力</span><span>保守・引き継ぎ</span>
+          <span>PWA</span><span>バイタル</span><span>皮膚の観察</span><span>サービス提供記録</span><span>CSV・印刷</span>
         </div>
         <div class="btns">
-          <a class="btn btn-use" href="https://tad551216-rgb.github.io/CRUD4Forguncy/" target="_blank" rel="noopener">ひらく ↗</a>
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/nyuyoku-kiroku/" target="_blank" rel="noopener">使ってみる ↗</a>
         </div>
+        <p class="feat" style="margin:14px 0 0;">
+          アプリを開いて<b>「設定」タブの「サンプルデータを入れて試す」</b>を押すと、架空の利用者6名と記録3件が入ります。まずはそちらでお試しください。
+        </p>
       </article>
 
     </div>
   </section>
 
-  <!-- 次の一冊 -->
-  <section class="next-sec">
+  <section class="note-sec">
     <div class="wrap">
-      <p class="label">NEXT</p>
+      <h2>放課後デイと一緒に運営されている方へ</h2>
+      <p>児童のほうの送迎・記録・保護者連絡には、<a href="ouen.html">放課後デイ応援帖</a>のアプリをご用意しています。どちらも同じ考え方(サーバーを持たず、データは端末の中だけ)で作っていますので、並べてお使いいただけます。</p>
+      <p>実際にどう動くのかを先に見たい方は、サンプルデータが最初から入った<a href="otameshi.html">お試し版</a>もご覧ください。</p>
+
+      <h2 style="margin-top:24px;">記録の保存について</h2>
+      <p>通所介護の記録は、完結の日から<b>2年間</b>の保存が必要です(自治体の条例で5年としている場合があります)。どちらのアプリもデータはその端末の中だけにありますので、<b>月に一度はJSONファイルに保存し、別の場所にも控えを置いてください</b>。端末を初期化すると記録も消えてしまいます。</p>
+
       <div class="next-links">
         <a href="index.html">← 表紙にもどる</a>
         <a href="ouen.html">放課後デイ応援帖へ →</a>
-        <a href="kiroku.html">記録の手帖(作り方)へ →</a>
+        <a href="otameshi.html">お試し版へ →</a>
       </div>
     </div>
   </section>

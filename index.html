@@ -56,10 +56,10 @@
   .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);}
   .brand .mark{font-size:21px;font-weight:700;letter-spacing:.04em;}
   .brand .mark .han{color:var(--accent);}
-  nav.site-nav{display:flex;gap:18px;}
+  nav.site-nav{display:flex;gap:14px;}
   nav.site-nav a{
     font-family:-apple-system,"Hiragino Sans",sans-serif;
-    font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:.04em;white-space:nowrap;
+    font-size:12.5px;color:var(--ink-soft);text-decoration:none;letter-spacing:.02em;white-space:nowrap;
   }
   nav.site-nav a:hover{color:var(--accent);}
   @media(max-width:620px){ nav.site-nav{display:none;} }
@@ -145,6 +145,7 @@
     color:#FDFBF5;margin:auto;
   }
   .book .title.long{font-size:17.5px;letter-spacing:.02em;line-height:1.22;}
+  .book .title.xlong{font-size:16px;letter-spacing:0;line-height:1.2;}
   .book .who{
     font-family:-apple-system,"Hiragino Sans",sans-serif;
     font-size:12.5px;letter-spacing:.04em;color:rgba(253,251,245,.9);
@@ -154,6 +155,7 @@
   .book.kurashi{background:var(--ink);}
   .book.yohaku{background:var(--cork);}
   .book.ouen{background:var(--green);}
+  .book.dayserv{background:var(--dayserv);}
   .book.shigoto{background:var(--ink-soft);}
   .book.kiroku{background:var(--accent-deep);}
   .shelf-caption{
@@ -241,6 +243,7 @@
       <a href="kurashi.html">くらしの手帖</a>
       <a href="yohaku.html">手帖の余白</a>
       <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="day.html">デイサービス応援帖</a>
       <a href="shigoto.html">しごとの手帖</a>
       <a href="kiroku.html">記録の手帖</a>
     </nav>
@@ -274,7 +277,7 @@
     <div class="wrap">
       <p class="sec-label">SHELF</p>
       <h2>手帖の棚</h2>
-      <p class="sec-note">目的ごとに、五冊に分けました。気になる一冊をどうぞ。</p>
+      <p class="sec-note">目的ごとに、六冊に分けました。気になる一冊をどうぞ。</p>
 
       <div class="shelf" role="list">
         <div class="shelf-inner">
@@ -297,6 +300,13 @@
           <span class="face">
             <span class="title long">放課後デイ応援帖</span>
             <span class="who">放課後等デイ<br>サービスの方へ</span>
+          </span>
+        </a>
+        <a class="book dayserv" role="listitem" href="day.html">
+          <span class="spine"></span>
+          <span class="face">
+            <span class="title xlong">デイサービス応援帖</span>
+            <span class="who">日帰り入浴・送迎の<br>事業所の方へ</span>
           </span>
         </a>
         <a class="book shigoto" role="listitem" href="shigoto.html">
@@ -330,6 +340,10 @@
         <div class="toc-row">
           <span class="name"><span class="dot">●</span><a href="ouen.html">放課後デイ応援帖</a></span>
           <span class="items">おむかえルート帖/支援きろく帖/おうち連絡帖/作業日報&amp;集計/個別支援計画のたね</span>
+        </div>
+        <div class="toc-row">
+          <span class="name"><span class="dot">●</span><a href="day.html">デイサービス応援帖</a></span>
+          <span class="items">そうげい計画帖/入浴きろく帖</span>
         </div>
         <div class="toc-row">
           <span class="name"><span class="dot">●</span><a href="shigoto.html">しごとの手帖</a></span>
@@ -389,6 +403,7 @@
         <a href="kurashi.html">くらしの手帖</a>
         <a href="yohaku.html">手帖の余白</a>
         <a href="ouen.html">放課後デイ応援帖</a>
+      <a href="day.html">デイサービス応援帖</a>
         <a href="shigoto.html">しごとの手帖</a>
         <a href="kiroku.html">記録の手帖</a>
         <a href="sitemap.html">サイトマップ</a>
