@@ -231,6 +231,48 @@
     background:rgba(243,241,234,.92);border:none;cursor:pointer;
     width:34px;height:34px;border-radius:50%;font-size:16px;color:var(--ink);
   }
+  /* ===== 使いはじめる前のお願い（ヒーローと棚のあいだ） ===== */
+  .before-start{padding:26px 0 6px;}
+  .bs-card{
+    background:var(--surface); border:1px solid var(--line);
+    border-left:6px solid var(--accent); border-radius:10px;
+    padding:20px 22px; box-shadow:0 1px 0 var(--line);
+  }
+  .bs-card h2{
+    font-size:1.08rem; line-height:1.5; color:var(--ink);
+    margin-bottom:10px; letter-spacing:.02em;
+  }
+  .bs-card h2 .mark{color:var(--accent); margin-right:.35em;}
+  .bs-card p{color:var(--ink-soft); line-height:1.9; font-size:.97rem;}
+  .bs-card p + p{margin-top:.7em;}
+  .bs-card strong{color:var(--ink); font-weight:700;}
+  .bs-why{
+    margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);
+    font-size:.9rem; color:var(--muted); line-height:1.8;
+  }
+  .bs-how{margin-top:14px;}
+  .bs-how summary{
+    cursor:pointer; color:var(--accent-deep); font-weight:700;
+    font-size:.95rem; padding:8px 0; list-style:none;
+  }
+  .bs-how summary::-webkit-details-marker{display:none;}
+  .bs-how summary::before{content:'＋ '; }
+  .bs-how[open] summary::before{content:'− '; }
+  .bs-steps{
+    margin-top:8px; padding:14px 16px;
+    background:var(--paper-2); border-radius:8px;
+  }
+  .bs-steps h3{
+    font-size:.92rem; color:var(--ink); margin:0 0 6px;
+  }
+  .bs-steps h3 + ol{margin-bottom:14px;}
+  .bs-steps ol{margin:0 0 0 1.3em; color:var(--ink-soft); font-size:.93rem; line-height:1.9;}
+  .bs-steps ol:last-child{margin-bottom:0;}
+  @media (max-width:520px){
+    .bs-card{padding:16px 16px; border-radius:8px;}
+    .bs-card h2{font-size:1rem;}
+    .bs-card p{font-size:.93rem; line-height:1.85;}
+  }
 </style>
 </head>
 <body>
@@ -269,6 +311,36 @@
           <span class="tri">▶</span> 紹介動画を見る(1分)
         </button>
         <a class="shelf-link" href="#shelf">手帖の棚へ ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使いはじめる前のお願い:ホーム画面への追加 -->
+  <section class="before-start">
+    <div class="wrap">
+      <div class="bs-card">
+        <h2><span class="mark">■</span>使いはじめる前に、ひとつだけ</h2>
+        <p>ブラウザで開くだけでも、そのままお使いいただけます。ただ、<strong>これから続けてお使いになるなら、先にホーム画面に追加してから始めてください。</strong></p>
+        <p>追加せずにお使いになると、しばらく開かない間に、書きためた記録が消えてしまうことがあります。また、ブラウザで何日か使ってから追加すると、<strong>それまでの記録が引き継がれないことがあります。</strong>ですから、追加はいちばん最初に。</p>
+        <p class="bs-why">iPhoneやiPadには、しばらく訪れていないサイトの保存データを自動で消す仕組みがあります。広告の追跡を防ぐためのものですが、この手帖が保存した記録も同じように消えてしまいます。ホーム画面に追加したものは、この対象から外れます。</p>
+        <details class="bs-how">
+          <summary>ホーム画面に追加する手順を見る</summary>
+          <div class="bs-steps">
+            <h3>iPhone・iPad</h3>
+            <ol>
+              <li><strong>Safariで</strong>開きます（Chromeなど他のブラウザからは追加できません）</li>
+              <li>画面下の共有ボタン（□に↑）を押します</li>
+              <li>メニューを下にすべらせて「ホーム画面に追加」</li>
+              <li>「追加」を押します</li>
+            </ol>
+            <h3>Android</h3>
+            <ol>
+              <li>Chromeで開きます</li>
+              <li>右上の「⋮」を押します</li>
+              <li>「アプリをインストール」または「ホーム画面に追加」</li>
+            </ol>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -375,8 +447,10 @@
       <p class="sec-label">ABOUT</p>
       <h2>このサイトについて</h2>
       <p class="story">70歳になりました。出発点は、父が営む鉄工所。倒産で残ったのは、生産管理のために独学したパソコンの知識だけでした。30歳でシステム開発を始め、40年。会長に退いてできた自分の時間で出会ったのがAIです。大きな成功を狙うつもりはありません。誰か一人の役に立てば、それで価値がある。</p>
+      <p class="story">記録が端末の外に出ないことは、お約束ではありません。通信するしくみが一行も入っていないので、送りようがないのです。中身は一枚のHTMLファイルですから、開けばすべて読めます。サーバーを持たずに、端末どうしで記録を受け渡すしくみについては、記録の手帖に書きました。</p>
       <p>
-        <a class="more" href="articles/iron-to-ai.html">くわしい歩み「鉄からシステム、そしてAIへ」を読む →</a>
+        <a class="more" href="articles/iron-to-ai.html">くわしい歩み「鉄からシステム、そしてAIへ」を読む →</a><br>
+        <a class="more" href="kiroku.html">しくみの説明「サーバーを持たずに、端末どうしで記録を渡す」を読む →</a>
       </p>
       <div class="pillars">
         <div class="pillar">
