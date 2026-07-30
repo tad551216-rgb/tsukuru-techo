@@ -95,7 +95,8 @@
   + '  font-size:13px;font-weight:700;padding:8px 14px;cursor:pointer;font-family:inherit;}'
   + '.hjm-note{font-size:12px;color:#7A7567;line-height:1.8;margin:0 0 10px;}'
   /* どこに焦点があるか、目で分かるようにする */
-  + '.hjm-box:focus{outline:none;}'
+  + '.hjm-box:focus{outline:3px solid #C2603A;outline-offset:-3px;}'
+  + '.hjm-box:focus-visible{outline:3px solid #C2603A;outline-offset:-3px;}'
   + '.hjm-go:focus-visible,.hjm-sub:focus-visible,.hjm-x:focus-visible,'
   + '.hjm-copy:focus-visible,.hjm-url input:focus-visible{'
   + '  outline:3px solid #1B2A4A;outline-offset:2px;}'
@@ -193,7 +194,7 @@
 
   /* ------------------- 案内を出す ------------------- */
   function open(url, name, trigger){
-    addCSS();
+    addCSS();   /* すでに入っていれば何もしない */
     var s = steps(url, name);
     var before = trigger || document.activeElement;
 
@@ -281,8 +282,30 @@
     }
     fit();
 
-    /* 案内に焦点を移す。まず箱に当てて、見出しから読み上げられるようにする */
-    if(box){ try{ box.focus({ preventScroll:true }); }catch(e){ try{ box.focus(); }catch(e2){} } }
+    /* 案内に焦点を移す。まず箱に当てて、見出しから読み上げられるようにする。
+       描き終わる前だと当たらないことがあるので、当たるまで何度か試す。 */
+    function put(){
+      if(!box) return true;
+      try{ box.focus({ preventScroll:true }); }catch(e){ try{ box.focus(); }catch(e2){} }
+      return back.contains(document.activeElement);
+    }
+    function grab(n){
+      if(put() || n <= 0) return;
+      if(window.requestAnimationFrame) requestAnimationFrame(function(){ grab(n - 1); });
+      else setTimeout(function(){ grab(n - 1); }, 16);
+    }
+    grab(10);
+    setTimeout(function(){ if(back.parentNode) put(); }, 60);
+    setTimeout(function(){ if(back.parentNode) put(); }, 250);
+
+    /* 開いている間に焦点が外へ出たら、引き戻す */
+    function keep(e){
+      if(!back.parentNode) return;
+      if(back.contains(e.target)) return;
+      put();
+    }
+    document.addEventListener('focusin', keep, true);
+    closers.push(function(){ document.removeEventListener('focusin', keep, true); });
 
     if(vv){
       vv.addEventListener('resize', fit);
@@ -319,6 +342,13 @@
     var name = a.getAttribute('data-hjm-name') || appName(a);
     open(href, name, a);
   }, true);
+
+  /* 体裁は先に入れておく。初回だけ焦点が当たらない、を防ぐため。
+     defer で読み込むので、この時点で head は必ずある。 */
+  addCSS();
+  if(!document.getElementById('hjm-css')){
+    document.addEventListener('DOMContentLoaded', addCSS);
+  }
 
   /* ほかから呼びたいとき用 */
   window.Hajimekata = { open: open, isStandalone: isStandalone };
