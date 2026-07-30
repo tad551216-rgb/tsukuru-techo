@@ -94,6 +94,12 @@
   + '.hjm-copy{flex:none;background:#1B2A4A;color:#fff;border:none;border-radius:8px;'
   + '  font-size:13px;font-weight:700;padding:8px 14px;cursor:pointer;font-family:inherit;}'
   + '.hjm-note{font-size:12px;color:#7A7567;line-height:1.8;margin:0 0 10px;}'
+  /* どこに焦点があるか、目で分かるようにする */
+  + '.hjm-box:focus{outline:none;}'
+  + '.hjm-go:focus-visible,.hjm-sub:focus-visible,.hjm-x:focus-visible,'
+  + '.hjm-copy:focus-visible,.hjm-url input:focus-visible{'
+  + '  outline:3px solid #1B2A4A;outline-offset:2px;}'
+  + '.hjm-go:focus-visible{outline-color:#1B2A4A;}'
   + '@media (min-width:600px){.hjm-back{align-items:center;padding:20px;}'
   + '  .hjm-box{border-radius:14px;} .hjm-head{border-radius:14px 14px 0 0;}}'
   + '@media (max-height:700px){.hjm-why{font-size:12.5px;line-height:1.65;}'
@@ -186,16 +192,17 @@
   }
 
   /* ------------------- 案内を出す ------------------- */
-  function open(url, name){
+  function open(url, name, trigger){
     addCSS();
     var s = steps(url, name);
+    var before = trigger || document.activeElement;
 
     var back = document.createElement('div');
     back.className = 'hjm-back';
     back.innerHTML =
-      '<div class="hjm-box" role="dialog" aria-modal="true" aria-label="はじめかた">'
+      '<div class="hjm-box" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="hjm-ttl">'
       + '<div class="hjm-head">'
-      + '<div class="tt"><div class="t">' + esc(name || 'このアプリ') + ' のはじめかた</div>'
+      + '<div class="tt"><div class="t" id="hjm-ttl">' + esc(name || 'このアプリ') + ' のはじめかた</div>'
       + '<div class="s">' + esc(s.sub) + '</div></div>'
       + '<button class="hjm-x" id="hjm-x2" type="button" aria-label="閉じる">✕</button>'
       + '</div>'
@@ -222,8 +229,19 @@
       document.removeEventListener('keydown', onKey);
       closers.forEach(function(f){ try{ f(); }catch(e){} });
       closers.length = 0;
+      /* 焦点を、押したボタンに返す */
+      try{ if(before && before.focus) before.focus(); }catch(e){}
     }
-    function onKey(e){ if(e.key === 'Escape') close(); }
+    function onKey(e){
+      if(e.key === 'Escape'){ close(); return; }
+      if(e.key !== 'Tab') return;
+      /* 案内の中だけを行き来する */
+      var items = back.querySelectorAll('button, [href], input:not([disabled])');
+      if(!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
     document.addEventListener('keydown', onKey);
 
     back.addEventListener('click', function(e){ if(e.target === back) close(); });
@@ -262,6 +280,10 @@
       if(vv && typeof vv.offsetTop === 'number') back.style.top = vv.offsetTop + 'px';
     }
     fit();
+
+    /* 案内に焦点を移す。まず箱に当てて、見出しから読み上げられるようにする */
+    if(box){ try{ box.focus({ preventScroll:true }); }catch(e){ try{ box.focus(); }catch(e2){} } }
+
     if(vv){
       vv.addEventListener('resize', fit);
       vv.addEventListener('scroll', fit);
@@ -295,7 +317,7 @@
     if(e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     e.preventDefault();
     var name = a.getAttribute('data-hjm-name') || appName(a);
-    open(href, name);
+    open(href, name, a);
   }, true);
 
   /* ほかから呼びたいとき用 */
