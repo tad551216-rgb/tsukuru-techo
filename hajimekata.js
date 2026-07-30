@@ -46,8 +46,12 @@
 
   /* ------------------- 見た目 ------------------- */
   var CSS = ''
-  + '.hjm-back{position:fixed;inset:0;z-index:9998;background:rgba(27,42,74,.45);'
+  + '.hjm-back{position:fixed;left:0;right:0;top:0;bottom:0;z-index:9998;'
+  + '  background:rgba(27,42,74,.45);'
   + '  display:flex;align-items:flex-end;justify-content:center;padding:0;}'
+  /* iPhoneのSafariは、下のツールバーの分だけ画面が短くなる。
+     inset で上下を留めると、下端がツールバーの裏に潜ってしまう。 */
+  + '@supports (height:100dvh){.hjm-back{bottom:auto;height:100dvh;}}'
   + '.hjm-box{background:#F3F1EA;color:#1B2A4A;width:100%;max-width:560px;'
   + '  border-radius:16px 16px 0 0;'
   + '  max-height:92vh;max-height:92dvh;'      /* 中身が長くても足もとが隠れないよう三段に分ける */
@@ -211,10 +215,13 @@
     var prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
+    var closers = [];
     function close(){
       document.body.style.overflow = prev;
       if(back.parentNode) back.parentNode.removeChild(back);
       document.removeEventListener('keydown', onKey);
+      closers.forEach(function(f){ try{ f(); }catch(e){} });
+      closers.length = 0;
     }
     function onKey(e){ if(e.key === 'Escape') close(); }
     document.addEventListener('keydown', onKey);
@@ -245,6 +252,28 @@
     /* いちばん上を見せる */
     var box = back.querySelector('.hjm-box');
     if(box) box.scrollTop = 0;
+
+    /* iPhoneのSafariでは、下のツールバーの出入りで見える高さが変わる。
+       実際に見えている高さを当てて、足もとが隠れないようにする。 */
+    var vv = window.visualViewport;
+    function fit(){
+      var h = (vv && vv.height) || window.innerHeight || 0;
+      if(h > 0) back.style.height = h + 'px';
+      if(vv && typeof vv.offsetTop === 'number') back.style.top = vv.offsetTop + 'px';
+    }
+    fit();
+    if(vv){
+      vv.addEventListener('resize', fit);
+      vv.addEventListener('scroll', fit);
+    }
+    window.addEventListener('orientationchange', fit);
+    closers.push(function(){
+      if(vv){
+        vv.removeEventListener('resize', fit);
+        vv.removeEventListener('scroll', fit);
+      }
+      window.removeEventListener('orientationchange', fit);
+    });
   }
 
   /* リンクの近くにある見出しから、アプリの名前を拾う */
