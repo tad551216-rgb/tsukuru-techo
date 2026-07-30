@@ -180,38 +180,25 @@
   <div class="eyebrow">TOOLS</div>
   <h1 class="mincho">業務応援アプリ</h1>
   <p class="lede">送迎の段取りから、記録とサイン、保護者とのやり取りまで。<br>小さな事業所の一日を、すこし軽くする道具箱です。</p>
+  <p class="lede" style="margin-top:12px;font-size:13px;"><a href="#docs" style="color:#FBF7EE;text-decoration:underline;text-underline-offset:3px;">はじめての方へ：紹介ムービーと資料 ›</a></p>
 </div>
 
 <main class="wrap">
 
-<!-- 紹介ムービー -->
-<section class="paper tilt-r">
-  <h2 class="sec mincho"><small>MOVIE</small>8分でわかる紹介ムービー</h2>
-  <p class="movie-lead">送迎ルート・記録・保護者連絡まで、実際の画面で流れをご紹介します。</p>
-  <a class="vbtn" href="docs/houday-douga.mp4" data-video="docs/houday-douga.mp4"><span class="play">▶</span>ムービーを再生する</a>
-</section>
-
-
-<!-- マスター連携スライド -->
-<section class="paper tilt-l">
-  <h2 class="sec mincho"><small>SLIDES</small>しくみがわかるスライド</h2>
-  <p class="movie-lead">3つのアプリはどうつながっているのか。マスター連携の考え方と、運用開始の5ステップを15枚のスライドにまとめました。導入前の全体理解にどうぞ。設定を進めるときは手順書PDFを、まず触ってみたいときは架空データのサンプルページをお使いください。</p>
-  <div class="links">
-    <a class="lbtn app" href="viewer.html?f=docs%2Fmaster-slides.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%20%E5%AE%8C%E5%85%A8%E8%A8%AD%E8%A8%88%E5%9B%B3">📄 スライドPDF（全15ページ）</a>
-    <a class="lbtn doc" href="viewer.html?f=docs%2Fmaster-renkei-guide.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%E3%82%AC%E3%82%A4%E3%83%89">📄 手順書PDF（全9ページ）</a>
-    <a class="lbtn doc" href="sample-renkei.html">🧪 サンプルデータで体験する</a>
+<!-- アプリ本体（データ駆動） -->
+<section class="paper tilt-r" id="apps">
+  <h2 class="sec mincho"><small>APPS</small>柱になるアプリ</h2>
+  <p class="body">3つで一組ですが、1つだけでも使えます。まずは<strong>おむかえルート帖</strong>からがおすすめです。送迎を1ヶ月先まで計画したい事業所には、月間版もご用意しました。</p>
+  <p class="body"><strong>架空データで試せるサンプル</strong>が、アプリの中に入っています。まず読み込んで、そのまま操作をお試しください。</p>
+  <div class="addnote">
+    <span class="t">📲 先にホーム画面へ追加してから使います</span>
+    <span class="d">追加せずに使うと、書きためた記録が消えることがあります。手順は<a href="#install">このページの下のほう</a>に書いてあります。</span>
   </div>
-  <p class="movie-lead" style="margin-top:18px;">はじめての方への説明用に、アプリの目的・全体構成・段階的な始め方をまとめたスライドもあります（全14ページ）。事業所内の勉強会や、他の施設へのご紹介にどうぞ。PowerPoint版は自由に書きかえていただけます。</p>
-  <div class="links">
-    <a class="lbtn app" href="viewer.html?f=docs%2Fhoukago-day-apps.pdf&amp;t=%E6%94%BE%E8%AA%B2%E5%BE%8C%E3%83%87%E3%82%A4%E5%BF%9C%E6%8F%B4%E5%B8%96%20%E3%81%94%E6%A1%88%E5%86%85%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89">📄 ご案内スライド（全14ページ）</a>
-    <a class="lbtn dl" href="docs/houkago-day-apps.pdf" download>⬇︎ PDFを保存</a>
-    <a class="lbtn dl" href="docs/houkago-day-apps.pptx" download>⬇︎ PowerPointを保存</a>
-  </div>
+  <div id="appList"></div>
 </section>
-
 
 <!-- 一日の流れ -->
-<section class="paper tilt-r">
+<section class="paper tilt-l">
   <h2 class="sec mincho"><small>ONE DAY</small>アプリでつながる一日</h2>
   <div class="flow">
     <div class="st"><div><div class="tt">朝、お迎えの段取り<span class="app">おむかえルート帖</span></div><div class="dd">学校ごとの下校時刻を確認し、車両とルートを組んで、担当者へLINEで指示。</div></div></div>
@@ -222,19 +209,6 @@
     <div class="st"><div><div class="tt">月末、締めと請求<span class="app">支援きろく帖</span></div><div class="dd">サイン漏れ・記録漏れを点検して、算定時間数つきCSVと実績記録票を出力。</div></div></div>
   </div>
 </section>
-
-
-<!-- アプリ本体（データ駆動） -->
-<section class="paper tilt-l" id="apps">
-  <h2 class="sec mincho"><small>APPS</small>柱になるアプリ</h2>
-  <p class="body">3つで一組ですが、1つだけでも使えます。まずはおむかえルート帖からがおすすめです。送迎を1ヶ月先まで計画したい事業所には、月間版もご用意しました。</p>
-  <div class="addnote">
-    <span class="t">📲 先にホーム画面へ追加してから使います</span>
-    <span class="d">追加せずに使うと、書きためた記録が消えることがあります。手順は<a href="#install">このページの下のほう</a>に書いてあります。</span>
-  </div>
-  <div id="appList"></div>
-</section>
-
 
 <!-- おまけ -->
 <section class="paper tilt-r" id="omake">
@@ -248,8 +222,26 @@
 </section>
 
 
+<!-- 資料（ムービー・スライド） -->
+<section class="paper tilt-l" id="docs">
+  <h2 class="sec mincho"><small>DOCS</small>もっと知りたいときは</h2>
+  <p class="movie-lead">3つのアプリがどうつながるのか、導入前に全体をつかみたいときの資料です。</p>
+  <a class="vbtn" href="docs/houday-douga.mp4" data-video="docs/houday-douga.mp4"><span class="play">▶</span>紹介ムービー（8分）</a>
+  <div class="links" style="margin-top:14px;">
+    <a class="lbtn app" href="viewer.html?f=docs%2Fmaster-slides.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%20%E5%AE%8C%E5%85%A8%E8%A8%AD%E8%A8%88%E5%9B%B3">📄 しくみがわかるスライド（15ページ）</a>
+    <a class="lbtn doc" href="viewer.html?f=docs%2Fmaster-renkei-guide.pdf&amp;t=%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E9%80%A3%E6%90%BA%E3%82%AC%E3%82%A4%E3%83%89">📄 マスター連携の手順書（9ページ）</a>
+  </div>
+  <p class="movie-lead" style="margin:18px 0 8px;">事業所内の勉強会や、他の施設へのご紹介には、ご案内スライドをどうぞ（PowerPoint版は自由に書きかえられます）。</p>
+  <div class="links">
+    <a class="lbtn doc" href="viewer.html?f=docs%2Fhoukago-day-apps.pdf&amp;t=%E6%94%BE%E8%AA%B2%E5%BE%8C%E3%83%87%E3%82%A4%E5%BF%9C%E6%8F%B4%E5%B8%96%20%E3%81%94%E6%A1%88%E5%86%85%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89">📄 ご案内スライド（14ページ）</a>
+    <a class="lbtn dl" href="docs/houkago-day-apps.pdf" download>⬇︎ PDFを保存</a>
+    <a class="lbtn dl" href="docs/houkago-day-apps.pptx" download>⬇︎ PowerPointを保存</a>
+  </div>
+</section>
+
+
 <!-- はじめかた -->
-<section class="paper tilt-l install" id="install">
+<section class="paper tilt-r install" id="install">
   <h2 class="sec mincho"><small>START</small>使いはじめる前に — 先にホーム画面へ追加してください</h2>
   <p class="body">アプリストアは使いません。上のボタンを押すとアプリが開きますので、<b>何も入力せずに、まずホーム画面へ追加してください。</b>そのあと、ホーム画面のアイコンから開いて使い始めます。</p>
 
@@ -282,7 +274,7 @@
 </section>
 
 <!-- 端末どうしの受け渡し -->
-<section class="paper tilt-r" id="share">
+<section class="paper tilt-l" id="share">
   <h2 class="sec mincho"><small>SHARE</small>端末どうしで記録を渡す（QRコード）</h2>
   <p class="body">端末どうしで、<b>画面にQRコードを出して、相手の端末のカメラで読み取る</b>やり方です。インターネットを通らないので、記録がサーバーを経由することはありません。そのかわり、<b>同じ場所にいることが必要</b>です。</p>
   <p class="body">支援きろく帖で渡せるのは、次の二つです。</p>
@@ -327,7 +319,7 @@
 
 
 <!-- 大事なこと -->
-<section class="paper tilt-l">
+<section class="paper tilt-r">
   <h2 class="sec mincho"><small>NOTES</small>お使いいただく前に、大事なこと</h2>
   <ul class="caution">
     <li>支援きろく帖が表示する算定時間の「区分」は参考表示です。実際の請求区分・加算の可否は、最新の告示・自治体の取り扱い・お使いの請求ソフトの判定に従ってください。</li>
