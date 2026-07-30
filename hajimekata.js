@@ -47,43 +47,51 @@
   + '.hjm-back{position:fixed;inset:0;z-index:9998;background:rgba(27,42,74,.45);'
   + '  display:flex;align-items:flex-end;justify-content:center;padding:0;}'
   + '.hjm-box{background:#F3F1EA;color:#1B2A4A;width:100%;max-width:560px;'
-  + '  border-radius:16px 16px 0 0;max-height:92vh;overflow-y:auto;'
+  + '  border-radius:16px 16px 0 0;'
+  + '  max-height:92vh;max-height:92dvh;'      /* 中身が長くても足もとが隠れないよう三段に分ける */
+  + '  display:flex;flex-direction:column;min-height:0;'
   + '  box-shadow:0 -6px 30px rgba(27,42,74,.35);'
-  + '  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;'
-  + '  -webkit-overflow-scrolling:touch;}'
-  + '.hjm-head{background:#1B2A4A;color:#F7F5EE;padding:14px 18px;'
-  + '  border-radius:16px 16px 0 0;position:sticky;top:0;z-index:1;}'
+  + '  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;}'
+  + '.hjm-head{background:#1B2A4A;color:#F7F5EE;padding:13px 16px;flex:none;'
+  + '  border-radius:16px 16px 0 0;display:flex;align-items:flex-start;gap:10px;}'
+  + '.hjm-head .tt{flex:1;min-width:0;}'
+  + '.hjm-x{flex:none;background:rgba(247,245,238,.16);color:#F7F5EE;border:none;'
+  + '  width:32px;height:32px;border-radius:50%;font-size:17px;line-height:1;'
+  + '  cursor:pointer;font-family:inherit;padding:0;}'
   + '.hjm-head .t{font-size:16px;font-weight:700;letter-spacing:.04em;}'
   + '.hjm-head .s{font-size:12px;opacity:.8;margin-top:3px;}'
-  + '.hjm-body{padding:16px 18px 4px;}'
+  + '.hjm-body{padding:14px 18px 6px;flex:1 1 auto;overflow-y:auto;min-height:0;'
+  + '  -webkit-overflow-scrolling:touch;}'
   + '.hjm-why{background:#fff;border:1px solid #D8D3C4;border-left:5px solid #C2603A;'
-  + '  border-radius:8px;padding:12px 14px;font-size:13.5px;line-height:1.85;margin-bottom:14px;}'
+  + '  border-radius:8px;padding:11px 13px;font-size:13px;line-height:1.75;margin-bottom:12px;}'
   + '.hjm-why b{color:#1B2A4A;}'
   + '.hjm-steps{list-style:none;margin:0;padding:0;counter-reset:hjm;}'
-  + '.hjm-steps li{counter-increment:hjm;position:relative;padding:0 0 14px 40px;'
-  + '  font-size:14.5px;line-height:1.8;}'
+  + '.hjm-steps li{counter-increment:hjm;position:relative;padding:0 0 11px 38px;'
+  + '  font-size:14px;line-height:1.75;}'
   + '.hjm-steps li:before{content:counter(hjm);position:absolute;left:0;top:1px;'
-  + '  width:26px;height:26px;border-radius:50%;background:#1B2A4A;color:#F7F5EE;'
+  + '  width:24px;height:24px;border-radius:50%;background:#1B2A4A;color:#F7F5EE;'
   + '  font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;}'
   + '.hjm-steps li.mark:before{background:#C2603A;}'
   + '.hjm-steps b{color:#9F4A2B;}'
   + '.hjm-url{display:flex;gap:8px;margin:4px 0 14px;}'
   + '.hjm-url input{flex:1;min-width:0;font-size:13px;padding:8px 10px;'
   + '  border:1px solid #D8D3C4;border-radius:8px;background:#fff;color:#3A4A66;}'
-  + '.hjm-foot{padding:4px 18px calc(18px + env(safe-area-inset-bottom));'
-  + '  position:sticky;bottom:0;background:#F3F1EA;}'
+  + '.hjm-foot{flex:none;padding:8px 18px calc(14px + env(safe-area-inset-bottom));'
+  + '  background:#F3F1EA;border-top:1px solid #E2DED1;}'
   + '.hjm-go{display:block;width:100%;text-align:center;text-decoration:none;'
   + '  background:#C2603A;color:#fff;font-size:16px;font-weight:700;'
-  + '  padding:14px;border:none;border-radius:10px;cursor:pointer;}'
+  + '  padding:13px;border:none;border-radius:10px;cursor:pointer;font-family:inherit;}'
   + '.hjm-go.calm{background:#1B2A4A;}'
   + '.hjm-sub{display:block;width:100%;text-align:center;background:none;border:none;'
-  + '  color:#7A7567;font-size:12.5px;padding:12px 4px 2px;cursor:pointer;'
+  + '  color:#7A7567;font-size:12.5px;padding:9px 4px 0;cursor:pointer;'
   + '  text-decoration:underline;font-family:inherit;}'
   + '.hjm-copy{flex:none;background:#1B2A4A;color:#fff;border:none;border-radius:8px;'
   + '  font-size:13px;font-weight:700;padding:8px 14px;cursor:pointer;font-family:inherit;}'
   + '.hjm-note{font-size:12px;color:#7A7567;line-height:1.8;margin:0 0 10px;}'
   + '@media (min-width:600px){.hjm-back{align-items:center;padding:20px;}'
-  + '  .hjm-box{border-radius:14px;} .hjm-head{border-radius:14px 14px 0 0;}}';
+  + '  .hjm-box{border-radius:14px;} .hjm-head{border-radius:14px 14px 0 0;}}'
+  + '@media (max-height:700px){.hjm-why{font-size:12.5px;line-height:1.65;}'
+  + '  .hjm-steps li{font-size:13.5px;line-height:1.65;padding-bottom:9px;}}';
 
   function addCSS(){
     if(document.getElementById('hjm-css')) return;
@@ -176,8 +184,11 @@
     back.className = 'hjm-back';
     back.innerHTML =
       '<div class="hjm-box" role="dialog" aria-modal="true" aria-label="はじめかた">'
-      + '<div class="hjm-head"><div class="t">' + esc(name || 'このアプリ') + ' のはじめかた</div>'
+      + '<div class="hjm-head">'
+      + '<div class="tt"><div class="t">' + esc(name || 'このアプリ') + ' のはじめかた</div>'
       + '<div class="s">' + esc(s.sub) + '</div></div>'
+      + '<button class="hjm-x" id="hjm-x2" type="button" aria-label="閉じる">✕</button>'
+      + '</div>'
       + '<div class="hjm-body">'
       + (isPhone
           ? '<div class="hjm-why"><b>先にホーム画面へ追加してから、使い始めてください。</b><br>'
@@ -204,6 +215,7 @@
 
     back.addEventListener('click', function(e){ if(e.target === back) close(); });
     back.querySelector('#hjm-x').addEventListener('click', close);
+    back.querySelector('#hjm-x2').addEventListener('click', close);
     back.querySelector('#hjm-go').addEventListener('click', function(){
       close();
       /* 同じ画面で開く。iPhoneでは、開いた画面から共有→追加をしていただく */
