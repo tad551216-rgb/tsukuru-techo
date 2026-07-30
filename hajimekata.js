@@ -37,9 +37,11 @@
   var isAndroid = /Android/.test(ua);
   var inApp = /Line\/|FBAN|FBAV|Instagram|Twitter|MicroMessenger|KAKAOTALK/i.test(ua);
   var otherBrowser = /CriOS|FxiOS|EdgiOS|OPiOS|YaBrowser/i.test(ua);
-  /* iPhoneでは、Safari以外からはホーム画面に追加できない */
-  var iosCantAdd = isIOS && (inApp || otherBrowser);
-  var androidCantAdd = isAndroid && inApp;
+  /* ホーム画面から開いた画面には共有ボタンが出ないため、そこからは追加できない。
+     LINEなどのアプリ内ブラウザ、iPhoneのSafari以外のブラウザも同じ。 */
+  var standalone = isStandalone();
+  var iosCantAdd = isIOS && (inApp || otherBrowser || standalone);
+  var androidCantAdd = isAndroid && (inApp || standalone);
   var isPhone = isIOS || isAndroid;
 
   /* ------------------- 見た目 ------------------- */
@@ -145,7 +147,8 @@
     if(iosCantAdd || androidCantAdd){
       var which = isIOS ? 'Safari' : 'Chrome';
       return {
-        sub: 'この画面からは、ホーム画面に追加できません',
+        sub: standalone ? 'この画面からは追加できません（' + which + 'でお開きください）'
+                        : 'この画面からは、ホーム画面に追加できません',
         html:
           '<ol class="hjm-steps">'
           + '<li>下のアドレスを<b>「写す」</b>で写します'
@@ -157,7 +160,10 @@
               : '<b>「⋮」</b>→<b>「ホーム画面に追加」</b>') + '</li>'
           + '<li class="mark"><b>ホーム画面のアイコンから開いて</b>、使い始めてください</li>'
           + '</ol>'
-          + '<p class="hjm-note">LINEなどの中で開いた画面では、ホーム画面への追加ができません。お手数ですが' + which + 'でお開きください。</p>',
+          + '<p class="hjm-note">' + (standalone
+              ? 'ホーム画面から開いたこの画面には、共有ボタンが出ないため追加ができません。'
+              : 'LINEなどの中で開いた画面では、ホーム画面への追加ができません。')
+            + 'お手数ですが' + which + 'でお開きください。</p>',
         go: 'このまま中身だけ見る', calm: true
       };
     }
@@ -252,7 +258,6 @@
 
   /* ------------------- リンクを見張る ------------------- */
   document.addEventListener('click', function(e){
-    if(isStandalone()) return;                 /* すでにアイコンから開いている */
     var a = e.target.closest ? e.target.closest('a[href]') : null;
     if(!a) return;
     if(a.hasAttribute('data-hjm-skip')) return;
