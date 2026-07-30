@@ -89,6 +89,23 @@
   }
   .pwa-note b{color:var(--ink);}
 
+  /* はじめかたの一言（放課後デイ応援帖の入口と同じ意匠） */
+  .addnote{
+    display:block; margin:0 0 30px; padding:14px 16px;
+    background:#FFF6F1; border:1px solid #E8C4B2; border-left:6px solid var(--accent);
+    border-radius:10px;
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+  }
+  .addnote .t{
+    display:block; font-size:15.5px; font-weight:700;
+    color:var(--accent-deep); line-height:1.7;
+  }
+  .addnote .d{
+    display:block; font-size:13px; color:var(--ink-soft);
+    line-height:1.8; margin-top:4px;
+  }
+  .addnote a{ color:var(--accent-deep); font-weight:700; }
+
   .tools{padding-bottom:20px;}
   .tool{
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
@@ -186,6 +203,11 @@
       <div class="pwa-note">
         <b>それぞれに操作手順書（PDF）を用意しています。</b>はじめてお使いになるときは、まずそちらをご覧ください。ホーム画面への追加のしかたから書いてあります。<br>
         どのアプリもブラウザで開くだけで使える<b>「PWA」</b>です。ホーム画面に追加すれば、ふつうのアプリのように起動できます。入力したデータはすべて<b>その端末の中だけ</b>に保存され、サーバーには送られません。<b>無料でお使いいただけます。</b>
+      </div>
+
+      <div class="addnote">
+        <span class="t">📲 先にホーム画面へ追加してから使います</span>
+        <span class="d">追加せずに使うと、書きためた記録が消えることがあります。手順は<a href="#start">このページの下のほう</a>に書いてあります。</span>
       </div>
 
       <!-- そうげい計画帖 -->
