@@ -232,13 +232,33 @@
 
 <!-- はじめかた -->
 <section class="paper tilt-l install" id="install">
-  <h2 class="sec mincho"><small>START</small>先にホーム画面へ追加してから、使い始めてください</h2>
-  <p class="body">アプリストアは使いません。<b>上のボタンを押すと、お使いの端末に合った追加の手順が出ます。</b>その手順のとおりに進めてください。</p>
+  <h2 class="sec mincho"><small>START</small>使いはじめる前に — 先にホーム画面へ追加してください</h2>
+  <p class="body">アプリストアは使いません。上のボタンを押すとアプリが開きますので、<b>何も入力せずに、まずホーム画面へ追加してください。</b>そのあと、ホーム画面のアイコンから開いて使い始めます。</p>
+
+  <div class="os">iPhone・iPad の手順</div>
+  <ol>
+    <li><b>Safariで</b>アプリを開く（Chromeなど他のブラウザでは追加できません）</li>
+    <li>開いたら、<b>何も入力せずに</b>画面下の<b>共有ボタン（□に↑）</b>を押す</li>
+    <li>メニューを下にすべらせて<b>「ホーム画面に追加」</b>→「追加」</li>
+    <li><b>Safariを閉じて、ホーム画面のアイコンから開き直す</b></li>
+    <li><b>そこから使い始める</b></li>
+  </ol>
+
+  <div class="os">Android の手順</div>
+  <ol>
+    <li>Chromeでアプリを開く</li>
+    <li>開いたら、<b>何も入力せずに</b>右上の<b>「⋮」</b>を押す</li>
+    <li><b>「ホーム画面に追加」</b>（または「アプリをインストール」）を選ぶ</li>
+    <li><b>ブラウザを閉じて、ホーム画面のアイコンから開き直す</b></li>
+    <li><b>そこから使い始める</b></li>
+  </ol>
+
+  <div class="os">気をつけていただきたいこと</div>
   <ul class="caution">
     <li><b>追加せずに使い始めないでください。</b>しばらく開かない間に、書きためた記録が消えてしまうことがあります（iPhoneの仕組みによるものです）。</li>
     <li><b>ブラウザで使ってから追加すると、それまでの記録が引き継がれないことがあります。</b>追加はいちばん最初に。</li>
     <li><b>アプリごとに追加が必要です。</b>ひとつ追加すれば全部入る、という仕組みではありません。</li>
-    <li>LINEの中で開いた画面からは追加できません。その場合は手順の中で、アドレスを写してSafari（Androidの方はChrome）で開いていただくよう案内します。</li>
+    <li><b>LINEの中で開いた画面からは追加できません。</b>アドレスをコピーして、Safari（Androidの方はChrome）で開き直してください。</li>
   </ul>
   <p class="body" style="font-size:12.5px;color:var(--muted);">ホーム画面のアイコンから開くと全画面で動き、電波のない場所でも使えます。データは端末内に保存されるため、機種変更の前には各アプリの「バックアップ」で控えを取ってください。</p>
 </section>
@@ -398,8 +418,8 @@ function pdfHref(path,title){
   return /\.pdf$/i.test(path) ? 'viewer.html?f='+encodeURIComponent(path)+'&t='+encodeURIComponent(title) : path;
 }
 function card(a){
-  let links='<a class="lbtn app" href="'+esc(a.app)+'" data-hjm-name="'+esc(a.name)+'">▶ ホーム画面に追加して使う</a>';
-  /* はじめかたは、アプリを開くときに hajimekata.js が案内します */
+  let links='<a class="lbtn app" href="'+esc(a.app)+'">▶ ホーム画面に追加して使う</a>';
+  /* 追加の手順は、下の「使いはじめる前に」の節にまとめています */
   if(a.manual) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.manual,a.name+' マニュアル'))+'">マニュアル</a>';
   if(Array.isArray(a.dl)) a.dl.forEach(function(d){
     links+='<a class="lbtn dl" href="'+esc(d.path)+'" download>⬇︎ '+esc(d.label)+'</a>';
@@ -436,6 +456,5 @@ document.getElementById('omakeList').innerHTML=OMAKE.map(card).join('');
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
 })();
 </script>
-<script src="hajimekata.js?v=6" defer></script>
 </body>
 </html>
