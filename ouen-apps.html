@@ -230,22 +230,16 @@
 </section>
 
 
-<!-- インストールガイド -->
+<!-- はじめかた -->
 <section class="paper tilt-l install" id="install">
-  <h2 class="sec mincho"><small>INSTALL</small>ホーム画面に追加する（共通）</h2>
-  <p class="body">アプリストアは使いません。ブラウザで開いて「ホーム画面に追加」するだけで、アプリとして使えます。</p>
-  <div class="os">iPhone・iPad（Safari）</div>
-  <ol>
-    <li>上のボタンからアプリを開く</li>
-    <li>画面下の「共有」ボタン（□に↑）をタップ</li>
-    <li>「ホーム画面に追加」を選んで「追加」</li>
-  </ol>
-  <div class="os">Android（Chrome）</div>
-  <ol>
-    <li>上のボタンからアプリを開く</li>
-    <li>右上の「︙」メニューをタップ</li>
-    <li>「ホーム画面に追加」（または「アプリをインストール」）を選ぶ</li>
-  </ol>
+  <h2 class="sec mincho"><small>START</small>先にホーム画面へ追加してから、使い始めてください</h2>
+  <p class="body">アプリストアは使いません。<b>上のボタンを押すと、お使いの端末に合った追加の手順が出ます。</b>その手順のとおりに進めてください。</p>
+  <ul class="caution">
+    <li><b>追加せずに使い始めないでください。</b>しばらく開かない間に、書きためた記録が消えてしまうことがあります（iPhoneの仕組みによるものです）。</li>
+    <li><b>ブラウザで使ってから追加すると、それまでの記録が引き継がれないことがあります。</b>追加はいちばん最初に。</li>
+    <li><b>アプリごとに追加が必要です。</b>ひとつ追加すれば全部入る、という仕組みではありません。</li>
+    <li>LINEの中で開いた画面からは追加できません。その場合は手順の中で、アドレスを写してSafari（Androidの方はChrome）で開いていただくよう案内します。</li>
+  </ul>
   <p class="body" style="font-size:12.5px;color:var(--muted);">ホーム画面のアイコンから開くと全画面で動き、電波のない場所でも使えます。データは端末内に保存されるため、機種変更の前には各アプリの「バックアップ」で控えを取ってください。</p>
 </section>
 
@@ -330,7 +324,7 @@ const APPS = [
       'お送り時の保護者サイン取得（記録アプリと連携）'
     ],
     app:'https://tad551216-rgb.github.io/omukae-route/',
-    guide:'#install', manual:DOCS+'omukae-route-manual.pdf'
+    manual:DOCS+'omukae-route-manual.pdf'
   },
   {
     name:'おむかえルート帖・月間版', tag:'送迎・月間計画', tagClass:'',
@@ -342,7 +336,7 @@ const APPS = [
       'お送りサイン・支援きろく帖とのマスター連携・全国学校データベースにも対応'
     ],
     app:'https://tad551216-rgb.github.io/omukae-monthly/',
-    guide:'#install', manual:DOCS+'omukae-monthly-manual.pdf',
+    manual:DOCS+'omukae-monthly-manual.pdf',
     dl:[
       {label:'マニュアルPDFを保存', path:DOCS+'omukae-monthly-manual.pdf'},
       {label:'マニュアルWordを保存', path:DOCS+'omukae-monthly-manual.docx'}
@@ -359,7 +353,7 @@ const APPS = [
       '算定時間数つきCSV・サイン画像つき実績記録票の印刷・5年保管用バックアップ'
     ],
     app:'https://tad551216-rgb.github.io/shien-kiroku/',
-    guide:'#install', manual:DOCS+'shien-kiroku-manual.pdf'
+    manual:DOCS+'shien-kiroku-manual.pdf'
   },
   {
     name:'おうち連絡帖', tag:'保護者向け', tagClass:'g',
@@ -371,7 +365,7 @@ const APPS = [
       '受け取った記録は端末に残り、家庭側の連絡帳控えに'
     ],
     app:'https://tad551216-rgb.github.io/ouchi-renraku/',
-    guide:'#install', manual:DOCS+'ouchi-renraku-manual.pdf'
+    manual:DOCS+'ouchi-renraku-manual.pdf'
   }
 ];
 const OMAKE = [
@@ -389,7 +383,6 @@ const OMAKE = [
     lead:'LINEに流れてきた日報を貼り付けるだけで、従業員別・期間別に自動集計。月締めや漏れ確認カレンダーも。',
     items:['日報テキストの貼り付け集計（従業員別・期間別）','月締め・記入漏れカレンダー・日報/週報/月報の出力'],
     app:'https://tad551216-rgb.github.io/nippo-syuukei/',
-    guide:'#install',
     manual:DOCS+'nippo-shukei-manual.pdf'
   },
   {
@@ -405,9 +398,8 @@ function pdfHref(path,title){
   return /\.pdf$/i.test(path) ? 'viewer.html?f='+encodeURIComponent(path)+'&t='+encodeURIComponent(title) : path;
 }
 function card(a){
-  let links='<a class="lbtn app" href="'+esc(a.app)+'">▶ アプリをひらく</a>';
-  if(a.guide) links+='<a class="lbtn doc" href="'+esc(a.guide.startsWith('#')?a.guide:pdfHref(a.guide,a.name+'（iPhone）'))+'">'+(a.guide.startsWith('#')?'インストールの手順':'インストールガイド（iPhone）')+'</a>';
-  if(a.guideAndroid) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.guideAndroid,a.name+'（Android）'))+'">インストールガイド（Android）</a>';
+  let links='<a class="lbtn app" href="'+esc(a.app)+'" data-hjm-name="'+esc(a.name)+'">▶ ホーム画面に追加して使う</a>';
+  /* はじめかたは、アプリを開くときに hajimekata.js が案内します */
   if(a.manual) links+='<a class="lbtn doc" href="'+esc(pdfHref(a.manual,a.name+' マニュアル'))+'">マニュアル</a>';
   if(Array.isArray(a.dl)) a.dl.forEach(function(d){
     links+='<a class="lbtn dl" href="'+esc(d.path)+'" download>⬇︎ '+esc(d.label)+'</a>';
@@ -444,5 +436,6 @@ document.getElementById('omakeList').innerHTML=OMAKE.map(card).join('');
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeVid(); });
 })();
 </script>
+<script src="hajimekata.js" defer></script>
 </body>
 </html>
