@@ -1,39 +1,46 @@
-/* つくる手帖ピンボール — オフライン用サービスワーカー */
-const CACHE = 'tt-pinball-v2';
-const ASSETS = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-512.png',
-  './apple-touch-icon.png'
-];
+/* ===========================================================
+   つくる手帖 — 後片づけ用のサービスワーカー
+   -----------------------------------------------------------
+   もともとここには、ピンボール用のサービスワーカーが置かれて
+   いました。受け持ち範囲が /tsukuru-techo/ 配下すべてで、
+   しかも「控えがあれば控えを返す」作りだったため、
+   ページを更新しても端末には古いものが表示され続けていました。
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+   このファイルは、その後始末をするためだけのものです。
+
+     1. 溜まっている控えを、すべて捨てる
+     2. 自分自身の登録を取り消す
+     3. 開いているページを読み込み直す
+
+   fetch を受け取らないので、通信はふつうに素通りします。
+   つくる手帖の各ページは、これ以降つねに最新が表示されます。
+
+   ※ 各アプリ（day-kiroku、shien-kiroku など）のサービスワーカーは
+     それぞれ別の場所にあり、これには影響されません。
+     アプリのオフライン動作はそのまま保たれます。
+   =========================================================== */
+
+self.addEventListener('install', function(e){
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
-});
+self.addEventListener('activate', function(e){
+  e.waitUntil((async function(){
+    /* 溜まっている控えを捨てる */
+    try{
+      var keys = await caches.keys();
+      await Promise.all(keys.map(function(k){ return caches.delete(k); }));
+    }catch(err){}
 
-self.addEventListener('fetch', (e) => {
-  const req = e.request;
-  if (req.method !== 'GET') return;
-  e.respondWith(
-    caches.match(req).then((hit) =>
-      hit || fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
-        return res;
-      }).catch(() => caches.match('./index.html'))
-    )
-  );
+    /* 自分の登録を取り消す */
+    try{ await self.registration.unregister(); }catch(err){}
+
+    /* 開いているページを読み込み直して、最新に入れ替える */
+    try{
+      var list = await self.clients.matchAll({ type:'window' });
+      list.forEach(function(c){
+        try{ c.navigate(c.url); }catch(err){}
+      });
+    }catch(err){}
+  })());
 });
