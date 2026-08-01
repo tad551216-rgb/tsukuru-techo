@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>デイサービス応援帖 — つくる手帖</title>
-<meta name="description" content="日帰り入浴特化型デイサービスのための道具。送迎計画をつくる「そうげい計画帖」と、入浴前のバイタルから皮膚の観察まで記録する「入浴きろく帖」。どちらも端末の中だけにデータを保存します。">
+<meta name="description" content="通所介護のための道具を七つ。送迎計画、一日の記録、入浴、機能訓練、ヒヤリハット、ご家族への連絡、預り金の管理まで。どれも端末の中だけにデータを保存します。">
 <link rel="icon" href="icons/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="つくる手帖">
 <meta property="og:title" content="デイサービス応援帖 — つくる手帖">
-<meta property="og:description" content="送迎計画と入浴記録。日帰り入浴特化型デイサービスのための道具。">
+<meta property="og:description" content="送迎計画、一日の記録、入浴、機能訓練、ヒヤリハット、ご家族への連絡、預り金の管理。通所介護のための道具。">
 <meta property="og:url" content="https://tad551216-rgb.github.io/tsukuru-techo/day.html">
 <meta property="og:image" content="https://tad551216-rgb.github.io/tsukuru-techo/images/ogp.jpeg">
 <meta name="twitter:card" content="summary_large_image">
@@ -193,7 +193,7 @@
         </div>
         <h1>デイサービス応援帖</h1>
       </div>
-      <p class="lede">通所介護（デイサービス）のための道具を六つ。送迎の計画から、一日の記録、入浴、機能訓練、ヒヤリハット、ご家族への連絡まで。放課後デイと一緒に運営されている事業所の方にも、そのままお使いいただけます。</p>
+      <p class="lede">通所介護（デイサービス）のための道具を七つ。送迎の計画から、一日の記録、入浴、機能訓練、ヒヤリハット、ご家族への連絡、預り金の管理まで。放課後デイと一緒に運営されている事業所の方にも、そのままお使いいただけます。</p>
     </div>
   </section>
 
@@ -211,7 +211,7 @@
       </div>
 
       <div class="pwa-note">
-        <b>架空データで試せるサンプル</b>が、各アプリの「設定」のいちばん下に入っています。まず読み込んで、そのまま操作をお試しください。
+        <b>架空データで試せるサンプル</b>が、各アプリの「設定」のいちばん下に入っています。まず読み込んで、そのまま操作をお試しください。実際にどう動くのかを先にご覧になりたい方には、サンプルデータが最初から入った<a href="otameshi.html" style="color:var(--accent);font-weight:700;">お試し版</a>もご用意しています。
       </div>
 
       <!-- そうげい計画帖 -->
@@ -339,6 +339,29 @@
         </div>
       </article>
 
+      <!-- おかいもの帖 -->
+      <article class="tool" id="okaimono">
+        <div class="tool-head">
+          <span class="glyph" aria-hidden="true">🛒</span>
+          <h2>おかいもの帖</h2>
+        </div>
+        <p class="desc">利用者さんからお預かりしたお金で、おやつや昼食、外出行事の品を買いに行く仕事のための帖。預り金の出納と、お店ごとの買い物リストを、ひとつにまとめて扱います。</p>
+        <div class="feat">
+          <b>「ざんだか」「かりおさえ」「つかえる」</b>の三つの数字で見ます。ご希望をうかがって予定額で仮おさえした分は残高から差し引かれますので、お店で足りなくなることがありません。<br>
+          お店では<b>商品のバーコードを読ませると、その方の分にチェックが入ります</b>。読んだ番号は覚えるので、次からは自動で当たります。入出金には<b>確認した職員</b>の名前が残り、月ごとの預り金報告はそのまま印刷してご家族へお渡しいただけます。
+        </div>
+        <div class="tags">
+          <span>PWA</span><span>預り金の出納</span><span>バーコードで消し込み</span><span>月次報告の印刷</span>
+        </div>
+        <div class="btns">
+          <a class="btn btn-use" href="https://tad551216-rgb.github.io/okaimono/">ホーム画面に追加して使う</a>
+          <a class="btn btn-read" href="viewer.html?f=docs%2Fokaimono-guide.pdf&amp;t=%E6%93%8D%E4%BD%9C%E6%89%8B%E9%A0%86%E6%9B%B8">📄 操作手順書</a>
+        </div>
+        <p class="feat" style="margin:14px 0 0;">
+          この帖は預り金の出納を記録する道具です。<b>管理規程の整備・現金と帳簿の照合・ご家族へのご報告は、事業所の定めに従ってください。</b>預り金の取り扱いは保険者により異なりますので、導入前のご確認をおすすめします。
+        </p>
+      </article>
+
     </div>
   </section>
 
@@ -381,6 +404,8 @@
       <h2>放課後デイと一緒に運営されている方へ</h2>
       <p>児童のほうの送迎・記録・保護者連絡には、<a href="ouen.html">放課後デイ応援帖</a>のアプリをご用意しています。どちらも同じ考え方(サーバーを持たず、データは端末の中だけ)で作っていますので、並べてお使いいただけます。</p>
       <p><b>ヒヤリハット帖は、一本で両方の事業に使えます。</b>設定で「両方」を選ぶと、放課後デイ用の選択肢(離設・送迎車への置き去り・噛みつき・誤食など)に切り替わり、集計も事業ごとに分けて見られます。</p>
+      <p><b>おかいもの帖も、どちらの事業でもそのままお使いいただけます。</b>預り金をお預かりして買い物に行く仕事は、通所介護でも放課後等デイサービスでも変わりません。</p>
+      <p>実際にどう動くのかを先に見たい方は、サンプルデータが最初から入った<a href="otameshi.html">お試し版</a>もご覧ください。</p>
 
       <h2 style="margin-top:24px;">端末どうしで記録を受け渡すとき(QRコード)</h2>
       <p>職員の方の端末で書いた記録を、管理者の端末に集めることができます。<b>画面にQRコードを出して、相手の端末のカメラで読み取る</b>やり方です。インターネットを通らないので、記録がどこかのサーバーを経由することはありません。そのかわり、<b>同じ場所にいることが必要</b>です。</p>
@@ -420,10 +445,12 @@
 
       <h2 style="margin-top:24px;">記録の保存について</h2>
       <p>通所介護の記録は、完結の日から<b>2年間</b>の保存が必要です(自治体の条例で5年としている場合があります)。どちらのアプリもデータはその端末の中だけにありますので、<b>月に一度はJSONファイルに保存し、別の場所にも控えを置いてください</b>。端末を初期化すると記録も消えてしまいます。</p>
+      <p><b>預り金の出納の記録は、事業所の会計書類にあたります。</b>保存年限は保険者により扱いが異なりますので、事業所の規程に合わせてお取り扱いください。</p>
 
       <div class="next-links">
         <a href="index.html">← 表紙にもどる</a>
         <a href="ouen.html">放課後デイ応援帖へ →</a>
+        <a href="otameshi.html">お試し版へ →</a>
       </div>
     </div>
   </section>
