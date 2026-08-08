@@ -231,6 +231,30 @@
     background:rgba(243,241,234,.92);border:none;cursor:pointer;
     width:34px;height:34px;border-radius:50%;font-size:16px;color:var(--ink);
   }
+  /* ===== 手帖のある風景(3枚のイラスト) ===== */
+  .story-gallery{padding:8px 0 36px;}
+  .story-gallery .sec-label{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    font-size:11px;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:8px;
+  }
+  .story-gallery h2{font-size:clamp(19px,3vw,24px);margin-bottom:6px;}
+  .story-gallery .sec-note{font-size:14px;color:var(--muted);margin-bottom:22px;}
+  .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:760px){ .story-grid{grid-template-columns:1fr;} }
+  .story-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    overflow:hidden;box-shadow:2px 3px 0 rgba(27,42,74,.10);
+  }
+  .story-card img{display:block;width:100%;height:auto;}
+  .story-card .cap{padding:14px 16px 18px;}
+  .story-card .tag{
+    font-family:-apple-system,"Hiragino Sans",sans-serif;
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
+    color:var(--accent-deep);background:rgba(194,96,58,.10);
+    border-radius:5px;padding:3px 9px;margin-bottom:8px;
+  }
+  .story-card p{font-size:13.5px;line-height:1.8;color:var(--ink-soft);}
+
   /* ===== 使いはじめる前のお願い（ヒーローと棚のあいだ） ===== */
   .before-start{padding:26px 0 6px;}
   .bs-card{
@@ -311,6 +335,38 @@
           <span class="tri">▶</span> 紹介動画を見る(1分)
         </button>
         <a class="shelf-link" href="#shelf">手帖の棚へ ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 手帖のある風景:3枚のイラスト -->
+  <section class="story-gallery">
+    <div class="wrap">
+      <p class="sec-label">SCENES</p>
+      <h2>手帖のある風景</h2>
+      <p class="sec-note">自分のために作った道具が、少しずつ誰かの日常にも届いています。</p>
+      <div class="story-grid">
+        <div class="story-card">
+          <img src="images/story-tsukuru.jpg" alt="自宅の机でタブレットとスマホを見ながら、道具のしくみを考えている様子" loading="lazy">
+          <div class="cap">
+            <span class="tag">つくる</span>
+            <p>父の鉄工所から始まった道具づくり。今はタブレットとスマホ、そしてAIを相棒に、自分の使い方に合わせた一枚を組み立てています。</p>
+          </div>
+        </div>
+        <div class="story-card">
+          <img src="images/story-watasu.jpg" alt="介護施設でスタッフがQRコードをお年寄りに見せている様子" loading="lazy">
+          <div class="cap">
+            <span class="tag">わたす</span>
+            <p>サーバーは使いません。記録はQRコードにして、端末から端末へ。施設の中だけで、そっと受け渡されていきます。</p>
+          </div>
+        </div>
+        <div class="story-card">
+          <img src="images/story-todoku.jpg" alt="放課後等デイサービスで子どもたちが職員と一緒に遊んでいる様子" loading="lazy">
+          <div class="cap">
+            <span class="tag">とどく</span>
+            <p>放課後等デイサービスの現場にも。子どもたちの毎日を支える誰かの手もとに、この手帖が届いています。</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
