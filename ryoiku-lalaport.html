@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>モールで社会をまなぶ ― ららぽーと堺おでかけ療育 — 個別支援計画のたね</title>
+<meta name="description" content="放課後等デイサービス向け 療育プログラム。三井ショッピングパーク ららぽーと堺(大阪府堺市美原区)を舞台に、迷子予防・フードコートでの注文・エスカレーター利用・順番待ちを実地で経験。アセスメント、スモールステップ、記録、個別支援計画の記載例、保護者への連絡文例まで。">
+<style>
+
+  :root{
+    --ink:#1B2A4A; --ink-soft:#3A4A66; --paper:#F3F1EA; --paper-2:#ECE9DF;
+    --line:#D8D3C4; --line-strong:#B9B2A0; --accent:#C2603A; --accent-deep:#9F4A2B;
+    --muted:#7A7567; --grid:#E3DFD3; --green:#3D6B52;
+    --cork:#BE9263; --note:#FAF8F2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.9; -webkit-font-smoothing:antialiased;
+    background-color:var(--cork);
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(255,245,225,.18), rgba(255,255,255,0) 60%),
+      radial-gradient(rgba(90,60,30,.30) 1.2px, rgba(255,255,255,0) 1.7px),
+      radial-gradient(rgba(60,40,20,.22) 1px, rgba(255,255,255,0) 1.5px),
+      radial-gradient(rgba(255,240,210,.20) 1px, rgba(255,255,255,0) 1.5px);
+    background-size: 100% 100%, 9px 9px, 13px 13px, 17px 17px;
+    background-position: 0 0, 0 0, 4px 6px, 7px 3px;
+    background-attachment: fixed, scroll, scroll, scroll;
+  }
+  .mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; }
+  .wrap{ max-width:880px; margin:0 auto; padding:0 22px; }
+  header.site{ border-bottom:1px solid var(--line); background:rgba(243,241,234,.92);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); position:sticky; top:0; z-index:10; }
+  .site-inner{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+  .brand{ text-decoration:none; color:var(--ink); font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:19px; white-space:nowrap; }
+  .site-nav{ display:flex; gap:16px; }
+  .site-nav a{ color:var(--ink-soft); text-decoration:none; font-weight:400; font-size:13px; letter-spacing:.04em; }
+  .site-nav a:hover{ color:var(--accent-deep); }
+
+  .head{ padding:52px 0 20px; text-align:center; }
+  .head .eyebrow{ font-size:12px; letter-spacing:.26em; color:var(--accent-deep); font-weight:700; }
+  .head h1{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:34px; letter-spacing:.10em; margin:10px 0 6px; color:var(--paper);
+    text-shadow:0 1px 0 rgba(0,0,0,.18); }
+  .head .lede{ color:#FBF7EE; font-size:14.5px; max-width:600px; margin:0 auto; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+
+  .paper{
+    background:var(--note); border:1px solid var(--line); border-radius:8px;
+    box-shadow:0 6px 16px rgba(60,40,15,.22), 0 1px 0 rgba(255,255,255,.5) inset;
+    padding:26px 24px; margin:26px 0; position:relative;
+  }
+  .paper::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E8875A, var(--accent-deep) 70%);
+    box-shadow:0 2px 4px rgba(0,0,0,.35);
+  }
+  .paper.tilt-l{ transform:rotate(-.4deg); }
+  .paper.tilt-r{ transform:rotate(.35deg); }
+  h2.sec{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600; font-size:21px;
+    letter-spacing:.08em; margin-bottom:14px; padding-left:12px;
+    border-left:4px solid var(--accent); color:var(--ink);
+  }
+  h2.sec small{ display:block; font-size:11px; letter-spacing:.22em; color:var(--accent-deep);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:700; margin-bottom:2px; border:none; }
+  p.body{ font-size:14.5px; color:var(--ink-soft); margin:10px 0; }
+  p.body b{ color:var(--ink); }
+
+  table.t{ width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+  table.t th, table.t td{ border:1px solid var(--line); padding:7px 9px;
+    text-align:left; vertical-align:top; color:var(--ink-soft); }
+  table.t th{ background:var(--paper-2); color:var(--ink); font-weight:700; white-space:nowrap; }
+  table.t td b{ color:var(--ink); }
+  .wraptbl{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  h3.sub{ font-family:"Hiragino Mincho ProN","Yu Mincho",serif; font-weight:600;
+    font-size:16px; margin:20px 0 6px; color:var(--ink);
+    border-bottom:1px dashed var(--line-strong); padding-bottom:4px; }
+  ul.dot{ list-style:none; margin:6px 0 6px 2px; }
+  ul.dot li{ font-size:13.5px; color:var(--ink-soft); padding-left:16px;
+    position:relative; margin:4px 0; }
+  ul.dot li::before{ content:"・"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  ul.check{ list-style:none; margin:6px 0; }
+  ul.check li{ font-size:13.5px; color:var(--ink-soft); padding-left:22px;
+    position:relative; margin:5px 0; }
+  ul.check li::before{ content:"☐"; position:absolute; left:0; color:var(--accent-deep); font-weight:700; }
+  .callout{ background:#FFF6EF; border:1px solid #E8C6AE; border-left:4px solid var(--accent);
+    border-radius:6px; padding:12px 14px; margin:14px 0; font-size:13.5px; color:var(--ink-soft); }
+  .callout b{ color:var(--accent-deep); }
+  .copybox{ background:var(--note); border:1px solid var(--line); border-radius:6px;
+    padding:12px 14px; margin:10px 0; font-size:13.5px; color:var(--ink-soft); white-space:pre-wrap; }
+  .cbtn{ display:inline-block; font-size:12.5px; font-weight:700; border-radius:8px;
+    padding:7px 14px; border:1.5px solid var(--line-strong); background:#fff;
+    color:var(--ink); cursor:pointer; letter-spacing:.03em; }
+  .cbtn:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .cbtn.done{ background:var(--green); color:#fff; border-color:var(--green); }
+  .toc{ display:flex; flex-wrap:wrap; gap:6px; }
+  .toc a{ font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:5px 11px; }
+  .toc a:hover{ border-color:var(--accent); color:var(--accent-deep); }
+  .backlink{ display:inline-block; margin-top:6px; font-size:13px; color:var(--accent-deep);
+    text-decoration:none; font-weight:700; }
+
+  footer{ padding:34px 0 60px; text-align:center; color:#FBF7EE; font-size:12.5px; text-shadow:0 1px 2px rgba(80,50,20,.35); }
+  footer a{ color:#FFE7C9; }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="ryoiku.html">個別支援計画のたね</a>
+    <nav class="site-nav">
+      <a href="ouen-apps.html">業務応援アプリ</a>
+      <a href="ryoiku.html">個別支援計画のたね</a>
+      <a href="index.html">つくる手帖</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head" id="top">
+  <div class="eyebrow">PROGRAM No.08</div>
+  <h1 class="mincho">モールで社会をまなぶ</h1>
+  <p class="lede">三井ショッピングパーク ららぽーと堺(大阪府堺市美原区)を舞台に、<br>待ち合わせ場所の約束・フードコートでの注文・エスカレーター移動・順番待ちを、大きな施設ならではの負荷とともに経験します。</p>
+</div>
+
+<main class="wrap">
+
+<!-- 目次 -->
+<section class="paper tilt-r">
+  <h2 class="sec mincho"><small>CONTENTS</small>もくじ</h2>
+  <div class="toc">
+    <a href="#overview">0 ひと目でわかる5つの極意</a>
+    <a href="#outline">1 プログラムの位置づけ</a>
+    <a href="#assess">2 アセスメント</a>
+    <a href="#steps">3 ステップ構成</a>
+    <a href="#group">4 小集団プログラム</a>
+    <a href="#care">5 個別の配慮</a>
+    <a href="#record">6 記録</a>
+    <a href="#plan">7 個別支援計画 記載例</a>
+    <a href="#parent">8 保護者への連絡文例</a>
+    <a href="#items">9 準備物と下見チェック</a>
+  </div>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+<!-- 全体像 -->
+<section class="paper tilt-l" id="overview">
+  <h2 class="sec mincho"><small>OVERVIEW</small>ひと目でわかる5つの極意</h2>
+  <p class="body">大型商業施設は、道の駅(No.07)よりも<b>規模とにぎわいがひとまわり大きい「小さな社会」</b>です。約200店舗、屋内型スタジアム、フードコート、屋内外の遊び場までがひとつの建物と敷地に詰まっているぶん、迷子・音・人混みへの備えも一段階しっかり必要になります。No.03「まちが教室 おでかけ療育」の枠組みを、ららぽーと堺という大規模施設に絞って具体化したのが本プログラムです。</p>
+  <ul class="dot">
+    <li><b>極意1：まず「待ち合わせ場所」を決めて、全員で確認する。</b>広い施設だからこそ、はぐれたときにどこへ戻るかを出発前に約束しておく。</li>
+    <li><b>極意2：買い物は「ひとつだけ」に絞る。</b>目当てのお店で、決めた金額内でひとつ選んで会計する。</li>
+    <li><b>極意3：フードコートは、注文から片付けまでが練習の山場。</b>券売機・セルフレジ・トレー返却など、店ごとにルールが違うことも社会性の学びになる。</li>
+    <li><b>極意4：エスカレーター・エレベーターは移動そのものが課題。</b>苦手な子には無理をさせず、エレベーター優先ルートを用意する。</li>
+    <li><b>極意5：混雑と音は、平日の開店直後を選んで避ける。</b>週末・連休・館内イベント開催日は大変混雑するため、事前に施設の催事情報を確認する。</li>
+  </ul>
+</section>
+
+<!-- 1 位置づけ -->
+<section class="paper tilt-l" id="outline">
+  <h2 class="sec mincho"><small>OUTLINE</small>1 プログラムの位置づけ</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>五領域</th><td><b>健康・生活</b>（買い物・注文・食事のマナー）／<b>認知・行動</b>（見通し・待つ・迷子予防のルール理解）／<b>言語・コミュニケーション</b>（注文・あいさつ・はぐれた時の報告）／<b>人間関係・社会性</b>（順番・店員さんとのやりとり）／<b>運動・感覚</b>（エスカレーター・遊具・音や人混みへの対処）</td></tr>
+    <tr><th>行き先</th><td>三井ショッピングパーク ららぽーと堺（大阪府堺市美原区黒山22-1）。約200店舗のショップ・フードコート・屋内型スタジアムコート・北西エントランス広場のプレイゾーン／アーバンスポーツゾーン・屋外広場MIHARAパーク</td></tr>
+    <tr><th>地域連携</th><td>令和6年度改定で重視される<b>地域との交流の機会の提供</b>に対応。地域最大級の商業施設という公共性の高い場で、多くの人と共に過ごすマナーを学ぶ機会になります</td></tr>
+    <tr><th>ねらい</th><td>大きな施設ならではの「迷子予防」「移動」「順番待ち」を含めて、買い物・注文という生活場面を経験し、公共の場でのふるまいへの自信を育てる</td></tr>
+    <tr><th>対象</th><td>小学生全般（No.03のO2〜O4段階を目安。施設の規模が大きいため、道の駅版より一段階高めの段階を推奨。詳細は次節）</td></tr>
+    <tr><th>形態</th><td>小集団（児童3〜5名＋職員2〜3名。フロア移動が伴うため職員1名増を推奨）</td></tr>
+    <tr><th>頻度</th><td>季節ごと（年3〜4回）。屋内施設のため雨天でも実施しやすい</td></tr>
+    <tr><th>場面</th><td>平日午前（開店直後の10時台がねらい目。物販・サービス・フードコートは10時〜21時、レストランは11時〜22時が目安）</td></tr>
+  </table>
+  </div>
+  <div class="callout"><b>このプログラムのいちばん大事な原則。</b><br>道の駅と違い、ららぽーと堺は<b>フロアが複数あり、店舗数も多い大規模施設</b>です。「今日はどこまで行くか」を出発前に絞り込み、欲張って全フロアを回ろうとしないでください。<b>待ち合わせ場所を決めて全員で確認すること</b>が、遊具での順番待ち以上に、この施設ならではの最重要ステップです。</div>
+</section>
+
+<!-- 2 アセスメント -->
+<section class="paper tilt-r" id="assess">
+  <h2 class="sec mincho"><small>ASSESSMENT</small>2 アセスメント（初回・実施ごと）</h2>
+
+  <h3 class="sub">2-1 このプログラムでの段階の目安（No.03の外出スキル段階と対応）</h3>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>段階</th><th>状態</th><th>この日の課題設定</th></tr>
+    <tr><td><b>O2</b></td><td>道の駅程度の規模なら店内ルールを守れる。人混みや音への耐性はこれから</td><td>フロアは1つに絞り、職員と手をつなぐ・目視できる距離を保つことを優先。買い物は職員と一緒に</td></tr>
+    <tr><td><b>O3</b></td><td>待ち合わせ場所の意味を理解できる。会計・注文への意欲がある</td><td>「ひとつ買う」に加え、フードコートでの注文・トレー返却にも挑戦。エスカレーターは職員同伴</td></tr>
+    <tr><td><b>O3〜O4</b></td><td>公共の場での待ち方・移動が身についてきている</td><td>会計・注文・エスカレーター移動・プレイゾーンでの順番待ちまで、一連をできるだけ本人主導で。待ち合わせ場所への自主的な集合も試す</td></tr>
+  </table>
+  </div>
+
+  <h3 class="sub">2-2 実施前のチェック（事業所側）</h3>
+  <ul class="check">
+    <li>保護者の外出同意書（写真撮影の可否を含む）を得ている</li>
+    <li>下見を済ませ、当日訪れるフロア・店舗・混雑状況・トイレ／ベビー休憩室の場所を確認した</li>
+    <li>公式アプリやサイトで、当日のイベント・催事の有無を確認した（スタジアムコートでの催事日は特に混雑）</li>
+    <li>待ち合わせ場所を決め、写真に撮って全員で共有した</li>
+    <li>会計係を担当する児童ごとに、渡す金額と想定される買い物を決めた</li>
+    <li>アレルギー・偏食の情報をフードコート利用前に全職員で共有した</li>
+    <li>エスカレーターが苦手な児童がいる場合、エレベーターを使う移動ルートを決めてある</li>
+    <li>はぐれた場合の対応（インフォメーションセンターへの連絡、職員の役割分担）を事前に決めてある</li>
+  </ul>
+</section>
+
+<!-- 3 ステップ -->
+<section class="paper tilt-l" id="steps">
+  <h2 class="sec mincho"><small>STEPS</small>3 ステップ構成（1回の流れ）</h2>
+
+  <h3 class="sub">Step 0（前日まで）— 事前学習</h3>
+  <p class="body">施設の写真、待ち合わせ場所、当日の順番（①お店で買い物→②フードコートで注文→③プレイゾーン・スタジアム見学→④屋外広場で振り返り）、約束ごとを写真カードで確認します。会計係・注文係・地図係など、誰が何をする日かもここで発表します。「はぐれたら、待ち合わせ場所で待つ」ことは特に念入りに練習します。</p>
+
+  <h3 class="sub">Step 1 — お店で「ひとつ選んで買う」</h3>
+  <p class="body">事前に決めた金額（100〜500円程度）の中で、文具店・100円ショップ・雑貨店など目当てのお店からひとつ選び、自分でレジに持っていって会計します。多くの選択肢がある環境のため、「今日はこのお店だけ」と事前に絞り込んでおくと迷いすぎずに取り組めます。</p>
+
+  <h3 class="sub">Step 2 — フードコートで注文して片付ける</h3>
+  <p class="body">エリア最大級のフードコートで、メニューから選んで注文します（券売機式・カウンター注文式など店によって手順が違うため、事前に決めた店に絞ると進めやすい）。食べ終わったら自分でトレーを返却口に返す、というセルフサービスの一連の流れそのものが生活スキルの練習になります。キッズスペースが併設されているため、小さい兄弟がいる想定の練習にも応用できます。</p>
+
+  <h3 class="sub">Step 3 — 移動・プレイゾーンで順番待ち</h3>
+  <p class="body">エスカレーターまたはエレベーターで移動し、北西エントランス広場のプレイゾーンやアーバンスポーツゾーンで遊びます。屋内型スタジアムコートでイベントが開催されている日は、観覧するだけでも「大勢の中で座って待つ」練習になります。遊具・スポーツゾーンでは、他の利用者との<b>「かして」「じゅんばん」のやりとり</b>が自然に発生します。</p>
+
+  <h3 class="sub">Step 4 — 屋外広場でクールダウン・振り返り</h3>
+  <p class="body">屋外広場MIHARAパークで、屋内の音や人混みから離れて一息つきます。「今日いちばん頑張ったこと」をここで一人ずつ発表すると、屋内での興奮を落ち着かせる区切りにもなります。</p>
+
+  <h3 class="sub">Step 5（帰所後〜翌回）— おでかけ新聞</h3>
+  <p class="body">撮ってきた写真を使って「おでかけ新聞」を作ります。「買ったもの」「フードコートで食べたもの」「がんばって待てたこと・迷子にならなかったこと」の3つを書く欄を決めておくと、書くことが苦手な子も埋めやすくなります。</p>
+</section>
+
+<!-- 4 小集団 -->
+<section class="paper tilt-r" id="group">
+  <h2 class="sec mincho"><small>GROUP</small>4 小集団プログラム</h2>
+  <p class="body">ひとり一役（会計係・注文係・地図係・時計係・カメラ係）を割り当て、実施ごとに交代します。地図係にはフロアガイド（紙の見取り図）を持たせ、「次はどこに行くか」を発表してもらう役にすると、見通しを持つ練習になります。待つのが得意な子には「時計係」で他児に見通しを伝える役を任せると、特性が役割として活きます。</p>
+  <div class="callout">大規模施設ゆえに、<b>職員1名が児童2名までを目視できる範囲で担当する</b>体制を基本にしてください。フロアをまたぐ移動の際は、必ず全員の人数確認をしてから動きます。</div>
+</section>
+
+<!-- 5 配慮 -->
+<section class="paper tilt-l" id="care">
+  <h2 class="sec mincho"><small>CARE</small>5 個別の配慮</h2>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>状態像</th><th>配慮</th></tr>
+    <tr><td><b>感覚過敏（音・人混み・照明）</b></td><td>開店直後のすいた時間帯を選ぶ。イヤーマフや帽子を携行し、負荷が高いと感じたらMIHARAパークや車内で早めに休憩する</td></tr>
+    <tr><td><b>迷子・見通しの不安が強い</b></td><td>待ち合わせ場所の写真を持たせ、事業所名と職員の連絡先を書いたカードを携帯する。目立つ色の帽子やビブスの着用も検討する</td></tr>
+    <tr><td><b>エスカレーターが苦手</b></td><td>無理に乗せず、エレベーターを使うルートを最初から用意しておく。事前に事業所内でエスカレーターの動画を見て心づもりをする</td></tr>
+    <tr><td><b>待つことが苦手</b></td><td>フードコートでの注文から料理が来るまでの時間を、タイマーや「あと3分」の予告カードで見える化する。待つ間の手遊び（折り紙など）を用意しておく</td></tr>
+    <tr><td><b>お金の扱いが苦手／欲しいものが多くて選べない</b></td><td>会計時は小分けの封筒に金額をあらかじめ用意する。出発前に「今日買うのはひとつ」と繰り返し確認し、視覚カードで金額を示す</td></tr>
+    <tr><td><b>遊具・スポーツゾーンでのトラブルが出やすい</b></td><td>職員が近くで見守り、順番待ちの列に一緒に並ぶ。譲れたときにその場ですぐ言葉で認める</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- 6 記録 -->
+<section class="paper tilt-r" id="record">
+  <h2 class="sec mincho"><small>RECORD</small>6 記録</h2>
+  <p class="body">支援きろく帖の「活動・様子」欄に貼り付けて使えます。</p>
+  <div class="copybox" id="txtRecord">【モールおでかけ療育記録（ららぽーと堺）】
+実施日：　　年　　月　　日／担当：
+本日のStep：1買い物・2フードコート・3プレイゾーン等・4屋外広場
+役割：会計係・注文係・地図係・時計係・カメラ係・その他（　　）
+できたこと（買い物）：商品選び・会計・あいさつ
+できたこと（移動）：待ち合わせ場所の理解・エスカレーター／エレベーター利用
+できたこと（社会性）：順番待ち・「かして」「じゅんばん」のやりとり
+配慮の使用：予告タイマー・見通しカード・イヤーマフ・その他（　　）
+ヒヤリハット：無・有（内容：　　　　　　　　　　）
+本人の言葉（ふりかえり）：
+様子・特記：
+次回の目標：</div>
+  <button class="cbtn" data-copy="txtRecord">📋 記録テンプレートをコピー</button>
+</section>
+
+<!-- 7 計画記載例 -->
+<section class="paper tilt-l" id="plan">
+  <h2 class="sec mincho"><small>PLAN</small>7 個別支援計画 記載例</h2>
+  <p class="body">そのままではなく、<b>お子さんの実際の姿と、本人・保護者の意向</b>に合わせて書き直してからお使いください。</p>
+  <div class="copybox" id="txtPlan">【長期目標（6か月）】
+規模の大きな公共施設においても、待ち合わせ場所などの約束を守りながら、買い物や注文といった生活場面を落ち着いて行うことができる。
+
+【短期目標（3か月）】
+ららぽーと堺でのおでかけ活動において、決められた待ち合わせ場所の約束を守った上で、決められた金額の中で商品を自分で選び会計する、またはフードコートで注文して受け取り・片付けまで行うことのいずれかを、3回中2回以上落ち着いて行うことができる。
+
+【支援内容】
+季節ごとに1回、小集団で大型商業施設を活用したおでかけ療育を実施する。実施前に写真カードで当日の流れ・役割・待ち合わせ場所を共有し、買い物・フードコート利用・移動・遊び場という複数の生活場面を連続して経験できるようにする。人混みや音への負荷が高い場面では、イヤーマフの使用や屋外広場での休憩を挟み、無理のない範囲で活動を継続する。活動後は写真を用いたふりかえり（おでかけ新聞）を行い、経験を言葉にして伝える機会をつくる。
+
+【本人・家族の意向】
+（　本人：　　　　　　　　　　　　　　　　　）
+（　保護者：　　　　　　　　　　　　　　　　）</div>
+  <button class="cbtn" data-copy="txtPlan">📋 計画の文例をコピー</button>
+</section>
+
+<!-- 8 保護者 -->
+<section class="paper tilt-r" id="parent">
+  <h2 class="sec mincho"><small>FOR PARENTS</small>8 保護者への連絡文例</h2>
+  <p class="body">おうち連絡帖の連絡文や、連絡帳への記入に。</p>
+  <div class="copybox" id="txtParent">いつもお世話になっております。
+
+次回のおでかけ療育のご案内です。
+
+日時：　月　日（　）　時〜　時
+行き先：三井ショッピングパーク ららぽーと堺（大阪府堺市美原区）
+持ち物：水筒、動きやすい靴（お買い物・お食事代　　円をお預かりします）
+
+〇〇さんには当日、会計係（または注文係）をお願いする予定です。お店でのお買い物や、フードコートでの注文にチャレンジします。大きな施設のため、まず「待ち合わせ場所」を全員で確認してから活動を始めます。エスカレーターやプレイゾーンでの活動も予定しています。
+
+当日の体調がすぐれない場合は無理をせず、事業所内での活動に切り替えますのでご安心ください。音や人混みが苦手な様子が見られた場合は、屋外の広場で休憩をとります。ご不明な点や、感覚面でのご心配なことがありましたら、いつでもお知らせください。</div>
+  <button class="cbtn" data-copy="txtParent">📋 連絡文例をコピー</button>
+  <div class="callout"><b>ご家庭にお願いすることは、ひとつだけで十分です。</b>帰宅後に「今日は何を買ったの？」「お昼ごはん、何食べたの？」と聞いて、本人の言葉で話させてあげること。おでかけ新聞を見ながらなら、話すのが苦手な子も伝えられます。</div>
+</section>
+
+<!-- 9 準備物と下見チェック -->
+<section class="paper tilt-l" id="items">
+  <h2 class="sec mincho"><small>ITEMS</small>9 準備物と下見チェック</h2>
+  <ul class="dot">
+    <li>写真カード（施設の外観・待ち合わせ場所・フードコート・プレイゾーン、当日の順番）</li>
+    <li>紙のフロアガイド（施設で入手、または公式サイトのPDFを印刷）</li>
+    <li>緊急連絡カード（人数分）、事業所名と連絡先入りの迷子対策カード、救急セット、職員用携帯電話</li>
+    <li>会計・注文用の小分け封筒、予告タイマー、見通しカード</li>
+    <li>イヤーマフ・耳栓（感覚過敏がある児童用）</li>
+    <li>水筒、デジカメまたはスマホ（カメラ係用）</li>
+    <li>おでかけ新聞用の台紙・のり・ペン、記録シート</li>
+  </ul>
+
+  <h3 class="sub">施設メモ（下見時にあわせてご確認ください）</h3>
+  <p class="body">下記は作成時点の一般的な情報です。<b>営業時間・店舗構成・催事の有無は変動するため、実施前に公式サイト等で最新情報を必ずご確認ください。</b></p>
+  <div class="wraptbl">
+  <table class="t">
+    <tr><th>項目</th><th>メモ</th></tr>
+    <tr><td>所在地</td><td>大阪府堺市美原区黒山22-1</td></tr>
+    <tr><td>主な施設</td><td>約200店舗（ファッション・雑貨・フードコート等）／屋内型スタジアムコート「Fansta X Stadium」／北西エントランス広場（プレイゾーン・アーバンスポーツゾーン）／屋外広場「MIHARAパーク」／ベビー休憩室・多目的トイレ・キッズトイレ</td></tr>
+    <tr><td>営業時間の目安</td><td>物販・サービス・フードコート 10:00〜21:00／レストラン 11:00〜22:00（最新情報は必ず公式サイト等でご確認ください）</td></tr>
+    <tr><td>混雑</td><td>週末・連休・スタジアムコートでのイベント開催日は大変混雑。平日、開店直後の午前が狙い目</td></tr>
+    <tr><td>駐車場</td><td>約3,050台（阪和自動車道 美原北IC／美原南ICが至近。最寄り駅からは距離があり、車での来所が基本）</td></tr>
+  </table>
+  </div>
+  <a class="backlink" href="ryoiku-michinoeki.html">‹ No.07「道の駅で社会をまなぶ」も見る</a><br>
+  <a class="backlink" href="ryoiku-odekake.html">‹ No.03「まちが教室 おでかけ療育」の枠組みも見る</a><br>
+  <a class="backlink" href="ryoiku.html">‹ 個別支援計画のたね に戻る</a>
+</section>
+
+</main>
+
+
+<script>
+'use strict';
+document.querySelectorAll('.cbtn[data-copy]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var el = document.getElementById(b.getAttribute('data-copy'));
+    if(!el) return;
+    var t = el.innerText;
+    var done = function(){
+      var o = b.textContent;
+      b.textContent = '✓ コピーしました';
+      b.classList.add('done');
+      setTimeout(function(){ b.textContent = o; b.classList.remove('done'); }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done, function(){ fallback(t, done); });
+    } else { fallback(t, done); }
+  });
+});
+function fallback(t, done){
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ alert('コピーできませんでした。長押しで選択してください。'); }
+  document.body.removeChild(ta);
+}
+</script>
+
+<footer>
+  <div>つくる手帖 — 自分でつくる、小さな道具たち</div>
+  <div style="margin-top:6px;"><a href="ryoiku.html">個別支援計画のたね へ</a>　<a href="ouen.html">放課後デイ応援帖へ</a></div>
+</footer>
+</body>
+</html>
