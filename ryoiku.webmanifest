@@ -1,0 +1,32 @@
+{
+  "name": "個別支援計画のたね",
+  "short_name": "計画のたね",
+  "description": "放課後等デイサービスの個別支援計画づくりに。五領域にひもづく療育プログラムの素案集。",
+  "lang": "ja",
+  "start_url": "./ryoiku.html",
+  "scope": "./ryoiku",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3F1EA",
+  "theme_color": "#1B2A4A",
+  "icons": [
+    {
+      "src": "icons/ryoiku-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/ryoiku-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/ryoiku-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
