@@ -1,76 +1,80 @@
 /* ===========================================================
-   つくる手帖 — 後片づけ用のサービスワーカー
-   -----------------------------------------------------------
-   もともとここには、ピンボール用のサービスワーカーが置かれて
-   いました。受け持ち範囲が /tsukuru-techo/ 配下すべてで、
-   しかも「控えがあれば控えを返す」作りだったため、
-   ページを更新しても端末には古いものが表示され続けていました。
+   つくる手帖 ポータル — サービスワーカー
 
-   このファイルは、その後始末をするためだけのものです。
+   もともとここには「後片づけ専用」のワーカーが置かれていました。
+   自分自身を unregister するだけで fetch を受け取らないため、
+   ブラウザから見ると「サービスワーカーの無いサイト」でした。
+   PWAとしてインストールできなかったのはこれが理由です。
 
-     1. /tsukuru-techo/ の控えだけを捨てる
-     2. 自分自身の登録を取り消す
-     3. 開いているページを読み込み直す
+   このファイルは、その後片づけの働きを引き継いだうえで、
+   インストール要件を満たす本来のワーカーにしたものです。
 
-   fetch を受け取らないので、通信はふつうに素通りします。
-
-   -----------------------------------------------------------
-   【2026年8月 修正】
-
-   以前はここで caches.keys() のすべてを消していました。
-
-   サービスワーカーの受け持ち範囲はパスで分かれますが、
-   控え（Cache Storage）はオリジン単位で共有されます。
-   tad551216-rgb.github.io は、どのリポジトリでも同じオリジンです。
-
-   そのため、ポータルを開くたびに
-   day-kiroku・shien-kiroku・おむかえルート帖などの控えまで
-   まとめて消えていました（オフラインで開けなくなる原因）。
-
-   いまは、中身が /tsukuru-techo/ のものだけを選んで消します。
+   【設計上ゆずれない点】
+   ・控え(Cache Storage)はオリジン単位で共有されます。
+     tad551216-rgb.github.io はどのリポジトリでも同じオリジンなので、
+     消してよいのは自分の名前空間(TT_NS)のものだけです。
+   ・かつて「控えがあれば控えを返す」作りだったせいで、
+     更新しても古いページが出続けました。ここでは通信を先に試し、
+     つながらないときだけ控えを返します。
    =========================================================== */
 
-const TT_SCOPE = '/tsukuru-techo/';
+const TT_NS  = 'tt:tsukuru-techo:';
+const CACHE  = TT_NS + 'v1';
+const SCOPE  = '/tsukuru-techo/';
+const ASSETS = [
+  './', './index.html', './manifest.json',
+  './icons/icon-192.png', './icons/icon-180.png', './icons/favicon.ico'
+];
 
-self.addEventListener('install', function(e){
-  self.skipWaiting();
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => c.addAll(ASSETS))
+      .catch(() => {})            /* 1つ失敗しても導入は止めない */
+      .then(() => self.skipWaiting())
+  );
 });
 
-/* この控えは /tsukuru-techo/ のものか？ */
-async function isMine(name){
+/* 昔のワーカーが残した控えか？ 中身がすべて /tsukuru-techo/ のものなら自分のもの。
+   ひとつでも別の場所のものが混ざっていれば、他アプリの控えとみなして手を出さない。 */
+async function isLegacyMine(name){
+  if(name.startsWith(TT_NS)) return false;
   try{
     const c = await caches.open(name);
     const reqs = await c.keys();
     if(!reqs.length) return false;
-    /* ひとつでも別の場所のものが入っていれば、他のアプリの控えとみなして手を出さない */
-    return reqs.every(function(r){
-      try{ return new URL(r.url).pathname.indexOf(TT_SCOPE) === 0; }
+    return reqs.every(r => {
+      try{ return new URL(r.url).pathname.indexOf(SCOPE) === 0; }
       catch(err){ return false; }
     });
   }catch(err){ return false; }
 }
 
-self.addEventListener('activate', function(e){
-  e.waitUntil((async function(){
-
-    /* /tsukuru-techo/ の控えだけを捨てる */
+self.addEventListener('activate', e => {
+  e.waitUntil((async () => {
     try{
       const keys = await caches.keys();
       for(const k of keys){
-        if(await isMine(k)) await caches.delete(k);
+        if(k.startsWith(TT_NS)){
+          if(k !== CACHE) await caches.delete(k);        /* 自分の古い版 */
+        }else if(await isLegacyMine(k)){
+          await caches.delete(k);                        /* 昔のワーカーの置き土産 */
+        }
       }
     }catch(err){}
-
-    /* 自分の登録を取り消す */
-    try{ await self.registration.unregister(); }catch(err){}
-
-    /* 開いているページを読み込み直して、最新に入れ替える */
-    try{
-      const list = await self.clients.matchAll({ type:'window' });
-      list.forEach(function(c){
-        try{ c.navigate(c.url); }catch(err){}
-      });
-    }catch(err){}
-
+    await self.clients.claim();
   })());
+});
+
+self.addEventListener('fetch', e => {
+  if(e.request.method !== 'GET') return;
+  e.respondWith(
+    fetch(e.request)
+      .then(res => {
+        const copy = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
+        return res;
+      })
+      .catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
+  );
 });

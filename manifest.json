@@ -1,0 +1,20 @@
+{
+  "name": "つくる手帖",
+  "short_name": "つくる手帖",
+  "description": "スマホとAIで、自分や家族のための小さな道具をつくる記録。くらし・あそび・しごと・福祉の手帖。",
+  "id": "/tsukuru-techo/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "lang": "ja",
+  "background_color": "#F3F1EA",
+  "theme_color": "#1B2A4A",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "related_applications": [
+    { "platform": "webapp", "url": "https://tad551216-rgb.github.io/tsukuru-techo/manifest.json" }
+  ],
+  "prefer_related_applications": false
+}
